@@ -1,0 +1,36 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load bootstrap3 %}
+{% load render_table from django_tables2 %}
+{% block bootstrap3_title %}
+    员工管理
+{% endblock %}
+{% block bootstrap3_extra_head %}
+    <link href="{% static 'django_tables2/bootstrap.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{% url 'yunhu:user-create' %}" class="fm-create" data-fm-head="Create" data-fm-callback="reload">Create
+                User</a>
+            <form action="" method="get" class="form form-inline">
+                {% bootstrap_form filter.form layout='inline' %}
+                {% bootstrap_button 'filter' icon='search' %}
+            </form>
+        </div>
+        <div class="col-md-12">
+            {% render_table table 'django_tables2/bootstrap.html' %}
+
+        </div>
+    </div>
+{% endblock %}
+{% block bootstrap3_extra_script %}
+    <script>
+        $(function () {
+            $.fm({debug: true});
+        });
+    </script>
+    {% include "fm/modal.html" %}
+{% endblock %}
+
+
