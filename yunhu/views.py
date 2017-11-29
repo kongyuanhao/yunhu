@@ -19,6 +19,7 @@ from filters import *
 from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
+from yunhu.forms import UserCreateForm
 
 
 class MainView(LoginRequiredMixin, generic.TemplateView):
@@ -65,5 +66,12 @@ class UserAdminView(SingleTableMixin, FilterView):
 
 
 class UserCreateView(AjaxCreateView):
-    form_class = UserCreationForm
+    form_class = UserCreateForm
+    # fields = ()
+
+    def get_initial(self):
+        initial = self.initial.copy()
+        initial["company"] = self.request.user.company
+        return initial
+
 

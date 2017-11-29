@@ -11,12 +11,13 @@
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-            <a href="{% url 'yunhu:user-create' %}" class="fm-create" data-fm-head="Create" data-fm-callback="reload">Create
-                User</a>
+
             <form action="" method="get" class="form form-inline">
                 {% bootstrap_form filter.form layout='inline' %}
                 {% bootstrap_button 'filter' icon='search' %}
             </form>
+            <a href="{% url 'yunhu:user-create' %}" class="fm-create" data-fm-head="Create" data-fm-callback="reload">Create
+                User</a>
         </div>
         <div class="col-md-12">
             {% render_table table 'django_tables2/bootstrap.html' %}
