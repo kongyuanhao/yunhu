@@ -7,9 +7,17 @@ base Info
 """
 import django_filters
 from models import *
-
+from django_filters import ModelChoiceFilter
 
 class UserFilter(django_filters.FilterSet):
     class Meta:
         model = User
         fields = ["qq", "name"]
+
+
+class CustomerFilter(django_filters.FilterSet):
+    class Meta:
+        model = CustomerModel
+        fields = ["audit_status",]
+
+

@@ -9,16 +9,22 @@
     <link href="{% static 'django_tables2/bootstrap.css' %}" rel="stylesheet"/>
 {% endblock %}
 {% block content %}
-    <div class="row">
+    <div class="row" style="margin-top: 25px">
         <div class="col-md-12">
 
             <form action="" method="get" class="form form-inline">
                 {% bootstrap_form filter.form layout='inline' %}
                 {% bootstrap_button 'filter' icon='search' %}
+                <a href="{% url 'yunhu:user-create' %}" class="fm-create btn btn-default" data-fm-head="Create"
+                   data-fm-callback="reload">Creat
+                    User</a>
             </form>
-            <a href="{% url 'yunhu:user-create' %}" class="fm-create" data-fm-head="Create" data-fm-callback="reload">Create
-                User</a>
+
         </div>
+        <div class="clearfix"></div>
+
+    </div>
+    <div class="row">
         <div class="col-md-12">
             {% render_table table 'django_tables2/bootstrap.html' %}
 
