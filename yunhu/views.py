@@ -94,8 +94,10 @@ class CustomerListView(SingleTableMixin, FilterView):
 
 class CustomerUpdateView(AjaxUpdateView):
     form_class = CustomerChangeForm
-    model = User
+    model = CustomerModel
     pk_url_kwarg = 'customer_pk'
+
+
 
 
 def tel_check(request):

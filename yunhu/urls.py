@@ -33,7 +33,7 @@ user_url = [
 ]
 customer_url = [
     url(r'^customer-list/', views.CustomerListView.as_view(), name="customer-list"),
-    url(r'^customer-update/(?P<customer_pk>\d+)/$', views.UserUpdateView.as_view(), name="customer-update"),
+    url(r'^customer-update/(?P<customer_pk>\d+)/$', views.CustomerUpdateView.as_view(), name="customer-update"),
 ]
 
 h5_url = [

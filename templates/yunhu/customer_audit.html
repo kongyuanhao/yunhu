@@ -17,14 +17,69 @@
                 <div class="col-lg-8 col-lg-offset-2">
                     <div class="modal-wrapper" style="display: none;">
                         <div class="modal-head"></div>
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                           href="#collapseOne"
+                                           aria-expanded="true" aria-controls="collapseOne">
+                                            客户基本信息
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                                     aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        姓名:{{ object.name }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse"
+                                           data-parent="#accordion" href="#collapseTwo"
+                                           aria-expanded="false" aria-controls="collapseTwo">
+                                            运营商信息
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+                                     aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                        客户没有填写，Wating。。。。。。。
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingThree">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse"
+                                           data-parent="#accordion" href="#collapseThree"
+                                           aria-expanded="false" aria-controls="collapseThree">
+                                            学信网信息
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                                     aria-labelledby="headingThree">
+                                    <div class="panel-body">
+                                        客户没有填写，Wating。。。。。。。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="modal-body">
-                            <div>客户信息审核</div>
+
                         </div>
                         <div class="modal-buttons">
                             <button class="btn btn-primary" type="submit">
                                 {% trans 'OK' %}
                             </button>
-                            <button data-dismiss="modal" class="btn btn-default" type="button"><i class="fa fa-times"></i>
+                            <button data-dismiss="modal" class="btn btn-default" type="button"><i
+                                    class="fa fa-times"></i>
                                 {% trans 'Cancel' %}
                             </button>
                         </div>
@@ -35,5 +90,5 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="{% static "fm/css/modal.css" %}?v={% fm_version %}" />
+<link rel="stylesheet" href="{% static "fm/css/modal.css" %}?v={% fm_version %}"/>
 <script type="text/javascript" src="{% static "fm/js/fm.js" %}?v={% fm_version %}"></script>

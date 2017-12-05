@@ -2,77 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="92f3ef1b-7194-47ec-8be1-5d3f8bd75c90" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/h5/background1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/h5/background2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/indexhd.01a2d70.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/loginbg.5e40249.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/app.7e4abf899a49b665a023897001f41a57.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/app.7e4abf899a49b665a023897001f41a57.css.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/0.3fca0f89599ef2eff0f9.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/0.3fca0f89599ef2eff0f9.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/1.51c75cee994d5e45e44a.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/1.51c75cee994d5e45e44a.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/2.876c0441e697c4ebd2f9.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/2.876c0441e697c4ebd2f9.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/3.8806d9275e9a95795d87.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/3.8806d9275e9a95795d87.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/app.cfb00d1a59d250f78da2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/app.cfb00d1a59d250f78da2.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/manifest.eead532a49b4bd767cde.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/manifest.eead532a49b4bd767cde.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/vendor.c751437f933196f37f72.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/vendor.c751437f933196f37f72.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/yunhu/customer_audit.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/yunhu/customermodel_filter.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/yunhu/h5/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/yunhu/user_create_modal.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0002_auto_20171202_1742.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0003_auto_20171202_1814.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0004_auto_20171202_1819.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0005_auto_20171202_2132.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0006_auto_20171203_1141.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0007_auto_20171203_1152.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0008_auto_20171203_1246.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0009_auto_20171203_1330.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0010_auto_20171203_1358.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/response.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/base/data_list.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/charts/echarts.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/charts/flot.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/charts/metrics.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/charts/morris.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/email/emailbox.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/email/mail_compose.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/email/mail_detail.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/index/index01.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/index/index02.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/index/index03.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/pages/clients.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/pages/contacts.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/pages/profile.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/pages/project_detail.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/pages/projects.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/pages/teams_board.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/tables/table_basic.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/tables/table_bootstrap.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/yunhu/user_list.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/yunhu/migrations/0002_auto_20171125_1919.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/yunhu/migrations/0003_user_is_boss.py" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/yunhu/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/_header.html" afterPath="$PROJECT_DIR$/templates/base/_header.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/_menu.html" afterPath="$PROJECT_DIR$/templates/base/_menu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/login.html" afterPath="$PROJECT_DIR$/templates/base/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/yunhu/user_filter.html" afterPath="$PROJECT_DIR$/templates/yunhu/user_filter.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/admin.py" afterPath="$PROJECT_DIR$/yunhu/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/filters.py" afterPath="$PROJECT_DIR$/yunhu/filters.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/yunhu/customer_audit.html" afterPath="$PROJECT_DIR$/templates/yunhu/customer_audit.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/forms.py" afterPath="$PROJECT_DIR$/yunhu/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/yunhu/migrations/0001_initial.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/models.py" afterPath="$PROJECT_DIR$/yunhu/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/tables.py" afterPath="$PROJECT_DIR$/yunhu/tables.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/urls.py" afterPath="$PROJECT_DIR$/yunhu/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/views.py" afterPath="$PROJECT_DIR$/yunhu/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu_sms/settings.py" afterPath="$PROJECT_DIR$/yunhu_sms/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu_sms/urls.py" afterPath="$PROJECT_DIR$/yunhu_sms/urls.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -85,17 +20,37 @@
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.45742753">
+    <splitter split-orientation="horizontal" split-proportion="0.86376023">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/yunhu/views.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="75">
-                  <caret line="168" column="50" lean-forward="false" selection-start-line="168" selection-start-column="50" selection-end-line="168" selection-end-column="50" />
+                <state relative-caret-position="357">
+                  <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
                   <folding>
                     <element signature="e#24#63#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+            <entry file="file://$USER_HOME$/Anaconda2/Lib/site-packages/fm/views.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="122">
+                  <caret line="119" column="39" lean-forward="true" selection-start-line="119" selection-start-column="39" selection-end-line="119" selection-end-column="39" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="edit.py" pinned="false" current-in-tab="false">
+            <entry file="file://$USER_HOME$/Anaconda2/Lib/site-packages/django/views/generic/edit.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="122">
+                  <caret line="242" column="6" lean-forward="false" selection-start-line="242" selection-start-column="6" selection-end-line="242" selection-end-column="6" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -110,35 +65,31 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="temp_LaMNJqf.jpeg" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/static/img/idcard/temp_LaMNJqf.jpeg">
-              <provider selected="true" editor-type-id="images">
-                <state />
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="temp.jpeg" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/static/img/idcard/temp.jpeg">
-              <provider selected="true" editor-type-id="images">
-                <state />
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="customermodel_filter.html" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/templates/yunhu/customermodel_filter.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="425">
-                  <caret line="31" column="41" lean-forward="false" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
+                <state relative-caret-position="400">
+                  <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="customer_audit.html" pinned="false" current-in-tab="false">
+          <file leaf-file-name="customer_audit.html" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/templates/yunhu/customer_audit.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-102">
-                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                <state relative-caret-position="85">
+                  <caret line="25" column="92" lean-forward="true" selection-start-line="23" selection-start-column="40" selection-end-line="25" selection-end-column="92" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/templates/yunhu/index.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="310">
+                  <caret line="73" column="6" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="73" selection-end-column="6" />
                   <folding />
                 </state>
               </provider>
@@ -147,21 +98,11 @@
           <file leaf-file-name="tables.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/yunhu/tables.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="213">
+                <state relative-caret-position="449">
                   <caret line="51" column="177" lean-forward="false" selection-start-line="51" selection-start-column="177" selection-end-line="51" selection-end-column="177" />
                   <folding>
                     <element signature="e#85#105#0" expanded="true" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="app.7e4abf899a49b665a023897001f41a57.css" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/static/css/app.7e4abf899a49b665a023897001f41a57.css">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                  <folding />
                 </state>
               </provider>
             </entry>
@@ -193,8 +134,8 @@
           <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/yunhu/models.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1309">
-                  <caret line="170" column="6" lean-forward="false" selection-start-line="170" selection-start-column="2" selection-end-line="170" selection-end-column="6" />
+                <state relative-caret-position="204">
+                  <caret line="111" column="16" lean-forward="false" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="16" />
                   <folding>
                     <element signature="e#24#63#0" expanded="true" />
                   </folding>
@@ -205,7 +146,7 @@
           <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/yunhu_sms/urls.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="374">
+                <state relative-caret-position="310">
                   <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
                   <folding>
                     <element signature="e#657#697#0" expanded="true" />
@@ -257,18 +198,18 @@
           <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
             <entry file="file://$USER_HOME$/Anaconda2/Lib/site-packages/django/contrib/auth/models.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="310">
+                <state relative-caret-position="5406">
                   <caret line="333" column="15" lean-forward="false" selection-start-line="333" selection-start-column="4" selection-end-line="333" selection-end-column="15" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="forms.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/yunhu/forms.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="400">
-                  <caret line="31" column="8" lean-forward="false" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
+                <state relative-caret-position="255">
+                  <caret line="37" column="31" lean-forward="false" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
                   <folding>
                     <element signature="e#85#109#0" expanded="true" />
                   </folding>
@@ -286,11 +227,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/yunhu/urls.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="197">
-                  <caret line="40" column="19" lean-forward="false" selection-start-line="40" selection-start-column="11" selection-end-line="40" selection-end-column="19" />
+                <state relative-caret-position="95">
+                  <caret line="35" column="76" lean-forward="false" selection-start-line="35" selection-start-column="76" selection-end-line="35" selection-end-column="76" />
                   <folding />
                 </state>
               </provider>
@@ -316,6 +257,11 @@
   <component name="Git.Settings">
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="AUTO_COMMIT_ON_CHERRY_PICK" value="true" />
   </component>
   <component name="IdeDocumentHistory">
@@ -344,13 +290,14 @@
         <option value="$PROJECT_DIR$/yunhu/admin.py" />
         <option value="$PROJECT_DIR$/yunhu_sms/urls.py" />
         <option value="$PROJECT_DIR$/yunhu/models.py" />
-        <option value="$PROJECT_DIR$/yunhu/forms.py" />
         <option value="$PROJECT_DIR$/templates/yunhu/user_filter.html" />
         <option value="$PROJECT_DIR$/templates/yunhu/customermodel_filter.html" />
-        <option value="$PROJECT_DIR$/templates/yunhu/customer_audit.html" />
         <option value="$PROJECT_DIR$/yunhu/tables.py" />
-        <option value="$PROJECT_DIR$/yunhu/views.py" />
         <option value="$PROJECT_DIR$/yunhu/urls.py" />
+        <option value="$PROJECT_DIR$/yunhu/forms.py" />
+        <option value="$PROJECT_DIR$/templates/yunhu/index.html" />
+        <option value="$PROJECT_DIR$/yunhu/views.py" />
+        <option value="$PROJECT_DIR$/templates/yunhu/customer_audit.html" />
       </list>
     </option>
   </component>
@@ -360,7 +307,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1382" />
@@ -545,16 +492,16 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\PycharmProjects\yunhu_sms\templates\yunhu" />
+      <recent name="D:\PycharmProjects\yunhu_sms\templates\base" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\PycharmProjects\yunhu_sms\templates\yunhu" />
       <recent name="D:\PycharmProjects\yunhu_sms\templates\h5" />
       <recent name="D:\PycharmProjects\yunhu_sms\static\js" />
       <recent name="D:\PycharmProjects\yunhu_sms\static\img" />
       <recent name="D:\PycharmProjects\yunhu_sms\static\css" />
-      <recent name="D:\PycharmProjects\yunhu_sms\static\img\h5" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\PycharmProjects\yunhu_sms\templates\yunhu" />
-      <recent name="D:\PycharmProjects\yunhu_sms\templates\base" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -617,19 +564,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
     <editor active="true" />
     <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16717096" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938644" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37277147" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24311183" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32901135" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36142626" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938644" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16490166" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="manage.py@yunhu_sms" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36790925" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938644" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -638,6 +584,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="manage.py@yunhu_sms" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36790925" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -698,6 +645,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="LAST_COMMIT_MESSAGE" value="" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -706,13 +654,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Anaconda2/Lib/site-packages/django_fm-0.2.5.dist-info/METADATA">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="48" lean-forward="false" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Anaconda2/Lib/site-packages/django_fm-0.2.5.dist-info/metadata.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -786,7 +727,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="241">
           <caret line="19" column="54" lean-forward="false" selection-start-line="19" selection-start-column="54" selection-end-line="19" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -804,7 +744,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -812,14 +751,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda2/Lib/site-packages/fm/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-454">
-          <caret line="45" column="6" lean-forward="false" selection-start-line="45" selection-start-column="6" selection-end-line="45" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -831,19 +762,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Anaconda2/Lib/site-packages/django/views/generic/edit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="50" column="12" lean-forward="false" selection-start-line="50" selection-start-column="12" selection-end-line="50" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Anaconda2/Lib/site-packages/django_filters/filterset.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2244">
           <caret line="168" column="6" lean-forward="false" selection-start-line="168" selection-start-column="6" selection-end-line="168" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -851,7 +773,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-712">
           <caret line="3933" column="21" lean-forward="false" selection-start-line="3933" selection-start-column="13" selection-end-line="3933" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -859,7 +780,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1666">
           <caret line="99" column="14" lean-forward="false" selection-start-line="99" selection-start-column="14" selection-end-line="99" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -895,14 +815,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/data_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/data_list.html" />
     <entry file="file://$PROJECT_DIR$/templates/base/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -915,7 +828,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-523">
           <caret line="357" column="6" lean-forward="false" selection-start-line="357" selection-start-column="6" selection-end-line="357" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -923,9 +835,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
           <caret line="34" column="85" lean-forward="false" selection-start-line="34" selection-start-column="85" selection-end-line="34" selection-end-column="85" />
-          <folding>
-            <element signature="e#24#63#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -937,21 +846,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/yunhu_sms/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding>
-            <element signature="e#657#697#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/yunhu/response.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="22" column="25" lean-forward="false" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -959,9 +857,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="17" column="34" lean-forward="false" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -969,17 +865,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="45" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="36" selection-end-column="92" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/yunhu/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="31" column="8" lean-forward="false" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
-          <folding>
-            <element signature="e#85#109#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -993,61 +878,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/yunhu/customermodel_filter.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="31" column="41" lean-forward="false" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/yunhu/customer_audit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-102">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Anaconda2/Lib/site-packages/django/contrib/auth/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
+        <state relative-caret-position="5406">
           <caret line="333" column="15" lean-forward="false" selection-start-line="333" selection-start-column="4" selection-end-line="333" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/img/idcard/temp_LaMNJqf.jpeg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/img/idcard/temp.jpeg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/img/idcard/temp_8hXCHND.jpeg">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/yunhu/tests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/yunhu/tables.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="51" column="177" lean-forward="false" selection-start-line="51" selection-start-column="177" selection-end-line="51" selection-end-column="177" />
-          <folding>
-            <element signature="e#85#105#0" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/app.7e4abf899a49b665a023897001f41a57.css">
@@ -1074,30 +915,118 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/yunhu/views.py">
+    <entry file="file://$PROJECT_DIR$/static/img/idcard/temp_LaMNJqf.jpeg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/img/idcard/temp.jpeg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yunhu/tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="168" column="50" lean-forward="false" selection-start-line="168" selection-start-column="50" selection-end-line="168" selection-end-column="50" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yunhu/tables.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="449">
+          <caret line="51" column="177" lean-forward="false" selection-start-line="51" selection-start-column="177" selection-end-line="51" selection-end-column="177" />
           <folding>
-            <element signature="e#24#63#0" expanded="true" />
+            <element signature="e#85#105#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/yunhu/models.py">
+    <entry file="file://$PROJECT_DIR$/templates/yunhu/customermodel_filter.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1309">
-          <caret line="170" column="6" lean-forward="false" selection-start-line="170" selection-start-column="2" selection-end-line="170" selection-end-column="6" />
-          <folding>
-            <element signature="e#24#63#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="400">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/yunhu/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="40" column="19" lean-forward="false" selection-start-line="40" selection-start-column="11" selection-end-line="40" selection-end-column="19" />
+        <state relative-caret-position="95">
+          <caret line="35" column="76" lean-forward="false" selection-start-line="35" selection-start-column="76" selection-end-line="35" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yunhu/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="111" column="16" lean-forward="false" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="16" />
+          <folding>
+            <element signature="e#24#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yunhu_sms/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="e#657#697#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yunhu/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="37" column="31" lean-forward="false" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
+          <folding>
+            <element signature="e#85#109#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/yunhu/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="73" column="6" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="73" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/Lib/site-packages/fm/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="119" column="39" lean-forward="true" selection-start-line="119" selection-start-column="39" selection-end-line="119" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/Lib/site-packages/django/views/generic/edit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="242" column="6" lean-forward="false" selection-start-line="242" selection-start-column="6" selection-end-line="242" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yunhu/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+          <folding>
+            <element signature="e#24#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/yunhu/customer_audit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="25" column="92" lean-forward="true" selection-start-line="23" selection-start-column="40" selection-end-line="25" selection-end-column="92" />
           <folding />
         </state>
       </provider>
