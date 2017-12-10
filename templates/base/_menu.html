@@ -8,10 +8,17 @@
                 <div class="dropdown profile-element">
                     <span><img alt="image" class="img-circle" src="/static/img/profile_small.jpg"/></span>
                 </div>
-                <div class="logo-element">H+
+                <div class="logo-element">
+                    H+
                 </div>
             </li>
-
+            <li>
+                <a class="J_menuItem" href="{% url 'yunhu:channel-list' %}">
+                    <i class="fa fa-home"></i>
+                    <span class="nav-label">渠道管理</span>
+                    {#                    <span class="fa arrow"></span>#}
+                </a>
+            </li>
             <li>
                 <a class="J_menuItem" href="{% url 'yunhu:user-list' %}">
                     <i class="fa fa-home"></i>
@@ -27,28 +34,21 @@
                 </a>
             </li>
             <li>
-                <a class="J_menuItem" href="{% url 'yunhu:user-list' %}">
+                <a class="J_menuItem" href="{% url 'yunhu:lonas-list' %}">
                     <i class="fa fa-home"></i>
-                    <span class="nav-label">借款催收</span>
+                    <span class="nav-label">贷款管理</span>
                     {#                    <span class="fa arrow"></span>#}
                 </a>
             </li>
             <li>
-                <a class="J_menuItem" href="{% url 'yunhu:user-list' %}">
-                    <i class="fa fa-home"></i>
-                    <span class="nav-label">全部借款</span>
-                    {#                    <span class="fa arrow"></span>#}
-                </a>
-            </li>
-            <li>
-                <a class="J_menuItem" href="{% url 'yunhu:user-list' %}">
+                <a class="J_menuItem" href="{% url 'yunhu:expense-list' %}">
                     <i class="fa fa-home"></i>
                     <span class="nav-label">消费详情</span>
                     {#                    <span class="fa arrow"></span>#}
                 </a>
             </li>
             <li>
-                <a class="J_menuItem" href="{% url 'yunhu:user-list' %}">
+                <a class="J_menuItem" href="{% url 'yunhu:customerblack-list' %}">
                     <i class="fa fa-home"></i>
                     <span class="nav-label">黑名单</span>
                     {#                    <span class="fa arrow"></span>#}

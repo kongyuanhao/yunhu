@@ -7,16 +7,14 @@ from django.views import generic
 from braces.views import LoginRequiredMixin
 from django_filters.views import FilterView
 from django_tables2.views import SingleTableMixin
-from models import User
-from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
+from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView, AjaxFormView
 from tables import *
 from filters import *
 from django.http import JsonResponse
-from response import MyResponse
-# Create your views here.
-from yunhu.forms import UserCreateForm, UserChangeForm, CustomerChangeForm
+from yunhu.forms import *
 from django.db import models
-import json
+import json, random
+from uitls import send_message
 
 
 class MainView(LoginRequiredMixin, generic.TemplateView):
@@ -32,8 +30,54 @@ class WelcomeView(generic.TemplateView):
     '''
     template_name = "base/welcome.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(WelcomeView, self).get_context_data(**kwargs)
+        context['company'] = self.request.user.company
+        return context
+
+
+class ChannelListView(SingleTableMixin, FilterView):
+    '''
+    渠道管理
+    '''
+    table_class = ChannelTable
+    filterset_class = ChannelFilter
+
+    def get_queryset(self):
+        queryset = self.request.user.company.company_channels.all()
+        ordering = self.get_ordering()
+        if ordering:
+            if isinstance(ordering, six.string_types):
+                ordering = (ordering,)
+            queryset = queryset.order_by(*ordering)
+        return queryset
+
+
+class ChannelCreateView(AjaxCreateView):
+    '''
+    渠道创建
+    '''
+    form_class = ChannelForm
+
+    def get_initial(self):
+        initial = self.initial.copy()
+        initial["company"] = self.request.user.company
+        return initial
+
+
+class ChannelChangeView(AjaxUpdateView):
+    '''
+    渠道更新
+    '''
+    model = ChannelModel
+    form_class = ChannelChangeForm
+    pk_url_kwarg = 'channel_pk'
+
 
 class UserListView(SingleTableMixin, FilterView):
+    '''
+    员工管理
+    '''
     table_class = UserTable
     filterset_class = UserFilter
 
@@ -87,30 +131,83 @@ class CustomerListView(SingleTableMixin, FilterView):
 
     def get_queryset(self):
         if self.request.user.is_boss:
-            return CustomerModel.objects.filter(user__company=self.request.user.company)
+            return CustomerModel.objects.filter(user__company=self.request.user.company, is_black=False)
         else:
-            return CustomerModel.objects.filter(user=self.request.user)
+            return CustomerModel.objects.filter(user=self.request.user, is_black=False)
 
 
 class CustomerUpdateView(AjaxUpdateView):
     form_class = CustomerChangeForm
     model = CustomerModel
     pk_url_kwarg = 'customer_pk'
+    template_name = "yunhu/customer_update.html"
+    context_object_name = 'customer'
+
+    def pre_save(self):
+        if self.object.audit_status == 4:
+            LonasModel.objects.create(customer=self.object).save()
 
 
+class LonasListView(SingleTableMixin, FilterView):
+    table_class = LonasTable
+
+    filterset_class = LonasFilter
+
+    def get_queryset(self):
+        if self.request.user.is_boss:
+            return LonasModel.objects.filter(customer__user__company=self.request.user.company)
+        else:
+            return LonasModel.objects.filter(customer__user=self.request.user)
+
+
+class LonasUpdateView(AjaxUpdateView):
+    form_class = LonasForm
+    pk_url_kwarg = 'lonas_pk'
+    model = LonasModel
+    # template_name = "yunhu/customer_update.html"
+
+
+class ExpenseListView(SingleTableMixin, FilterView):
+    table_class = ExpenseTable
+
+    filterset_class = ExpenseFilter
+
+    def get_queryset(self):
+        if self.request.user.is_boss:
+            return ExpenseModel.objects.filter(user__company=self.request.user.company)
+        else:
+            return ExpenseModel.objects.filter(user=self.request.user)
+
+
+class CustomerBlackListView(SingleTableMixin, generic.ListView):
+    table_class = CustomerBlackTable
+
+    # filterset_class = CustomerFilter
+
+    def get_queryset(self):
+        return CustomerModel.objects.filter(user__company=self.request.user.company, is_black=True)
 
 
 def tel_check(request):
-    tel = request.POST.get("tel")
-    if tel:
-        tel, _ = TelCheckModel.objects.get_or_create(tel=tel)
-        tel.code = "1111"
-        tel.save()
-        return JsonResponse({
-            "code": "SUCCESS",
-            "msg": "成功获取验证码",
-            "body": None,
-        })
+    tel_num = request.POST.get("tel")
+    if tel_num:
+        tel, _ = TelCheckModel.objects.get_or_create(tel=tel_num)
+        code_num = str(random.randint(1000, 9999))
+        if send_message(tel_num, code_num):
+            tel.code = code_num
+            tel.save()
+            print "success"
+            return JsonResponse({
+                "code": "SUCCESS",
+                "msg": "成功获取验证码",
+                "body": None,
+            })
+        else:
+            return JsonResponse({
+                "code": "FAIL",
+                "msg": "获取验证码失败",
+                "body": None,
+            })
     else:
         return JsonResponse({
             "code": "FAIL",
@@ -166,6 +263,7 @@ def h5_register(request):
         "msg": msg,
         "body": body,
     })
+
 
 def h5_index(request):
     return render_to_response("yunhu/h5/index.html")

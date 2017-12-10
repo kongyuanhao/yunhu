@@ -9,6 +9,17 @@ import django_filters
 from models import *
 from django_filters import ModelChoiceFilter
 
+
+class ChannelFilter(django_filters.FilterSet):
+    '''
+    渠道筛选
+    '''
+
+    class Meta:
+        model = ChannelModel
+        fields = ("name",)
+
+
 class UserFilter(django_filters.FilterSet):
     class Meta:
         model = User
@@ -18,6 +29,16 @@ class UserFilter(django_filters.FilterSet):
 class CustomerFilter(django_filters.FilterSet):
     class Meta:
         model = CustomerModel
-        fields = ["audit_status",]
+        fields = ["audit_status", ]
 
 
+class LonasFilter(django_filters.FilterSet):
+    class Meta:
+        model = LonasModel
+        fields = ["is_blance", "is_repayment"]
+
+
+class ExpenseFilter(django_filters.FilterSet):
+    class Meta:
+        model = ExpenseModel
+        fields = ["user", ]

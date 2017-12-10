@@ -20,8 +20,11 @@ from django.contrib import admin
 admin.site.site_header = u"云狐风控系统"
 # admin.site.index_title = ''
 # admin.site.site_title = 'HTML title from adminsitration'
-
+from django.conf.urls.static import static
+from django.conf import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^yunhu/', include("yunhu.urls",namespace="yunhu")),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

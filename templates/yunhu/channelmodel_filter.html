@@ -3,7 +3,7 @@
 {% load bootstrap3 %}
 {% load render_table from django_tables2 %}
 {% block bootstrap3_title %}
-    员工管理
+    渠道管理
 {% endblock %}
 {% block bootstrap3_extra_head %}
     <link href="{% static 'django_tables2/bootstrap.css' %}" rel="stylesheet"/>
@@ -13,10 +13,17 @@
         <div class="col-md-12">
 
             <form action="" method="get" class="form form-inline">
-                {% bootstrap_form filter.form %}
+                {% bootstrap_form filter.form layout='inline' %}
                 {% bootstrap_button 'filter' icon='search' %}
+                <a href="{% url 'yunhu:channel-create' %}" class="fm-create btn btn-default pull-right" data-fm-head="新增渠道"
+                   data-fm-callback="reload">新增</a>
             </form>
+
         </div>
+        <div class="clearfix"></div>
+
+    </div>
+    <div class="row">
         <div class="col-md-12">
             {% render_table table 'django_tables2/bootstrap.html' %}
 
@@ -24,13 +31,12 @@
     </div>
 {% endblock %}
 {% block bootstrap3_extra_script %}
-    {% include "fm/modal.html" %}
-
     <script>
         $(function () {
             $.fm({debug: true});
         });
     </script>
+    {% include "fm/modal.html" %}
 {% endblock %}
 
 
