@@ -1,62 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="92f3ef1b-7194-47ec-8be1-5d3f8bd75c90" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/img/h5/微信图片_20171209181110.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/img/h5/微信图片_20171209181110_G74chBv.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/img/h5/微信图片_20171209181110_HGtdcJw.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/img/h5/微信图片_20171209181110_MCJDiO3.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/img/h5/微信图片_20171209181110_RHlPfc6.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/img/h5/微信图片_20171209181110_kNPaUBh.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/img/idcard/temp_7qonZct.jpeg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/img/idcard/temp_EAEMKOa.jpeg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/img/idcard/temp_PcdhZV3.jpeg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/img/idcard/temp_gvSBwWb.jpeg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/img/idcard/temp_i6DPno7.jpeg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/media/img/idcard/temp_j7URJs0.jpeg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/yunhu/channelmodel_filter.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/yunhu/customer_update.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/yunhu/customermodel_list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/yunhu/expensemodel_filter.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/yunhu/lonasmodel_filter.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/ali_public_key.pem" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0002_auto_20171210_1519.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0003_channelmodel_company.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0004_channelmodel_create_time.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0005_auto_20171210_1644.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0006_remove_companymodel_tel.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/migrations/0007_auto_20171210_1953.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/yunhu/uitls.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/yunhu/migrations/0002_auto_20171202_1742.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/yunhu/migrations/0003_auto_20171202_1814.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/yunhu/migrations/0004_auto_20171202_1819.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/yunhu/migrations/0005_auto_20171202_2132.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/yunhu/migrations/0006_auto_20171203_1141.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/yunhu/migrations/0007_auto_20171203_1152.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/yunhu/migrations/0008_auto_20171203_1246.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/yunhu/migrations/0009_auto_20171203_1330.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/yunhu/migrations/0010_auto_20171203_1358.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/_menu.html" afterPath="$PROJECT_DIR$/templates/base/_menu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/base.html" afterPath="$PROJECT_DIR$/templates/base/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/welcome.html" afterPath="$PROJECT_DIR$/templates/base/welcome.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/yunhu/customer_audit.html" afterPath="$PROJECT_DIR$/templates/yunhu/customer_audit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/yunhu/customermodel_filter.html" afterPath="$PROJECT_DIR$/templates/yunhu/customermodel_filter.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/yunhu/user_filter.html" afterPath="$PROJECT_DIR$/templates/yunhu/user_filter.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/admin.py" afterPath="$PROJECT_DIR$/yunhu/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/filters.py" afterPath="$PROJECT_DIR$/yunhu/filters.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/forms.py" afterPath="$PROJECT_DIR$/yunhu/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/yunhu/migrations/0001_initial.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/models.py" afterPath="$PROJECT_DIR$/yunhu/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/tables.py" afterPath="$PROJECT_DIR$/yunhu/tables.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/urls.py" afterPath="$PROJECT_DIR$/yunhu/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu/views.py" afterPath="$PROJECT_DIR$/yunhu/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu_sms/settings.py" afterPath="$PROJECT_DIR$/yunhu_sms/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yunhu_sms/urls.py" afterPath="$PROJECT_DIR$/yunhu_sms/urls.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/idcard/temp.jpeg" afterPath="$PROJECT_DIR$/media/img/idcard/temp.jpeg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/idcard/temp_8hXCHND.jpeg" afterPath="$PROJECT_DIR$/media/img/idcard/temp_8hXCHND.jpeg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/idcard/temp_LaMNJqf.jpeg" afterPath="$PROJECT_DIR$/media/img/idcard/temp_LaMNJqf.jpeg" />
-    </list>
+    <list default="true" id="92f3ef1b-7194-47ec-8be1-5d3f8bd75c90" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -182,7 +127,7 @@
           <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/yunhu/models.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="646">
+                <state relative-caret-position="1258">
                   <caret line="219" column="0" lean-forward="false" selection-start-line="219" selection-start-column="0" selection-end-line="219" selection-end-column="0" />
                   <folding>
                     <element signature="e#24#63#0" expanded="true" />
@@ -534,6 +479,14 @@
       <option name="presentableId" value="Default" />
       <updated>1511231575829</updated>
     </task>
+    <task id="LOCAL-00001" summary="第三周 周末">
+      <created>1512915476937</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1512915476937</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView">
@@ -625,7 +578,8 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="第三周 周末" />
+    <option name="LAST_COMMIT_MESSAGE" value="第三周 周末" />
     <option name="UPDATE_GROUP_BY_PACKAGES" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -840,6 +794,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="24" lean-forward="false" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1011,7 +966,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/yunhu/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
+        <state relative-caret-position="1258">
           <caret line="219" column="0" lean-forward="false" selection-start-line="219" selection-start-column="0" selection-end-line="219" selection-end-column="0" />
           <folding>
             <element signature="e#24#63#0" expanded="true" />
