@@ -11,31 +11,29 @@ from django.contrib.auth.forms import UserCreationForm, UsernameField
 
 from yunhu.models import User, ChannelModel, CustomerModel, LonasModel
 
+
 class ChannelForm(forms.ModelForm):
     class Meta:
         model = ChannelModel
-        fields = ("name","company",)
+        fields = ("name", "company",)
 
         widgets = {
             'company': forms.HiddenInput(),
         }
 
+
 class ChannelChangeForm(forms.ModelForm):
     '''
     渠道更新
     '''
+
     class Meta:
         model = ChannelModel
-        fields = ("name","check_ways")
+        fields = ("name", "check_ways")
 
         widgets = {
             'check_ways': forms.CheckboxSelectMultiple(),
         }
-
-class CustomerChangeForm(forms.ModelForm):
-    class Meta:
-        model = CustomerModel
-        fields = ("audit_status", "is_black", "blcak_reason")
 
 
 class UserCreateForm(UserCreationForm):
@@ -54,15 +52,41 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("department", "name", "identity", "tel", "qq", "wechat",
-                  "company", "channels",'is_active',)
+                  "company", "channels", 'is_active',)
         widgets = {
             'company': forms.HiddenInput(),
             'channels': forms.CheckboxSelectMultiple(),
         }
 
 
-
-class LonasForm(forms.ModelForm):
+class CustomerChangeForm(forms.ModelForm):
     class Meta:
-        model = LonasModel
-        fields = ["practical_blance", "days", "is_blance", "is_repayment"]
+        model = CustomerModel
+        fields = ("audit_status", "is_black", "blcak_reason")
+
+
+# 审核 改变状态 指定放款人 加入黑名单
+class CustomerAuditForm(forms.ModelForm):
+    class Meta:
+        model = CustomerModel
+        fields = ()
+
+
+# 放款 改变状态 指定追款人 加入黑名单
+# 实借金额 放款时间 还款时间
+class CustomerLoanForm(forms.ModelForm):
+    class Meta:
+        model = CustomerModel
+        fields = ()
+
+
+# 追款
+class CustomerUrgeForm(forms.ModelForm):
+    class Meta:
+        model = CustomerModel
+        fields = ()
+
+# class LonasForm(forms.ModelForm):
+#     class Meta:
+#         model = LonasModel
+#         fields = ["practical_blance", "days", "is_blance", "is_repayment"]

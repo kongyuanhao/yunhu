@@ -29,14 +29,35 @@
             <li>
                 <a class="J_menuItem" href="{% url 'yunhu:customer-list' %}">
                     <i class="fa fa-home"></i>
-                    <span class="nav-label">客户审核</span>
+                    <span class="nav-label">客户管理</span>
                     {#                    <span class="fa arrow"></span>#}
                 </a>
             </li>
             <li>
-                <a class="J_menuItem" href="{% url 'yunhu:lonas-list' %}">
+                <a class="J_menuItem" href="{% url 'yunhu:customer-audit' %}">
                     <i class="fa fa-home"></i>
-                    <span class="nav-label">贷款管理</span>
+                    <span class="nav-label">审核管理</span>
+                    {#                    <span class="fa arrow"></span>#}
+                </a>
+            </li>
+            <li>
+                <a class="J_menuItem" href="{% url 'yunhu:customer-loan' %}">
+                    <i class="fa fa-home"></i>
+                    <span class="nav-label">放款管理</span>
+                    {#                    <span class="fa arrow"></span>#}
+                </a>
+            </li>
+            <li>
+                <a class="J_menuItem" href="{% url 'yunhu:customer-urge' %}">
+                    <i class="fa fa-home"></i>
+                    <span class="nav-label">催款管理</span>
+                    {#                    <span class="fa arrow"></span>#}
+                </a>
+            </li>
+            <li>
+                <a class="J_menuItem" href="#">
+                    <i class="fa fa-home"></i>
+                    <span class="nav-label">数据分析</span>
                     {#                    <span class="fa arrow"></span>#}
                 </a>
             </li>

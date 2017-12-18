@@ -32,10 +32,6 @@ class CustomerFilter(django_filters.FilterSet):
         fields = ["audit_status", ]
 
 
-class LonasFilter(django_filters.FilterSet):
-    class Meta:
-        model = LonasModel
-        fields = ["is_blance", "is_repayment"]
 
 
 class ExpenseFilter(django_filters.FilterSet):

@@ -115,88 +115,134 @@ AUDIT_STATUS_CHOICES = (
     (5, u"已放款"),
     (6, u"续期"),
     (7, u"结清"),
-    (8, u"黑名单"),
 )
 
-
-# 照片类：借贷宝主页，借贷宝收还款，借贷宝资金动态，支付宝个人主页，今借到负债截图，
 # 文字类：父亲姓名电话。母亲姓名电话。配偶姓名电话。同事姓名电话，支付宝芝麻分，身份证号。
 # 账号密码类h5认证：学信，手机运营商，公积金，人行征信
+
+# 照片类：身份证正面  身份证反面   手持身份证照片
+# 借贷宝钱包页，
+# 支付宝芝麻信用分数页(支付宝--我的--芝麻信用）
+# 支付宝信用管理页（支付宝--我的--芝麻信用--信用管理），
+# 借贷宝 今借到 米房等借条平台负债截图（四张以内，可选）
+
+
+
+# 基本信息：
+#           姓名 手机号 身份证号 芝麻信用分 微信号 所在地区（选择） 详细地址
+#           图片：身份证正面 身份证反面 手持身份证照片  （全部必填）
+#
+# 补充信息：
+#     必填：
+#           联系人信息：父亲姓名电话。母亲姓名电话。朋友姓名电话（联系最频繁的）。同事姓名电话（联系最频繁的）
+#           图片：支付宝芝麻信用分数页(支付宝--我的--芝麻信用）支付宝信用管理页（支付宝--我的--芝麻信用--信用管理），
+#     选填：
+#           公司信息：公司名称 公司地址 公司电话 月薪
+#
+# 认证信息：
+#           h5：学信，手机运营商，脉脉，人行征信
+#           api：京东 淘宝 公积金
+
 class CustomerModel(models.Model):
     '''
     客户信息管理
     '''
-    audit_user = models.ForeignKey(User, verbose_name="审核员", help_text=u"审核客户", related_name="customer_audit")
-    lona_user = models.ForeignKey(User, verbose_name="财务员", help_text=u"给客户放款", related_name="customer_lona")
-    overdue_user = models.ForeignKey(User, verbose_name="催收员", help_text=u"催收客户贷款", related_name="customer_overdue")
-
     channel = models.ForeignKey(ChannelModel, verbose_name=u"渠道", related_name="customer_channel")
-
+    # 基本信息
     name = models.CharField(verbose_name=u"姓名", max_length=50, help_text=u"姓名")
     tel = models.CharField(verbose_name=u"电话", max_length=50, help_text=u"", blank=True, null=True)
     identity = models.CharField(verbose_name="身份证号", help_text=u"身份证号", blank=True, max_length=30, null=True)
-    # 文字类
-    father_tel = models.CharField(verbose_name=u"父亲电话", max_length=50, blank=True)
-    mother_tel = models.CharField(verbose_name=u"母亲电话", max_length=50, blank=True)
-    mate_tel = models.CharField(verbose_name=u"配偶电话", max_length=50, blank=True)
-    colleague_tel = models.CharField(verbose_name=u"同事电话", max_length=50, blank=True)
     zhima_score = models.CharField(verbose_name=u"芝麻信用分", max_length=50, blank=True)
+    wechat = models.CharField(verbose_name=u"微信", max_length=50, help_text=u"", blank=True, null=True)
+    zone = models.CharField(verbose_name=u"所在地区", max_length=50, help_text=u"", blank=True, null=True)
+    address = models.CharField(verbose_name=u"详细住址", max_length=50, help_text=u"", blank=True, null=True)
+
+    # 图片类 身份证
+    idcard_backpic = models.ImageField(verbose_name=u"身份证反面", help_text=u"身份证反面", upload_to="customer/idcard",
+                                       blank=True, null=True)
+    idcard_pic = models.ImageField(verbose_name=u"身份证正面", help_text=u"身份证正面", upload_to="customer/idcard", blank=True,
+                                   null=True)
+    idcard_people_pic = models.ImageField(verbose_name=u"手持身份证", help_text=u"手持身份证", upload_to="customer/idcard",
+                                          blank=True, null=True)
+    # 补充信息
+    # 联系人信息
+    father_name = models.CharField(verbose_name=u"父亲姓名", max_length=50, blank=True)
+    father_tel = models.CharField(verbose_name=u"父亲电话", max_length=50, blank=True)
+    mother_name = models.CharField(verbose_name=u"母亲姓名", max_length=50, blank=True)
+    mother_tel = models.CharField(verbose_name=u"母亲电话", max_length=50, blank=True)
+    friend_name = models.CharField(verbose_name=u"朋友姓名", max_length=50, blank=True)
+    friend_tel = models.CharField(verbose_name=u"朋友电话", max_length=50, blank=True)
+    colleague_name = models.CharField(verbose_name=u"同事姓名", max_length=50, blank=True)
+    colleague_tel = models.CharField(verbose_name=u"同事电话", max_length=50, blank=True)
+
+    # 公司信息
+    company_name = models.CharField(verbose_name=u"公司名称", max_length=50, blank=True)
+    company_tel = models.CharField(verbose_name=u"公司电话", max_length=50, blank=True)
+    company_address = models.CharField(verbose_name=u"公司地址", max_length=50, blank=True)
+    company_salary = models.CharField(verbose_name=u"薪水", max_length=50, blank=True)
+
     # 图片类
-    jdb_main_pic = models.ImageField(verbose_name=u"", upload_to="customer/", blank=True)
-    jdb_shk_pic = models.ImageField(verbose_name=u"", upload_to="customer/", blank=True)
-    jdb_zjdt_pic = models.ImageField(verbose_name=u"", upload_to="customer/", blank=True)
-    zfb_main_pic = models.ImageField(verbose_name=u"", upload_to="customer/", blank=True)
-    pic = models.ImageField(verbose_name=u"", upload_to="customer/", blank=True)
+    zfb_score_pic = models.ImageField(verbose_name=u"支付宝芝麻信用分数页", upload_to="customer/zfb", blank=True)
+    zfb_manage_pic = models.ImageField(verbose_name=u"支付宝管理页", upload_to="customer/zfb", blank=True)
+    # jdb_main_pic = models.ImageField(verbose_name=u"借贷宝主页", upload_to="customer/jdb", blank=True)
+    # jdb_fz_pic = models.ImageField(verbose_name=u"借贷宝负债", upload_to="customer/jdb", blank=True)
+    # jjd_fz_pic = models.ImageField(verbose_name=u"今借到负债", upload_to="customer/jjd", blank=True)
+    # mf_fz_pic = models.ImageField(verbose_name=u"米房负债", upload_to="customer/mf", blank=True)
 
-    # 账号认证
+    # h5认证：学信，手机运营商，脉脉，人行征信
+    chsi = models.BooleanField(verbose_name=u"学信认证", default=False)
+    mno = models.BooleanField(verbose_name=u"运营商认证", default=False)
+    maimai = models.BooleanField(verbose_name=u"脉脉认证", default=False)
+    rhzx = models.BooleanField(verbose_name=u"人行征信认证", default=False)
+    # api 认证 ： 京东 淘宝 公积金
+    jd = models.BooleanField(verbose_name=u"京东认证", default=False)
+    tb = models.BooleanField(verbose_name=u"淘宝认证", default=False)
+    gjj = models.BooleanField(verbose_name=u"公积金认证", default=False)
 
-    want_blance = models.FloatField(verbose_name=u"预借金额", help_text=u"预借金额", default=0.00, blank=True)
+
     create_time = models.DateTimeField(verbose_name=u"申请时间", auto_now=True)
     audit_status = models.IntegerField(verbose_name=u"审核状态", help_text=u"审核状态", choices=AUDIT_STATUS_CHOICES, default=1)
+
+    is_black = models.BooleanField(verbose_name=u"拉黑", help_text=u"用户进入黑名单", default=False)
+    blcak_reason = models.TextField(verbose_name=u"拉黑原因", blank=True, null=True)
+
+# 老板：修改标签 指定审核员
+# 客户审核：审核笔记 审核时间 修改标签 拉黑客户 指定放款人
+# 客户放款：放款金额 放款笔记 放款时间 收款时间 指定催款人 修改标签 拉黑客户
+# 客户催款 ：催款笔记 修改标签 拉黑客户
+
+# 客户审核：审核笔记 审核时间 修改标签 拉黑客户 指定放款人
+class AuditModel(models.Model):
+    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", related_name="audit_customer")
+    user = models.ForeignKey(User, verbose_name="审核人", help_text=u"审核客户", related_name="audit_user",
+                             blank=True, null=True)
+    note = models.TextField(verbose_name=u"审核笔记", blank=True)
+    time = models.DateTimeField(verbose_name=u"审核时间")
+
+    def assign_lona_user(self, user_loan):
+        LonasModel.objects.get_or_create(customer=self.customer, user_loan=user_loan)
+
+# 客户放款：放款金额 放款笔记 放款时间 收款时间 指定催款人 修改标签 拉黑客户
+class LonasModel(models.Model):
+    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", related_name="lona_customer")
+    user = models.ForeignKey(User, verbose_name="放款人", help_text=u"放款客户", related_name="loan_user", blank=True,
+                             null=True)
+    note = models.TextField(verbose_name=u"放款笔记", blank=True)
 
     practical_blance = models.FloatField(verbose_name=u"实借金额", help_text=u"实借金额", default=0.00)
     lona_time = models.DateField(verbose_name=u"放款时间", auto_now=True)
     refund_time = models.DateTimeField(verbose_name=u"还款时间", default=7, help_text=u"默认7天", blank=True)
 
-    qq = models.CharField(verbose_name=u"QQ", max_length=50, help_text=u"QQ")
+    def assign_urge_user(self, user_urge):
+        UrgeModel.objects.get_or_create(customer=self.customer, user_urge=user_urge)
 
-    wechat = models.CharField(verbose_name=u"微信", max_length=50, help_text=u"", blank=True, null=True)
-    address = models.CharField(verbose_name=u"住址", max_length=50, help_text=u"", blank=True, null=True)
+# 客户催款 ：催款笔记 修改标签 拉黑客户
+class UrgeModel(models.Model):
+    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", related_name="urge_customer")
+    user = models.ForeignKey(User, verbose_name="催款人", help_text=u"催款客户", related_name="urge_user", blank=True,
+                             null=True)
 
-    idcard_backpic = models.ImageField(verbose_name=u"身份证反面", help_text=u"身份证反面", upload_to="img/idcard",
-                                       blank=True, null=True)
-    idcard_pic = models.ImageField(verbose_name=u"身份证正面", help_text=u"身份证正面", upload_to="img/idcard", blank=True,
-                                   null=True)
-    idcard_people_pic = models.ImageField(verbose_name=u"手持身份证", help_text=u"手持身份证", upload_to="img/idcard",
-                                          blank=True, null=True)
-    is_black = models.BooleanField(verbose_name=u"拉黑", help_text=u"用户进入黑名单", default=False)
-    blcak_reason = models.TextField(verbose_name=u"拉黑原因", blank=True, null=True)
-
-    @property
-    def ip_zone(self):
-        return ip2loc.find(self.ip)
-
-    def add_blacklist(self, black_reason):
-        # 加入黑名单
-        self.is_black = True
-        self.blcak_reason = black_reason
-        self.save()
-
-    def remove_blacklist(self):
-        # 移除黑名单
-        self.is_black = False
-        self.save()
-
-    def do_blance(self, blance):
-        # 放款
-        pass
-
-
-class LonasModel(models.Model):
-    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", related_name="lonas")
-
-    is_blance = models.BooleanField(verbose_name=u"是否放款", default=False)
-    is_repayment = models.BooleanField(verbose_name=u"是否还款", default=False)
+    note = models.TextField(verbose_name=u"催款笔记", blank=True)
 
 
 class ExpenseModel(models.Model):
@@ -216,72 +262,6 @@ class CustomerLoginInfoModel(models.Model):
 
     class Meta:
         unique_together = ("customer", "ip")
-
-
-class AbstractAccountModel(models.Model):
-    '''
-    账户通用信息
-    '''
-    account = models.CharField(verbose_name=u"账号", max_length=255, help_text=u"账号")
-    password = models.CharField(verbose_name=u"密码", max_length=255, help_text=u"密码")
-
-    class Meta:
-        abstract = True
-
-
-# H5
-# 运营商：https://credit.baiqishi.com/clclient/common/basic?partnerId=bqs2&source=mno
-# 学信网：https://credit.baiqishi.com/clclient/common/basic?partnerId=bqs2&source=chsi
-# 脉脉：https://credit.baiqishi.com/clclient/common/basic?partnerId=bqs2&source=maimai
-# 人行征信：https://credit.baiqishi.com/clclient/common/basic?partnerId=bqs2&source=
-# API
-# 运营商，公积金，脉脉，人行征信，学信网
-class ZhiMaAccountModel(AbstractAccountModel):
-    '''
-    芝麻信用
-    '''
-    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", help_text=u"客户", related_name="zhima",
-                                 related_query_name="zhima")
-
-
-class MnoAccountModel(AbstractAccountModel):
-    '''
-    运营商
-    '''
-    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", help_text=u"客户", related_name="mno",
-                                 related_query_name="mno")
-
-
-class ChsiAccountModel(AbstractAccountModel):
-    '''
-    学信网
-    '''
-    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", help_text=u"客户", related_name="chsi",
-                                 related_query_name="chsi")
-
-
-class MaiMaiAccountModel(AbstractAccountModel):
-    '''
-    脉脉
-    '''
-    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", help_text=u"客户", related_name="maimai",
-                                 related_query_name="maimai")
-
-
-class RhzxAccountModel(AbstractAccountModel):
-    '''
-    人行征信
-    '''
-    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", help_text=u"客户", related_name="rhzx",
-                                 related_query_name="rhzx")
-
-
-class HfundAccountModel(AbstractAccountModel):
-    '''
-    公积金
-    '''
-    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", help_text=u"客户", related_name="hfund",
-                                 related_query_name="hfund")
 
 
 class TelCheckModel(models.Model):

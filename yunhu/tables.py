@@ -54,12 +54,17 @@ class UserTable(tables.Table):
         return format_html(update_html % {"user_id": record.id})
 
 
+# 显示信息 来源 芝麻信用分 审核人 申请时间 状态 操作
 class CustomerTable(tables.Table):
     edit = columns.Column(empty_values=(), verbose_name="操作")
 
     class Meta:
         model = CustomerModel
-        fields = ["user", "name", "tel", "qq", "identity", "want_blance", "ip_zone", "audit_status",
+        fields = ["channel", "name", "tel", "qq", "identity", "zhima_score",
+                  "audit_customer.user",
+                  "lona_customer.user",
+                  "urge_customer.user",
+                  "audit_status",
                   "create_time", ]
 
     def render_edit(self, record):
@@ -70,20 +75,69 @@ class CustomerTable(tables.Table):
         return format_html(view_html % {"customer_id": record.id})
 
 
-class LonasTable(tables.Table):
+class CustomerAuditTable(tables.Table):
     edit = columns.Column(empty_values=(), verbose_name="操作")
 
     class Meta:
-        model = LonasModel
-        fields = ["id", "customer.name", "practical_blance",
-                  "create_time", "days", "is_blance", "is_repayment"]
+        model = CustomerModel
+        fields = ["channel", "name", "tel", "qq", "identity", "zhima_score",
+                  "audit_status",
+                  "create_time", ]
 
     def render_edit(self, record):
         view_html = '''
-        <a href="/yunhu/lonas-update/%(lonas_id)s/" class="fm-update btn btn-default" data-fm-head="确认放款" data-fm-callback="reload" data-fm-target="#lonas-%(lonas_id)s">管理</a>
+        <a href="/yunhu/customer-update/%(customer_id)s/" class="fm-update btn btn-default" data-fm-head="客户审核" data-fm-callback="reload" data-fm-target="#customer-%(customer_id)s">审核</a>
         '''
 
-        return format_html(view_html % {"lonas_id": record.id})
+        return format_html(view_html % {"customer_id": record.id})
+
+class CustomerLoanTable(tables.Table):
+    edit = columns.Column(empty_values=(), verbose_name="操作")
+
+    class Meta:
+        model = CustomerModel
+        fields = ["channel", "name", "tel", "qq", "identity", "zhima_score",
+                  "audit_status",
+                  "create_time", ]
+
+    def render_edit(self, record):
+        view_html = '''
+        <a href="/yunhu/customer-update/%(customer_id)s/" class="fm-update btn btn-default" data-fm-head="客户审核" data-fm-callback="reload" data-fm-target="#customer-%(customer_id)s">审核</a>
+        '''
+
+        return format_html(view_html % {"customer_id": record.id})
+
+class CustomerUrgeTable(tables.Table):
+    edit = columns.Column(empty_values=(), verbose_name="操作")
+
+    class Meta:
+        model = CustomerModel
+        fields = ["channel", "name", "tel", "qq", "identity", "zhima_score",
+                  "audit_status",
+                  "create_time", ]
+
+    def render_edit(self, record):
+        view_html = '''
+        <a href="/yunhu/customer-update/%(customer_id)s/" class="fm-update btn btn-default" data-fm-head="客户审核" data-fm-callback="reload" data-fm-target="#customer-%(customer_id)s">审核</a>
+        '''
+
+        return format_html(view_html % {"customer_id": record.id})
+
+
+# class LonasTable(tables.Table):
+#     edit = columns.Column(empty_values=(), verbose_name="操作")
+#
+#     class Meta:
+#         model = LonasModel
+#         fields = ["id", "customer.name", "practical_blance",
+#                   "create_time", "days", "is_blance", "is_repayment"]
+#
+#     def render_edit(self, record):
+#         view_html = '''
+#         <a href="/yunhu/lonas-update/%(lonas_id)s/" class="fm-update btn btn-default" data-fm-head="确认放款" data-fm-callback="reload" data-fm-target="#lonas-%(lonas_id)s">管理</a>
+#         '''
+#
+#         return format_html(view_html % {"lonas_id": record.id})
 
 
 class ExpenseTable(tables.Table):

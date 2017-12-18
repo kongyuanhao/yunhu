@@ -41,9 +41,12 @@ user_url = [
 ]
 customer_url = [
     url(r'^customer-list/', views.CustomerListView.as_view(), name="customer-list"),
+    url(r'^customer-audit/', views.CustomerAuditListView.as_view(), name="customer-audit"),
+    url(r'^customer-loan/', views.CustomerLoanListView.as_view(), name="customer-loan"),
+    url(r'^customer-urge/', views.CustomerUrgeListView.as_view(), name="customer-urge"),
     url(r'^customer-update/(?P<customer_pk>\d+)/$', views.CustomerUpdateView.as_view(), name="customer-update"),
-    url(r'^lonas-list/', views.LonasListView.as_view(), name="lonas-list"),
-    url(r'^lonas-update/(?P<lonas_pk>\d+)/$', views.LonasUpdateView.as_view(), name="lonas-update"),
+    # url(r'^lonas-list/', views.LonasListView.as_view(), name="lonas-list"),
+    # url(r'^lonas-update/(?P<lonas_pk>\d+)/$', views.LonasUpdateView.as_view(), name="lonas-update"),
     url(r'^customerblack-list/', views.CustomerBlackListView.as_view(), name="customerblack-list"),
 ]
 

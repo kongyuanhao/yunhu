@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'yunhu',
     'crispy_forms',
     'fm',
-    'guardian',
     'corsheaders',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

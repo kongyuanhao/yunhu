@@ -15,7 +15,7 @@ from yunhu.forms import *
 from django.db import models
 import json, random
 from uitls import send_message
-
+from django.core import serializers
 
 class MainView(LoginRequiredMixin, generic.TemplateView):
     '''
@@ -125,15 +125,62 @@ class UserDeleteView(AjaxDeleteView):
     pk_url_kwarg = 'user_pk'
 
 
+# 全部客户
 class CustomerListView(SingleTableMixin, FilterView):
     table_class = CustomerTable
     filterset_class = CustomerFilter
 
     def get_queryset(self):
         if self.request.user.is_boss:
-            return CustomerModel.objects.filter(user__company=self.request.user.company, is_black=False)
+            return CustomerModel.objects.filter(channel__company=self.request.user.company, is_black=False)
         else:
-            return CustomerModel.objects.filter(user=self.request.user, is_black=False)
+            return CustomerModel.objects.none()
+
+
+# 待审核客户
+class CustomerAuditListView(SingleTableMixin, FilterView):
+    table_class = CustomerAuditTable
+    filterset_class = CustomerFilter
+
+    def get_queryset(self):
+        return CustomerModel.objects.filter(
+            audit_customer__user=self.request.user,
+        )
+
+
+#
+class CustomerAuditUpdateView(AjaxUpdateView):
+    form_class = CustomerChangeForm
+    model = CustomerModel
+    pk_url_kwarg = 'customer_pk'
+    template_name = "yunhu/customer_update.html"
+    context_object_name = 'customer'
+
+    def pre_save(self):
+        if self.object.audit_status == 4:
+            LonasModel.objects.create(customer=self.object).save()
+
+
+# 待放款客户
+class CustomerLoanListView(SingleTableMixin, FilterView):
+    table_class = CustomerLoanTable
+    filterset_class = CustomerFilter
+
+    def get_queryset(self):
+        return CustomerModel.objects.filter(
+            lona_customer__user=self.request.user,
+        )
+
+
+# 待催款客户
+class CustomerUrgeListView(SingleTableMixin, FilterView):
+    table_class = CustomerUrgeTable
+    filterset_class = CustomerFilter
+
+    def get_queryset(self):
+        return CustomerModel.objects.filter(
+            urge_customer__user=self.request.user,
+        )
 
 
 class CustomerUpdateView(AjaxUpdateView):
@@ -148,23 +195,23 @@ class CustomerUpdateView(AjaxUpdateView):
             LonasModel.objects.create(customer=self.object).save()
 
 
-class LonasListView(SingleTableMixin, FilterView):
-    table_class = LonasTable
-
-    filterset_class = LonasFilter
-
-    def get_queryset(self):
-        if self.request.user.is_boss:
-            return LonasModel.objects.filter(customer__user__company=self.request.user.company)
-        else:
-            return LonasModel.objects.filter(customer__user=self.request.user)
-
-
-class LonasUpdateView(AjaxUpdateView):
-    form_class = LonasForm
-    pk_url_kwarg = 'lonas_pk'
-    model = LonasModel
-    # template_name = "yunhu/customer_update.html"
+# class LonasListView(SingleTableMixin, FilterView):
+#     table_class = LonasTable
+#
+#     filterset_class = LonasFilter
+#
+#     def get_queryset(self):
+#         if self.request.user.is_boss:
+#             return LonasModel.objects.filter(customer__user__company=self.request.user.company)
+#         else:
+#             return LonasModel.objects.filter(customer__user=self.request.user)
+#
+#
+# class LonasUpdateView(AjaxUpdateView):
+#     form_class = LonasForm
+#     pk_url_kwarg = 'lonas_pk'
+#     model = LonasModel
+#     # template_name = "yunhu/customer_update.html"
 
 
 class ExpenseListView(SingleTableMixin, FilterView):
@@ -188,6 +235,12 @@ class CustomerBlackListView(SingleTableMixin, generic.ListView):
         return CustomerModel.objects.filter(user__company=self.request.user.company, is_black=True)
 
 
+# 跳转到h5页面
+def h5_index(request):
+    return render_to_response("yunhu/h5/index.html")
+
+
+# 检查手机号
 def tel_check(request):
     tel_num = request.POST.get("tel")
     if tel_num:
@@ -216,57 +269,197 @@ def tel_check(request):
         })
 
 
+# 客户登录注册
 def h5_register(request):
-    if request.META.has_key('HTTP_X_FORWARDED_FOR'):
-        ip = request.META['HTTP_X_FORWARDED_FOR']
-    else:
-        ip = request.META['REMOTE_ADDR']
-
-    print ip
+    '''
+    :param request: tel,code,identification
+    :return:customer_id
+    '''
     identification = request.POST.get("identification")
     tel = request.POST.get("tel")
     code = request.POST.get("code")
-    body = None
-    code_msg = "FAIL"
-    msg = ""
-    if identification:
-        user = User.objects.get(identification=identification)
-
-        if not tel:
-            msg = "tel参数缺失"
-        elif not code:
-            msg = "code参数缺失"
-        else:
-            try:
-                if TelCheckModel.objects.get(tel=tel).check_code(code):
-                    customer, _ = CustomerModel.objects.get_or_create(tel=tel, user=user)
-                    customer.ip = ip
-                    customer.save()
-                    msg = u"客户创建成功"
-                    code_msg = "SUCCESS"
-                    body = {
-                        "customer_id": customer.id,
-                    }
-                else:
-                    msg = "code错误"
-            except:
-                msg = "tel不存在"
+    if identification and tel and code:
+        channel = ChannelModel.objects.get(identification=identification)
+        TelCheckModel.objects.get(tel=tel).check_code(code)
+        customer, _ = CustomerModel.objects.get_or_create(tel=tel, channel=channel)
+        customer.save()
+        return JsonResponse({
+            "code": "SUCCESS",
+            "msg": u"客户创建成功",
+            "body": {
+                "customer_id": customer.id
+            },
+        })
     else:
-        msg = "identification参数缺失"
-    print {
-        "code": code_msg,
-        "msg": msg,
-        "body": body,
-    }
-    return JsonResponse({
-        "code": code_msg,
-        "msg": msg,
-        "body": body,
-    })
+        return JsonResponse({
+            "code": "FAIL",
+            "msg": u"参数缺失",
+            "body": None,
+        })
 
 
-def h5_index(request):
-    return render_to_response("yunhu/h5/index.html")
+# #/?checkway=chsi,mno,jd
+
+# 检查基础信息
+def check_base_info(request):
+    customer_id = request.POST.get("customer_id")
+    if customer_id:
+        try:
+            customer = CustomerModel.objects.get(id=customer_id)
+            return JsonResponse({
+                "code": "SUCCESS",
+                "msg": u"客户基本信息",
+                "body": {
+                    "name": customer.name,
+                    "tel": customer.tel,
+                    "identity": customer.identity,
+                    "zhima_score": customer.zhima_score,
+                    "wechat": customer.wechat,
+                    "address": customer.address,
+                    "idcard_backpic": customer.idcard_backpic,
+                    "idcard_pic": customer.idcard_pic,
+                    "idcard_people_pic": customer.idcard_people_pic,
+                },
+            })
+        except:
+            return JsonResponse({
+                "code": "FAIL",
+                "msg": u"客户信息不存在，请先注册",
+                "body": None,
+            })
+    else:
+        return JsonResponse({
+            "code": "FAIL",
+            "msg": u"参数缺失",
+            "body": None,
+        })
+
+# 客户基本信息更新
+def update_base_info(request):
+    serializers_data = serializers.deserialize("json",request.body)
+    customer_id = serializers_data.get("customer_id")
+    base_info = serializers_data.get("base_info")
+    try:
+        CustomerModel.objects.filter(id=customer_id).update(**base_info)
+        return JsonResponse({
+            "code": "SUCCESS",
+            "msg": u"基础信息更新成功",
+            "body": None,
+        })
+
+    except:
+        return JsonResponse({
+            "code": "FAIL",
+            "msg": u"基础信息更新失败",
+            "body": None,
+        })
+
+# 补充信息检查
+def check_supplement_info(request):
+    serializers_data = serializers.deserialize("json", request.body)
+    customer_id = serializers_data.get("customer_id")
+    if customer_id:
+        try:
+            customer = CustomerModel.objects.get(id=customer_id)
+            return JsonResponse({
+                "code": "SUCCESS",
+                "msg": u"客户补充信息",
+                "body": {
+                    "father_name": customer.father_name,
+                    "father_tel": customer.father_tel,
+                    "mother_name": customer.mother_name,
+                    "mother_tel": customer.mother_tel,
+                    "friend_name": customer.friend_name,
+                    "friend_tel": customer.friend_tel,
+                    "colleague_name": customer.colleague_name,
+                    "colleague_tel": customer.colleague_tel,
+                    "company_name": customer.company_name,
+                    "company_tel": customer.company_tel,
+                    "company_address": customer.company_address,
+                    "company_salary": customer.company_salary,
+                    "chsi":customer.chsi,
+                    "mno":customer.mno,
+                    "maimai":customer.maimai,
+                    "rhzx":customer.rhzx,
+                    "jd":customer.jd,
+                    "tb":customer.tb,
+                    "gjj":customer.gjj,
+                },
+            })
+        except:
+            return JsonResponse({
+                "code": "FAIL",
+                "msg": u"客户信息不存在，请先注册",
+                "body": None,
+            })
+    else:
+        return JsonResponse({
+            "code": "FAIL",
+            "msg": u"参数缺失",
+            "body": None,
+        })
+# 客户补充信息更新
+def update_supplement_info(request):
+    serializers_data = serializers.deserialize("json",request.body)
+    customer_id = serializers_data.get("customer_id")
+    supplement_info = serializers_data.get("supplement_info")
+    try:
+        CustomerModel.objects.filter(id=customer_id).update(**supplement_info)
+        return JsonResponse({
+            "code": "SUCCESS",
+            "msg": u"基础信息更新成功",
+            "body": None,
+        })
+
+    except:
+        return JsonResponse({
+            "code": "FAIL",
+            "msg": u"基础信息更新失败",
+            "body": None,
+        })
+
+# 客户认证信息更新
+def update_approve_info(customer_id):
+    pass
+# 客户认证信息检测
+def check_approve_info(request):
+    serializers_data = serializers.deserialize("json", request.body)
+    customer_id = serializers_data.get("customer_id")
+    if customer_id:
+        update_approve_info(customer_id)
+        try:
+            customer = CustomerModel.objects.get(id=customer_id)
+            return JsonResponse({
+                "code": "SUCCESS",
+                "msg": u"客户认证信息",
+                "body": {
+                    "chsi": customer.chsi,
+                    "mno": customer.mno,
+                    "maimai": customer.maimai,
+                    "rhzx": customer.rhzx,
+                    "jd": customer.jd,
+                    "tb": customer.tb,
+                    "gjj": customer.gjj,
+                },
+            })
+        except:
+            return JsonResponse({
+                "code": "FAIL",
+                "msg": u"客户信息不存在，请先注册",
+                "body": None,
+            })
+    else:
+        return JsonResponse({
+            "code": "FAIL",
+            "msg": u"参数缺失",
+            "body": None,
+        })
+
+
+
+
+
+
 
 
 def h5_login(request, identification):
