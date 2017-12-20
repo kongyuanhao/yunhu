@@ -17,6 +17,7 @@ import json, random
 from uitls import send_message
 from django.core import serializers
 
+
 class MainView(LoginRequiredMixin, generic.TemplateView):
     '''
     登录主界面
@@ -242,7 +243,12 @@ def h5_index(request):
 
 # 检查手机号
 def tel_check(request):
-    tel_num = request.POST.get("tel")
+    print request.body
+    serializers_data = json.loads(request.body)
+    # for ss in serializers_data:
+    #     print ss
+    print serializers_data
+    tel_num = serializers_data.get("tel_num")
     if tel_num:
         tel, _ = TelCheckModel.objects.get_or_create(tel=tel_num)
         code_num = str(random.randint(1000, 9999))
@@ -271,13 +277,10 @@ def tel_check(request):
 
 # 客户登录注册
 def h5_register(request):
-    '''
-    :param request: tel,code,identification
-    :return:customer_id
-    '''
-    identification = request.POST.get("identification")
-    tel = request.POST.get("tel")
-    code = request.POST.get("code")
+    serializers_data = json.loads(request.body)
+    identification = serializers_data.get("identification")
+    tel = serializers_data.get("tel")
+    code = serializers_data.get("code")
     if identification and tel and code:
         channel = ChannelModel.objects.get(identification=identification)
         TelCheckModel.objects.get(tel=tel).check_code(code)
@@ -300,9 +303,20 @@ def h5_register(request):
 
 # #/?checkway=chsi,mno,jd
 
+def str_img(s):
+    import base64
+
+    from django.core.files.base import ContentFile
+    format, imgstr = s.split(';base64,')
+    ext = format.split('/')[-1]
+
+    return ContentFile(base64.b64decode(imgstr), name='temp.' + ext)  # You can save this as file instance.
+
+
 # 检查基础信息
 def check_base_info(request):
-    customer_id = request.POST.get("customer_id")
+    serializers_data = serializers.deserialize("json", request.body)
+    customer_id = serializers_data.get("customer_id")
     if customer_id:
         try:
             customer = CustomerModel.objects.get(id=customer_id)
@@ -334,13 +348,22 @@ def check_base_info(request):
             "body": None,
         })
 
+
 # 客户基本信息更新
 def update_base_info(request):
-    serializers_data = serializers.deserialize("json",request.body)
+    serializers_data = json.loads(request.body)
     customer_id = serializers_data.get("customer_id")
     base_info = serializers_data.get("base_info")
+
     try:
-        CustomerModel.objects.filter(id=customer_id).update(**base_info)
+        custom = CustomerModel.objects.get(id=customer_id)
+        for k, v in base_info.items():
+            print k, v
+            if isinstance(CustomerModel._meta.get_field(k), models.ImageField):
+                setattr(custom, k, str_img(v))
+            else:
+                setattr(custom, k, v)
+        custom.save()
         return JsonResponse({
             "code": "SUCCESS",
             "msg": u"基础信息更新成功",
@@ -354,9 +377,10 @@ def update_base_info(request):
             "body": None,
         })
 
+
 # 补充信息检查
 def check_supplement_info(request):
-    serializers_data = serializers.deserialize("json", request.body)
+    serializers_data = json.loads(request.body)
     customer_id = serializers_data.get("customer_id")
     if customer_id:
         try:
@@ -377,13 +401,13 @@ def check_supplement_info(request):
                     "company_tel": customer.company_tel,
                     "company_address": customer.company_address,
                     "company_salary": customer.company_salary,
-                    "chsi":customer.chsi,
-                    "mno":customer.mno,
-                    "maimai":customer.maimai,
-                    "rhzx":customer.rhzx,
-                    "jd":customer.jd,
-                    "tb":customer.tb,
-                    "gjj":customer.gjj,
+                    "chsi": customer.chsi,
+                    "mno": customer.mno,
+                    "maimai": customer.maimai,
+                    "rhzx": customer.rhzx,
+                    "jd": customer.jd,
+                    "tb": customer.tb,
+                    "gjj": customer.gjj,
                 },
             })
         except:
@@ -398,13 +422,22 @@ def check_supplement_info(request):
             "msg": u"参数缺失",
             "body": None,
         })
+
+
 # 客户补充信息更新
 def update_supplement_info(request):
-    serializers_data = serializers.deserialize("json",request.body)
+    serializers_data = json.loads(request.body)
     customer_id = serializers_data.get("customer_id")
     supplement_info = serializers_data.get("supplement_info")
     try:
-        CustomerModel.objects.filter(id=customer_id).update(**supplement_info)
+        custom = CustomerModel.objects.filter(id=customer_id).update(**supplement_info)
+        for k, v in supplement_info.items():
+            print k, v
+            if isinstance(CustomerModel._meta.get_field(k), models.ImageField):
+                setattr(custom, k, str_img(v))
+            else:
+                setattr(custom, k, v)
+        custom.save()
         return JsonResponse({
             "code": "SUCCESS",
             "msg": u"基础信息更新成功",
@@ -418,12 +451,15 @@ def update_supplement_info(request):
             "body": None,
         })
 
+
 # 客户认证信息更新
 def update_approve_info(customer_id):
     pass
+
+
 # 客户认证信息检测
 def check_approve_info(request):
-    serializers_data = serializers.deserialize("json", request.body)
+    serializers_data = json.loads(request.body)
     customer_id = serializers_data.get("customer_id")
     if customer_id:
         update_approve_info(customer_id)
@@ -454,80 +490,3 @@ def check_approve_info(request):
             "msg": u"参数缺失",
             "body": None,
         })
-
-
-
-
-
-
-
-
-def h5_login(request, identification):
-    pass
-
-
-def str_img(s):
-    import base64
-
-    from django.core.files.base import ContentFile
-    format, imgstr = s.split(';base64,')
-    ext = format.split('/')[-1]
-
-    return ContentFile(base64.b64decode(imgstr), name='temp.' + ext)  # You can save this as file instance.
-
-
-def customer_update(request):
-    '''
-    {
-        "customer_id":1,
-        "baseinfo":{},
-        "mno":{},  运营商
-        "chsi":{}, 学信
-        "maimai":{},脉脉
-        "rhzx":{},人行征信
-    }
-    '''
-
-    post = request.POST
-    print post
-    customer_id = post.get("customer_id")
-    custom = CustomerModel.objects.get(id=customer_id)
-
-    base_info = post.get("baseinfo")
-    print base_info
-    mno = post.get("mno")
-    chsi = post.get("chsi")
-    maimai = post.get("maimai")
-    rhzx = post.get("rhzx")
-    if base_info:
-        '''
-        baseinfo:{
-            name = models.CharField(verbose_name=u"姓名", max_length=50, help_text=u"姓名")
-            tel = models.CharField(verbose_name=u"电话", max_length=50, help_text=u"", blank=True, null=True)
-            qq = models.CharField(verbose_name=u"QQ", max_length=50, help_text=u"QQ")
-            identity = models.CharField(verbose_name="身份证号", help_text=u"身份证号", blank=True, max_length=30, null=True)
-            wechat = models.CharField(verbose_name=u"微信", max_length=50, help_text=u"", blank=True, null=True)
-            address = models.CharField(verbose_name=u"住址", max_length=50, help_text=u"", blank=True, null=True)
-            want_blance = models.FloatField(verbose_name=u"预借金额", help_text=u"预借金额", default=0.00, blank=True)
-            ip = models.GenericIPAddressField(verbose_name=u"IP地址", help_text=u"IP地址", blank=True, null=True)
-            practical_blance = models.FloatField(verbose_name=u"实借金额", help_text=u"实借金额", default=0.00)
-            create_time = models.DateTimeField(verbose_name=u"申请时间", auto_now=True)
-            audit_status = models.IntegerField(verbose_name=u"审核状态", help_text=u"审核状态", choices=AUDIT_STATUS_CHOICES, default=1)
-
-        }
-        '''
-        base_info = json.loads(base_info)
-        print base_info
-        for k, v in base_info.items():
-            print k, v
-            if isinstance(CustomerModel._meta.get_field(k), models.ImageField):
-                setattr(custom, k, str_img(v))
-            else:
-                setattr(custom, k, v)
-        custom.save()
-
-    return JsonResponse({
-        "code": "SUCCESS",
-        "msg": "信息完善成功",
-        "body": None,
-    })

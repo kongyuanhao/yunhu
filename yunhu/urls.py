@@ -51,13 +51,14 @@ customer_url = [
 ]
 
 h5_url = [
-
     url(r'^h5_index/', views.h5_index, name="h5_index"),
     url(r'^telcheck/', views.tel_check, name="telcheck"),
     url(r'^h5register/', views.h5_register, name="h5register"),
-    url(r'^h5login/(?P<identification>.+)/', views.h5_login, name="telcheck"),
-    url(r'^customer_update/', views.customer_update, name="customer_update"),
-
+    url(r"^check_base_info/",views.check_base_info,name="check_base_info"),
+    url(r"^update_base_info/",views.update_base_info,name="update_base_info"),
+    url(r"^check_supplement_info/",views.check_supplement_info,name="check_supplement_info"),
+    url(r"^update_supplement_info/",views.update_supplement_info,name="update_supplement_info"),
+    url(r"^check_approve_info/",views.check_approve_info,name="check_approve_info"),
 ]
 
 urlpatterns += channel_url
