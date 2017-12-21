@@ -1,21 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import json
+import random
+
+from braces.views import LoginRequiredMixin
+from django.core import serializers
+from django.db import models
+from django.http import JsonResponse
 from django.shortcuts import render_to_response
 from django.utils import six
 from django.views import generic
-from braces.views import LoginRequiredMixin
 from django_filters.views import FilterView
 from django_tables2.views import SingleTableMixin
-from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView, AjaxFormView
-from tables import *
+from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
+
 from filters import *
-from django.http import JsonResponse
-from yunhu.forms import *
-from django.db import models
-import json, random
+from tables import *
 from uitls import send_message
-from django.core import serializers
+from yunhu.forms import *
 
 
 class MainView(LoginRequiredMixin, generic.TemplateView):
@@ -196,24 +199,6 @@ class CustomerUpdateView(AjaxUpdateView):
             LonasModel.objects.create(customer=self.object).save()
 
 
-# class LonasListView(SingleTableMixin, FilterView):
-#     table_class = LonasTable
-#
-#     filterset_class = LonasFilter
-#
-#     def get_queryset(self):
-#         if self.request.user.is_boss:
-#             return LonasModel.objects.filter(customer__user__company=self.request.user.company)
-#         else:
-#             return LonasModel.objects.filter(customer__user=self.request.user)
-#
-#
-# class LonasUpdateView(AjaxUpdateView):
-#     form_class = LonasForm
-#     pk_url_kwarg = 'lonas_pk'
-#     model = LonasModel
-#     # template_name = "yunhu/customer_update.html"
-
 
 class ExpenseListView(SingleTableMixin, FilterView):
     table_class = ExpenseTable
@@ -284,7 +269,8 @@ def h5_register(request):
     if identification and tel and code:
         channel = ChannelModel.objects.get(identification=identification)
         TelCheckModel.objects.get(tel=tel).check_code(code)
-        customer, _ = CustomerModel.objects.get_or_create(tel=tel, channel=channel)
+        customer, _ = CustomerModel.objects.get_or_create(
+            tel=tel, channel=channel)
         customer.save()
         return JsonResponse({
             "code": "SUCCESS",
@@ -310,7 +296,8 @@ def str_img(s):
     format, imgstr = s.split(';base64,')
     ext = format.split('/')[-1]
 
-    return ContentFile(base64.b64decode(imgstr), name='temp.' + ext)  # You can save this as file instance.
+    # You can save this as file instance.
+    return ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
 
 
 # 检查基础信息
@@ -430,7 +417,8 @@ def update_supplement_info(request):
     customer_id = serializers_data.get("customer_id")
     supplement_info = serializers_data.get("supplement_info")
     try:
-        custom = CustomerModel.objects.filter(id=customer_id).update(**supplement_info)
+        custom = CustomerModel.objects.filter(
+            id=customer_id).update(**supplement_info)
         for k, v in supplement_info.items():
             print k, v
             if isinstance(CustomerModel._meta.get_field(k), models.ImageField):

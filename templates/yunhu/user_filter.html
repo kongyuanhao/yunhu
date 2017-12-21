@@ -1,43 +1,11 @@
-{% extends "base/base.html" %}
-{% load static %}
-{% load bootstrap3 %}
-{% load render_table from django_tables2 %}
+{% extends "base/filter_base.html" %}
 {% block bootstrap3_title %}
     员工管理
 {% endblock %}
-{% block bootstrap3_extra_head %}
-    <link href="{% static 'django_tables2/bootstrap.css' %}" rel="stylesheet"/>
+{% block operations %}
+
+    <a href="{% url 'yunhu:user-create' %}" class="fm-create btn btn-default" data-fm-head="Create"
+       data-fm-callback="reload">Creat
+        User</a>
+
 {% endblock %}
-{% block content %}
-    <div class="row">
-        <div class="col-md-12">
-
-            <form action="" method="get" class="form form-inline">
-                {% bootstrap_form filter.form layout='inline' %}
-                {% bootstrap_button 'filter' icon='search' %}
-                <a href="{% url 'yunhu:user-create' %}" class="fm-create btn btn-default" data-fm-head="Create"
-                   data-fm-callback="reload">Creat
-                    User</a>
-            </form>
-
-        </div>
-        <div class="clearfix"></div>
-
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            {% render_table table 'django_tables2/bootstrap.html' %}
-
-        </div>
-    </div>
-{% endblock %}
-{% block bootstrap3_extra_script %}
-    <script>
-        $(function () {
-            $.fm({debug: true});
-        });
-    </script>
-    {% include "fm/modal.html" %}
-{% endblock %}
-
-

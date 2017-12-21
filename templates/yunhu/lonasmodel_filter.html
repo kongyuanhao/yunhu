@@ -1,36 +1,6 @@
-{% extends "base/base.html" %}
-{% load static %}
-{% load bootstrap3 %}
-{% load render_table from django_tables2 %}
+{% extends "base/filter_base.html" %}
 {% block bootstrap3_title %}
     贷款管理
 {% endblock %}
-{% block bootstrap3_extra_head %}
-    <link href="{% static 'django_tables2/bootstrap.css' %}" rel="stylesheet"/>
+{% block operations %}
 {% endblock %}
-{% block content %}
-    <div class="row">
-        <div class="col-md-12">
-
-            <form action="" method="get" class="form form-inline">
-                {% bootstrap_form filter.form %}
-                {% bootstrap_button 'filter' icon='search' %}
-            </form>
-        </div>
-        <div class="col-md-12">
-            {% render_table table 'django_tables2/bootstrap.html' %}
-
-        </div>
-    </div>
-{% endblock %}
-{% block bootstrap3_extra_script %}
-    {% include "fm/modal.html" %}
-
-    <script>
-        $(function () {
-            $.fm({debug: true});
-        });
-    </script>
-{% endblock %}
-
-
