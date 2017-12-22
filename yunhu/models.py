@@ -16,6 +16,7 @@ from django.db import models
 # )
 class CheckWayModel(models.Model):
     name = models.CharField(verbose_name=u"名称", max_length=50)
+    namecode = models.CharField(verbose_name=u"渠道代码", max_length=50)
 
     def __unicode__(self):
         return self.name
@@ -79,8 +80,9 @@ class ChannelModel(models.Model):
 
     @property
     def link_h5(self):
+        checkways = "?checkway=" + ",".join([cw.namecode for cw in self.check_ways.all()])
         return "".join(
-            ["http://www.yunhu.com/yumhu/h5login/", self.identification])
+            ["http://www.yunhu.com/#/login/", self.identification, checkways])
 
         # link_h5. = 'H5链接'
 
@@ -159,6 +161,7 @@ AUDIT_STATUS_CHOICES = (
     (6, u"续期"),
     (7, u"结清"),
 )
+
 
 # 文字类：父亲姓名电话。母亲姓名电话。配偶姓名电话。同事姓名电话，支付宝芝麻分，身份证号。
 # 账号密码类h5认证：学信，手机运营商，公积金，人行征信

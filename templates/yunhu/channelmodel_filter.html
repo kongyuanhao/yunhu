@@ -6,3 +6,28 @@
     <a href="{% url 'yunhu:channel-create' %}" class="fm-create btn btn-default pull-right" data-fm-head="新增渠道"
        data-fm-callback="reload">新增</a>
 {% endblock %}
+{% block bootstrap3_extra_script %}
+    {{ block.super }}
+    <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <script src="https://cdn.bootcss.com/qrcode-generator/1.3.1/qrcode.js"></script>
+    <script src="https://cdn.bootcss.com/layer/3.1.0/layer.js"></script>
+    <script>
+
+        $(".link_h5").click(function (event) {
+            {#        layer.alert($('#output').qrcode("http://jetienne.com"));#}
+            var qrcode = new QRCode('qrcode', {
+                text: '请输入二维码内容再生成图像',
+                width: 256,
+                height: 256,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            qrcode.clear();
+
+            layer.tips(qrcode.makeCode($(event.target).text()), $(this));
+            console.log($(event.target).text());
+            console.log($().qrcode("http://jetienne.com"));
+        })
+    </script>
+{% endblock %}
