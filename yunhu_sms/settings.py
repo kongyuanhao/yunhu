@@ -148,3 +148,5 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'yunhu.User'
 LOGIN_REDIRECT_URL = "/yunhu/main/"
 LOGIN_URL = "/yunhu/login/"
+
+APPEND_SLASH = False

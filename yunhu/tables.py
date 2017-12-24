@@ -60,7 +60,7 @@ class CustomerTable(tables.Table):
 
     class Meta:
         model = CustomerModel
-        fields = ["channel", "name", "tel", "qq", "identity", "zhima_score",
+        fields = ["channel", "name", "tel", "wechat", "identity", "zhima_score",
                   "audit_customer.user",
                   "lona_customer.user",
                   "urge_customer.user",

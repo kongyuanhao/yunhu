@@ -3,21 +3,22 @@ from __future__ import unicode_literals
 
 import json
 import random
-
+import base64
 from braces.views import LoginRequiredMixin
 from django.core import serializers
 from django.db import models
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.utils import six
 from django.views import generic
+from django.views.generic.detail import SingleObjectTemplateResponseMixin, DetailView
 from django_filters.views import FilterView
 from django_tables2.views import SingleTableMixin
-from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
+from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView, AjaxFormView
 
 from filters import *
 from tables import *
-from uitls import send_message
+from uitls import send_message, BaiQiZiXinYun, BaiQiShiApi
 from yunhu.forms import *
 
 
@@ -141,6 +142,43 @@ class CustomerListView(SingleTableMixin, FilterView):
             return CustomerModel.objects.none()
 
 
+class CustomerUpdateView(DetailView):
+    model = CustomerModel
+    pk_url_kwarg = 'customer_pk'
+    template_name = "yunhu/customer_update.html"
+    context_object_name = 'customer'
+
+    # def set_form_class(self):
+    #     user = self.request.user
+    #     if user.is_boss:
+    #         self.form_class = ChangeAuditForm
+    #     elif user.department == 1:
+    #         self.form_class = CustomerChangeForm
+    #     elif user.department == 2:
+    #         self.form_class = CustomerChangeForm
+    #     elif user.department == 3:
+    #         self.form_class = CustomerChangeForm
+    #     else:
+    #         self.form_class = CustomerChangeForm
+    #
+    # def get_form_class(self):
+    #     self.set_form_class()
+    #     return self.form_class
+    # def get_form(self, form_class=None):
+    #     """
+    #             Returns an instance of the form to be used in this view.
+    #             """
+    #     if form_class is None:
+    #         form_class = self.get_form_class()
+    #     return form_class(instance=self.get_form_instance(),**self.get_form_kwargs())
+    #
+    # def get_form_instance(self):
+    #     if self.http_method_names == "GET":
+    #         return self.form_class._meta.model.objects.get(customer=self.object)
+    #     return None
+class AuditCustomer(AjaxFormView):
+    form_class = CustomerChangeForm
+
 # 待审核客户
 class CustomerAuditListView(SingleTableMixin, FilterView):
     table_class = CustomerAuditTable
@@ -187,19 +225,6 @@ class CustomerUrgeListView(SingleTableMixin, FilterView):
         )
 
 
-class CustomerUpdateView(AjaxUpdateView):
-    form_class = CustomerChangeForm
-    model = CustomerModel
-    pk_url_kwarg = 'customer_pk'
-    template_name = "yunhu/customer_update.html"
-    context_object_name = 'customer'
-
-    def pre_save(self):
-        if self.object.audit_status == 4:
-            LonasModel.objects.create(customer=self.object).save()
-
-
-
 class ExpenseListView(SingleTableMixin, FilterView):
     table_class = ExpenseTable
 
@@ -233,7 +258,7 @@ def tel_check(request):
     # for ss in serializers_data:
     #     print ss
     print serializers_data
-    tel_num = serializers_data.get("tel_num")
+    tel_num = serializers_data.get("tel")
     if tel_num:
         tel, _ = TelCheckModel.objects.get_or_create(tel=tel_num)
         code_num = str(random.randint(1000, 9999))
@@ -260,6 +285,33 @@ def tel_check(request):
         })
 
 
+# 验证渠道
+def check_identification(request):
+    serializers_data = json.loads(request.body)
+    identification = serializers_data.get("identification")
+    if identification:
+        try:
+            ChannelModel.objects.get(identification=identification)
+            return JsonResponse({
+                "code": "SUCCESS",
+                "msg": u"渠道存在",
+                "body": None,
+            })
+        except Exception, e:
+            print e
+            return JsonResponse({
+                "code": "FAIL",
+                "msg": u"该渠道没有注册",
+                "body": None,
+            })
+    else:
+        return JsonResponse({
+            "code": "FAIL",
+            "msg": u"参数缺失",
+            "body": None,
+        })
+
+
 # 客户登录注册
 def h5_register(request):
     serializers_data = json.loads(request.body)
@@ -272,6 +324,7 @@ def h5_register(request):
         customer, _ = CustomerModel.objects.get_or_create(
             tel=tel, channel=channel)
         customer.save()
+        customer.assign_audit_user(random.choice(channel.channels_users.filter(department=1)))
         return JsonResponse({
             "code": "SUCCESS",
             "msg": u"客户创建成功",
@@ -290,8 +343,6 @@ def h5_register(request):
 # #/?checkway=chsi,mno,jd
 
 def str_img(s):
-    import base64
-
     from django.core.files.base import ContentFile
     format, imgstr = s.split(';base64,')
     ext = format.split('/')[-1]
@@ -302,7 +353,7 @@ def str_img(s):
 
 # 检查基础信息
 def check_base_info(request):
-    serializers_data = serializers.deserialize("json", request.body)
+    serializers_data = json.loads(request.body)
     customer_id = serializers_data.get("customer_id")
     if customer_id:
         try:
@@ -317,12 +368,13 @@ def check_base_info(request):
                     "zhima_score": customer.zhima_score,
                     "wechat": customer.wechat,
                     "address": customer.address,
-                    "idcard_backpic": customer.idcard_backpic,
-                    "idcard_pic": customer.idcard_pic,
-                    "idcard_people_pic": customer.idcard_people_pic,
+                    "idcard_backpic": customer.idcard_backpic.url if customer.idcard_backpic else None,
+                    "idcard_pic": customer.idcard_pic.url if customer.idcard_pic else None,
+                    "idcard_people_pic": customer.idcard_people_pic.url if customer.idcard_people_pic else None,
                 },
             })
-        except:
+        except Exception, e:
+            print e
             return JsonResponse({
                 "code": "FAIL",
                 "msg": u"客户信息不存在，请先注册",
@@ -341,13 +393,15 @@ def update_base_info(request):
     serializers_data = json.loads(request.body)
     customer_id = serializers_data.get("customer_id")
     base_info = serializers_data.get("base_info")
-
+    print customer_id
+    print base_info
     try:
         custom = CustomerModel.objects.get(id=customer_id)
         for k, v in base_info.items():
             print k, v
             if isinstance(CustomerModel._meta.get_field(k), models.ImageField):
-                setattr(custom, k, str_img(v))
+                if v.startswith("data:"):
+                    setattr(custom, k, str_img(v))
             else:
                 setattr(custom, k, v)
         custom.save()
@@ -357,7 +411,8 @@ def update_base_info(request):
             "body": None,
         })
 
-    except:
+    except Exception, e:
+        print e
         return JsonResponse({
             "code": "FAIL",
             "msg": u"基础信息更新失败",
@@ -388,13 +443,8 @@ def check_supplement_info(request):
                     "company_tel": customer.company_tel,
                     "company_address": customer.company_address,
                     "company_salary": customer.company_salary,
-                    "chsi": customer.chsi,
-                    "mno": customer.mno,
-                    "maimai": customer.maimai,
-                    "rhzx": customer.rhzx,
-                    "jd": customer.jd,
-                    "tb": customer.tb,
-                    "gjj": customer.gjj,
+                    "zfb_score_pic": customer.zfb_score_pic.url if customer.zfb_score_pic else None,
+                    "zfb_manage_pic": customer.zfb_manage_pic.url if customer.zfb_manage_pic else None,
                 },
             })
         except:
@@ -417,12 +467,12 @@ def update_supplement_info(request):
     customer_id = serializers_data.get("customer_id")
     supplement_info = serializers_data.get("supplement_info")
     try:
-        custom = CustomerModel.objects.filter(
-            id=customer_id).update(**supplement_info)
+        custom = CustomerModel.objects.get(id=customer_id)
         for k, v in supplement_info.items():
             print k, v
             if isinstance(CustomerModel._meta.get_field(k), models.ImageField):
-                setattr(custom, k, str_img(v))
+                if v.startswith("data:"):
+                    setattr(custom, k, str_img(v))
             else:
                 setattr(custom, k, v)
         custom.save()
@@ -440,41 +490,47 @@ def update_supplement_info(request):
         })
 
 
-# 客户认证信息更新
-def update_approve_info(customer_id):
-    pass
-
-
 # 客户认证信息检测
 def check_approve_info(request):
     serializers_data = json.loads(request.body)
     customer_id = serializers_data.get("customer_id")
     if customer_id:
-        update_approve_info(customer_id)
-        try:
-            customer = CustomerModel.objects.get(id=customer_id)
-            return JsonResponse({
-                "code": "SUCCESS",
-                "msg": u"客户认证信息",
-                "body": {
-                    "chsi": customer.chsi,
-                    "mno": customer.mno,
-                    "maimai": customer.maimai,
-                    "rhzx": customer.rhzx,
-                    "jd": customer.jd,
-                    "tb": customer.tb,
-                    "gjj": customer.gjj,
-                },
-            })
-        except:
-            return JsonResponse({
-                "code": "FAIL",
-                "msg": u"客户信息不存在，请先注册",
-                "body": None,
-            })
+        # try:
+        customer = CustomerModel.objects.get(id=customer_id)
+        check_ways = [check_way.namecode for check_way in customer.channel.check_ways.all()]
+        BaiQiZiXinYun().update_approve_info(customer)
+        return JsonResponse({
+            "code": "SUCCESS",
+            "msg": u"客户认证信息",
+            "body": {
+                "chsi": customer.chsi,
+                "mno": customer.mno,
+                "maimai": customer.maimai,
+                "rhzx": customer.rhzx,
+                "jd": customer.jd,
+                "tb": customer.tb,
+                "gjj": customer.gjj,
+            },
+        })
+        # except Exception,e:
+        #     print e
+        #     return JsonResponse({
+        #         "code": "FAIL",
+        #         "msg": u"客户信息不存在，请先注册",
+        #         "body": None,
+        #     })
     else:
         return JsonResponse({
             "code": "FAIL",
             "msg": u"参数缺失",
             "body": None,
         })
+
+
+# 白骑士api转发
+def bqs_api(request):
+    serializers_data = json.loads(request.body)
+    url = serializers_data.get("url")
+    data = serializers_data.get("data")
+    response_data = BaiQiShiApi(url, data).do_request()
+    return JsonResponse(response_data)

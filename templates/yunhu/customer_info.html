@@ -1,0 +1,81 @@
+{% load i18n %}
+{% load static %}
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a href="#1" data-toggle="tab">客户基本信息</a>
+    </li>
+    <li><a href="#2" data-toggle="tab">客户补充信息</a>
+    </li>
+    <li><a href="#3" data-toggle="tab">资信云报告</a>
+    </li>
+    <li><a href="#4" data-toggle="tab">反欺诈云报告</a>
+    </li>
+</ul>
+
+<div class="tab-content ">
+    <div class="tab-pane active" id="1">
+        <p>姓名:{{ customer.name }}</p>
+        <p>电话:{{ customer.tel }}</p>
+        <p>身份证号:{{ customer.identity }}</p>
+        <p>微信:{{ customer.wechat }}</p>
+        <p>芝麻信用分:{{ customer.zhima_score }}</p>
+        <p>所在地区:{{ customer.zone }}</p>
+        <p>详细住址:{{ customer.address }}</p>
+        <hr>
+        <p>身份证照片</p>
+        <div class="row">
+            <div class="col-sm-3">
+                <a href="#" class="thumbnail">
+                    <img src="{{ customer.idcard_pic.url }}">
+                </a>
+            </div>
+            <div class="col-sm-3">
+                <a href="#" class="thumbnail">
+                    <img src="{{ customer.idcard_backpic.url }}">
+                </a>
+            </div>
+
+
+            <div class="col-sm-3">
+                <a href="#" class="thumbnail">
+                    <img src="{{ customer.idcard_people_pic.url }}">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="2">
+        <p>父亲姓名:{{ customer.father_name }}</p>
+        <p>父亲电话:{{ customer.father_tel }}</p>
+        <p>母亲姓名:{{ customer.mother_name }}</p>
+        <p>母亲电话:{{ customer.mother_tel }}</p>
+        <p>朋友姓名:{{ customer.friend_name }}</p>
+        <p>朋友电话:{{ customer.friend_tel }}</p>
+        <p>同事姓名:{{ customer.colleague_name }}</p>
+        <p>同事电话:{{ customer.colleague_tel }}</p>
+        <p>公司名称:{{ customer.company_name }}</p>
+        <p>公司电话:{{ customer.company_tel }}</p>
+        <p>公司地址:{{ customer.company_address }}</p>
+        <p>薪水:{{ customer.company_salary }}</p>
+        <hr>
+        <p>借贷平台图片</p>
+        <div class="row">
+            <div class="col-sm-3">
+                <a href="#" class="thumbnail">
+                    <img src="{{ customer.zfb_score_pic.url }}">
+                </a>
+            </div>
+            <div class="col-sm-3">
+                <a href="#" class="thumbnail">
+                    <img src="{{ customer.zfb_manage_pic.url }}">
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <div class="tab-pane" id="3">
+        <h3>资信云报告</h3>
+    </div>
+    <div class="tab-pane" id="4">
+        <h3>反欺诈云报告</h3>
+    </div>
+</div>

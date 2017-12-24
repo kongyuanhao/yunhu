@@ -48,17 +48,20 @@ customer_url = [
     # url(r'^lonas-list/', views.LonasListView.as_view(), name="lonas-list"),
     # url(r'^lonas-update/(?P<lonas_pk>\d+)/$', views.LonasUpdateView.as_view(), name="lonas-update"),
     url(r'^customerblack-list/', views.CustomerBlackListView.as_view(), name="customerblack-list"),
+    url(r'^auditcustomer/', views.AuditCustomer.as_view(), name="auditcustomer"),
 ]
 
 h5_url = [
     url(r'^h5_index/', views.h5_index, name="h5_index"),
     url(r'^telcheck/', views.tel_check, name="telcheck"),
+    url(r'^check_identification/', views.check_identification, name="check_identification"),
     url(r'^h5register/', views.h5_register, name="h5register"),
     url(r"^check_base_info/",views.check_base_info,name="check_base_info"),
     url(r"^update_base_info/",views.update_base_info,name="update_base_info"),
     url(r"^check_supplement_info/",views.check_supplement_info,name="check_supplement_info"),
     url(r"^update_supplement_info/",views.update_supplement_info,name="update_supplement_info"),
     url(r"^check_approve_info/",views.check_approve_info,name="check_approve_info"),
+    url(r"^bqs_api/",views.bqs_api,name="bqs_api"),
 ]
 
 urlpatterns += channel_url

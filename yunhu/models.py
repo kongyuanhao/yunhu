@@ -30,27 +30,17 @@ class CompanyModel(models.Model):
     '''
     公司信息管理
     '''
-    name = models.CharField(
-        verbose_name=u"公司名称", max_length=50, help_text=u"公司名称", unique=True)
-    contact = models.CharField(
-        verbose_name=u"联系方式", max_length=50, help_text=u"联系方式")
+    name = models.CharField(verbose_name=u"公司名称", max_length=50, help_text=u"公司名称", unique=True)
+    contact = models.CharField(verbose_name=u"联系方式", max_length=50, help_text=u"联系方式")
     balance = models.FloatField(verbose_name=u"账户余额", default=0.00)
-    check_ways = models.ManyToManyField(
-        CheckWayModel, verbose_name=u"审查方式", related_name="companys")
+    check_ways = models.ManyToManyField(CheckWayModel, verbose_name=u"审查方式", related_name="companys")
     possessor = models.CharField(verbose_name=u"所有人", max_length=50)
-    identity = models.CharField(
-        verbose_name="身份证号", help_text=u"身份证号", max_length=30)
+    identity = models.CharField(verbose_name="身份证号", help_text=u"身份证号", max_length=30)
     status = models.BooleanField(verbose_name=u"启用", default=True)
     remark = models.TextField(verbose_name=u"备注", blank=True)
     create_time = models.DateTimeField(verbose_name=u"创建时间", auto_now=True)
-    h5_first_background = models.ImageField(
-        verbose_name=u"主背景图",
-        default='img/h5/background1.png',
-        upload_to="img/h5")
-    h5_second_background = models.ImageField(
-        verbose_name=u"次背景图",
-        default='img/h5/background2.png',
-        upload_to="img/h5")
+    h5_first_background = models.ImageField(verbose_name=u"主背景图", default='img/h5/background1.png', upload_to="img/h5")
+    h5_second_background = models.ImageField(verbose_name=u"次背景图", default='img/h5/background2.png', upload_to="img/h5")
 
     def __unicode__(self):
         return self.name
@@ -64,19 +54,12 @@ class ChannelModel(models.Model):
     '''
     渠道管理
     '''
-    name = models.CharField(
-        verbose_name=u"渠道名称", max_length=50, help_text=u"渠道名称")
-    identification = models.CharField(
-        verbose_name=u"标识码",
-        max_length=255,
-        help_text=u"标识码",
-        default=uuid.uuid1,
-        unique=True)
-    company = models.ForeignKey(
-        CompanyModel, verbose_name=u"所属公司", related_name="company_channels")
+    name = models.CharField(verbose_name=u"渠道名称", max_length=50, help_text=u"渠道名称")
+    identification = models.CharField(verbose_name=u"标识码", max_length=255, help_text=u"标识码", default=uuid.uuid1,
+                                      unique=True)
+    company = models.ForeignKey(CompanyModel, verbose_name=u"所属公司", related_name="company_channels")
     create_time = models.DateTimeField(auto_now=True)
-    check_ways = models.ManyToManyField(
-        CheckWayModel, verbose_name=u"认证方式", related_name="check_way_channels")
+    check_ways = models.ManyToManyField(CheckWayModel, verbose_name=u"认证方式", related_name="check_way_channels")
 
     @property
     def link_h5(self):
@@ -105,42 +88,16 @@ class User(AbstractUser):
     '''
     公司用户管理
     '''
-    company = models.ForeignKey(
-        CompanyModel,
-        verbose_name=u"所属公司",
-        help_text=u"所属公司",
-        related_name="user",
-        null=True)
-    department = models.IntegerField(
-        verbose_name=u"部门名称",
-        help_text=u"部门名称",
-        choices=DEPARTMENT_CHOICES,
-        blank=True,
-        null=True)
+    company = models.ForeignKey(CompanyModel, verbose_name=u"所属公司", help_text=u"所属公司", related_name="comany_users", null=True)
+    department = models.IntegerField(verbose_name=u"部门名称", help_text=u"部门名称", choices=DEPARTMENT_CHOICES, blank=True,
+                                     null=True)
     name = models.CharField(verbose_name=u"姓名", max_length=50, help_text=u"姓名")
-    identity = models.CharField(
-        verbose_name="身份证号",
-        help_text=u"身份证号",
-        blank=True,
-        max_length=30,
-        null=True)
-    tel = models.CharField(
-        verbose_name=u"电话",
-        max_length=50,
-        help_text=u"电话",
-        blank=True,
-        null=True)
+    identity = models.CharField(verbose_name="身份证号", help_text=u"身份证号", blank=True, max_length=30, null=True)
+    tel = models.CharField(verbose_name=u"电话", max_length=50, help_text=u"电话", blank=True, null=True)
     qq = models.CharField(verbose_name=u"QQ", max_length=50, help_text=u"QQ")
-    wechat = models.CharField(
-        verbose_name=u"微信",
-        max_length=50,
-        help_text=u"微信",
-        blank=True,
-        null=True)
-    is_boss = models.BooleanField(
-        verbose_name=u"管理员", default=False, help_text=u"管理员")
-    channels = models.ManyToManyField(
-        ChannelModel, verbose_name=u"负责渠道", related_name="users")
+    wechat = models.CharField(verbose_name=u"微信", max_length=50, help_text=u"微信", blank=True, null=True)
+    is_boss = models.BooleanField(verbose_name=u"管理员", default=False, help_text=u"管理员")
+    channels = models.ManyToManyField(ChannelModel, verbose_name=u"负责渠道", related_name="channels_users")
 
 
 # 待审核
@@ -192,100 +149,43 @@ class CustomerModel(models.Model):
     '''
     客户信息管理
     '''
-    channel = models.ForeignKey(
-        ChannelModel, verbose_name=u"渠道", related_name="customer_channel")
+    channel = models.ForeignKey(ChannelModel, verbose_name=u"渠道", related_name="customer_channel")
     # 基本信息
     name = models.CharField(verbose_name=u"姓名", max_length=50, help_text=u"姓名")
-    tel = models.CharField(
-        verbose_name=u"电话",
-        max_length=50,
-        help_text=u"",
-        blank=True,
-        null=True)
-    identity = models.CharField(
-        verbose_name="身份证号",
-        help_text=u"身份证号",
-        blank=True,
-        max_length=30,
-        null=True)
-    zhima_score = models.CharField(
-        verbose_name=u"芝麻信用分", max_length=50, blank=True)
-    wechat = models.CharField(
-        verbose_name=u"微信",
-        max_length=50,
-        help_text=u"",
-        blank=True,
-        null=True)
-    zone = models.CharField(
-        verbose_name=u"所在地区",
-        max_length=50,
-        help_text=u"",
-        blank=True,
-        null=True)
-    address = models.CharField(
-        verbose_name=u"详细住址",
-        max_length=50,
-        help_text=u"",
-        blank=True,
-        null=True)
+    tel = models.CharField(verbose_name=u"电话", max_length=50, help_text=u"", blank=True, null=True)
+    identity = models.CharField(verbose_name="身份证号", help_text=u"身份证号", blank=True, max_length=30, null=True)
+    zhima_score = models.CharField(verbose_name=u"芝麻信用分", max_length=50, blank=True)
+    wechat = models.CharField(verbose_name=u"微信", max_length=50, help_text=u"", blank=True, null=True)
+    zone = models.CharField(verbose_name=u"所在地区", max_length=50, help_text=u"", blank=True, null=True)
+    address = models.CharField(verbose_name=u"详细住址", max_length=50, help_text=u"", blank=True, null=True)
 
     # 图片类 身份证
-    idcard_backpic = models.ImageField(
-        verbose_name=u"身份证反面",
-        help_text=u"身份证反面",
-        upload_to="customer/idcard",
-        blank=True,
-        null=True)
-    idcard_pic = models.ImageField(
-        verbose_name=u"身份证正面",
-        help_text=u"身份证正面",
-        upload_to="customer/idcard",
-        blank=True,
-        null=True)
-    idcard_people_pic = models.ImageField(
-        verbose_name=u"手持身份证",
-        help_text=u"手持身份证",
-        upload_to="customer/idcard",
-        blank=True,
-        null=True)
+    idcard_backpic = models.ImageField(verbose_name=u"身份证反面", help_text=u"身份证反面", upload_to="customer/idcard",
+                                       blank=True, null=True)
+    idcard_pic = models.ImageField(verbose_name=u"身份证正面", help_text=u"身份证正面", upload_to="customer/idcard", blank=True,
+                                   null=True)
+    idcard_people_pic = models.ImageField(verbose_name=u"手持身份证", help_text=u"手持身份证", upload_to="customer/idcard",
+                                          blank=True, null=True)
     # 补充信息
     # 联系人信息
-    father_name = models.CharField(
-        verbose_name=u"父亲姓名", max_length=50, blank=True)
-    father_tel = models.CharField(
-        verbose_name=u"父亲电话", max_length=50, blank=True)
-    mother_name = models.CharField(
-        verbose_name=u"母亲姓名", max_length=50, blank=True)
-    mother_tel = models.CharField(
-        verbose_name=u"母亲电话", max_length=50, blank=True)
-    friend_name = models.CharField(
-        verbose_name=u"朋友姓名", max_length=50, blank=True)
-    friend_tel = models.CharField(
-        verbose_name=u"朋友电话", max_length=50, blank=True)
-    colleague_name = models.CharField(
-        verbose_name=u"同事姓名", max_length=50, blank=True)
-    colleague_tel = models.CharField(
-        verbose_name=u"同事电话", max_length=50, blank=True)
+    father_name = models.CharField(verbose_name=u"父亲姓名", max_length=50, blank=True)
+    father_tel = models.CharField(verbose_name=u"父亲电话", max_length=50, blank=True)
+    mother_name = models.CharField(verbose_name=u"母亲姓名", max_length=50, blank=True)
+    mother_tel = models.CharField(verbose_name=u"母亲电话", max_length=50, blank=True)
+    friend_name = models.CharField(verbose_name=u"朋友姓名", max_length=50, blank=True)
+    friend_tel = models.CharField(verbose_name=u"朋友电话", max_length=50, blank=True)
+    colleague_name = models.CharField(verbose_name=u"同事姓名", max_length=50, blank=True)
+    colleague_tel = models.CharField(verbose_name=u"同事电话", max_length=50, blank=True)
 
     # 公司信息
-    company_name = models.CharField(
-        verbose_name=u"公司名称", max_length=50, blank=True)
-    company_tel = models.CharField(
-        verbose_name=u"公司电话", max_length=50, blank=True)
-    company_address = models.CharField(
-        verbose_name=u"公司地址", max_length=50, blank=True)
-    company_salary = models.CharField(
-        verbose_name=u"薪水", max_length=50, blank=True)
+    company_name = models.CharField(verbose_name=u"公司名称", max_length=50, blank=True)
+    company_tel = models.CharField(verbose_name=u"公司电话", max_length=50, blank=True)
+    company_address = models.CharField(verbose_name=u"公司地址", max_length=50, blank=True)
+    company_salary = models.CharField(verbose_name=u"薪水", max_length=50, blank=True)
 
     # 图片类
-    zfb_score_pic = models.ImageField(
-        verbose_name=u"支付宝芝麻信用分数页", upload_to="customer/zfb", blank=True)
-    zfb_manage_pic = models.ImageField(
-        verbose_name=u"支付宝管理页", upload_to="customer/zfb", blank=True)
-    # jdb_main_pic = models.ImageField(verbose_name=u"借贷宝主页", upload_to="customer/jdb", blank=True)
-    # jdb_fz_pic = models.ImageField(verbose_name=u"借贷宝负债", upload_to="customer/jdb", blank=True)
-    # jjd_fz_pic = models.ImageField(verbose_name=u"今借到负债", upload_to="customer/jjd", blank=True)
-    # mf_fz_pic = models.ImageField(verbose_name=u"米房负债", upload_to="customer/mf", blank=True)
+    zfb_score_pic = models.ImageField(verbose_name=u"支付宝芝麻信用分数页", upload_to="customer/zfb", blank=True)
+    zfb_manage_pic = models.ImageField(verbose_name=u"支付宝管理页", upload_to="customer/zfb", blank=True)
 
     # h5认证：学信，手机运营商，脉脉，人行征信
     chsi = models.BooleanField(verbose_name=u"学信认证", default=False)
@@ -298,16 +198,14 @@ class CustomerModel(models.Model):
     gjj = models.BooleanField(verbose_name=u"公积金认证", default=False)
 
     create_time = models.DateTimeField(verbose_name=u"申请时间", auto_now=True)
-    audit_status = models.IntegerField(
-        verbose_name=u"审核状态",
-        help_text=u"审核状态",
-        choices=AUDIT_STATUS_CHOICES,
-        default=1)
+    audit_status = models.IntegerField(verbose_name=u"审核状态", help_text=u"审核状态", choices=AUDIT_STATUS_CHOICES, default=1)
 
-    is_black = models.BooleanField(
-        verbose_name=u"拉黑", help_text=u"用户进入黑名单", default=False)
-    blcak_reason = models.TextField(
-        verbose_name=u"拉黑原因", blank=True, null=True)
+    is_black = models.BooleanField(verbose_name=u"拉黑", help_text=u"用户进入黑名单", default=False)
+    blcak_reason = models.TextField(verbose_name=u"拉黑原因", blank=True, null=True)
+
+
+    def assign_audit_user(self, user_audit):
+        AuditModel.objects.get_or_create(customer=self, user=user_audit)
 
 
 # 老板：修改标签 指定审核员
@@ -318,17 +216,12 @@ class CustomerModel(models.Model):
 
 # 客户审核：审核笔记 审核时间 修改标签 拉黑客户 指定放款人
 class AuditModel(models.Model):
-    customer = models.ForeignKey(
-        CustomerModel, verbose_name=u"客户", related_name="audit_customer")
-    user = models.ForeignKey(
-        User,
-        verbose_name="审核人",
-        help_text=u"审核客户",
-        related_name="audit_user",
-        blank=True,
-        null=True)
+    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", related_name="audit_customer")
+    user = models.ForeignKey(User, verbose_name="审核人", help_text=u"审核客户", related_name="audit_user", blank=True,
+                             null=True)
     note = models.TextField(verbose_name=u"审核笔记", blank=True)
-    time = models.DateTimeField(verbose_name=u"审核时间")
+    time = models.DateTimeField(verbose_name=u"审核时间",auto_now=True)
+
 
     def assign_lona_user(self, user_loan):
         LonasModel.objects.get_or_create(
@@ -337,22 +230,14 @@ class AuditModel(models.Model):
 
 # 客户放款：放款金额 放款笔记 放款时间 收款时间 指定催款人 修改标签 拉黑客户
 class LonasModel(models.Model):
-    customer = models.ForeignKey(
-        CustomerModel, verbose_name=u"客户", related_name="lona_customer")
-    user = models.ForeignKey(
-        User,
-        verbose_name="放款人",
-        help_text=u"放款客户",
-        related_name="loan_user",
-        blank=True,
-        null=True)
+    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", related_name="lona_customer")
+    user = models.ForeignKey(User, verbose_name="放款人", help_text=u"放款客户", related_name="loan_user", blank=True,
+                             null=True)
     note = models.TextField(verbose_name=u"放款笔记", blank=True)
 
-    practical_blance = models.FloatField(
-        verbose_name=u"实借金额", help_text=u"实借金额", default=0.00)
+    practical_blance = models.FloatField(verbose_name=u"实借金额", help_text=u"实借金额", default=0.00)
     lona_time = models.DateField(verbose_name=u"放款时间", auto_now=True)
-    refund_time = models.DateTimeField(
-        verbose_name=u"还款时间", default=7, help_text=u"默认7天", blank=True)
+    refund_time = models.DateTimeField(verbose_name=u"还款时间", default=7, help_text=u"默认7天", blank=True)
 
     def assign_urge_user(self, user_urge):
         UrgeModel.objects.get_or_create(
@@ -361,16 +246,9 @@ class LonasModel(models.Model):
 
 # 客户催款 ：催款笔记 修改标签 拉黑客户
 class UrgeModel(models.Model):
-    customer = models.ForeignKey(
-        CustomerModel, verbose_name=u"客户", related_name="urge_customer")
-    user = models.ForeignKey(
-        User,
-        verbose_name="催款人",
-        help_text=u"催款客户",
-        related_name="urge_user",
-        blank=True,
-        null=True)
-
+    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", related_name="urge_customer")
+    user = models.ForeignKey(User, verbose_name="催款人", help_text=u"催款客户", related_name="urge_user", blank=True,
+                             null=True)
     note = models.TextField(verbose_name=u"催款笔记", blank=True)
 
 
@@ -385,11 +263,7 @@ class CustomerLoginInfoModel(models.Model):
     '''
     客户登录信息
     '''
-    customer = models.ForeignKey(
-        CustomerModel,
-        verbose_name=u"客户",
-        help_text=u"客户",
-        related_name='login_info')
+    customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", help_text=u"客户", related_name='login_info')
     ip = models.GenericIPAddressField(verbose_name=u"IP")
     login_time = models.DateTimeField(auto_now=True)
 

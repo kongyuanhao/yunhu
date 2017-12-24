@@ -9,7 +9,7 @@ from django import forms
 
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 
-from yunhu.models import User, ChannelModel, CustomerModel, LonasModel
+from yunhu.models import User, ChannelModel, CustomerModel, LonasModel, AuditModel
 
 
 class ChannelForm(forms.ModelForm):
@@ -66,10 +66,24 @@ class CustomerChangeForm(forms.ModelForm):
 
 
 # 审核 改变状态 指定放款人 加入黑名单
-class CustomerAuditForm(forms.ModelForm):
+AUDIT_CHOICES = (
+    (1, u"待审核"),
+    (2, u"拒绝受理"),
+    (3, u"审核通过"),
+    (4, u"需要复审"),
+    (5, u"已放款"),
+    (6, u"续期"),
+    (7, u"结清"),
+)
+
+
+class ChangeAuditForm(forms.ModelForm):
+    # audit_status = forms.ChoiceField(choices=AUDIT_CHOICES)
+
     class Meta:
-        model = CustomerModel
-        fields = ()
+        model = AuditModel
+        fields = ("customer","user","note",)
+
 
 
 # 放款 改变状态 指定追款人 加入黑名单
