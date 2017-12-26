@@ -11,6 +11,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.utils import six
 from django.views import generic
+from django.views.generic import FormView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin, DetailView
 from django_filters.views import FilterView
 from django_tables2.views import SingleTableMixin
@@ -142,42 +143,54 @@ class CustomerListView(SingleTableMixin, FilterView):
             return CustomerModel.objects.none()
 
 
-class CustomerUpdateView(DetailView):
-    model = CustomerModel
-    pk_url_kwarg = 'customer_pk'
-    template_name = "yunhu/customer_update.html"
-    context_object_name = 'customer'
+class CustomerAuditView(AjaxFormView):
+    template_name = "yunhu/customer_audit.html"
 
-    # def set_form_class(self):
-    #     user = self.request.user
-    #     if user.is_boss:
-    #         self.form_class = ChangeAuditForm
-    #     elif user.department == 1:
-    #         self.form_class = CustomerChangeForm
-    #     elif user.department == 2:
-    #         self.form_class = CustomerChangeForm
-    #     elif user.department == 3:
-    #         self.form_class = CustomerChangeForm
-    #     else:
-    #         self.form_class = CustomerChangeForm
-    #
-    # def get_form_class(self):
-    #     self.set_form_class()
-    #     return self.form_class
-    # def get_form(self, form_class=None):
-    #     """
-    #             Returns an instance of the form to be used in this view.
-    #             """
-    #     if form_class is None:
-    #         form_class = self.get_form_class()
-    #     return form_class(instance=self.get_form_instance(),**self.get_form_kwargs())
-    #
-    # def get_form_instance(self):
-    #     if self.http_method_names == "GET":
-    #         return self.form_class._meta.model.objects.get(customer=self.object)
-    #     return None
-class AuditCustomer(AjaxFormView):
+    form_class = ChangeAuditForm
+
+    def get_customer(self):
+        pk = self.kwargs.get("customer_pk")
+        return CustomerModel.objects.get(id=pk)
+
+    def get_initial(self):
+        initial = self.initial.copy()
+        initial.update({"customer_id": self.object.id,"user_id": self.request.user.id})
+        print initial
+        return initial
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        print form
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        kwargs['customer'] = self.get_customer()
+        return super(CustomerAuditView, self).get_context_data(**kwargs)
+
+    def post_save(self):
+        print self.object
+        # def get_form(self, form_class=None):
+        #     """
+        #             Returns an instance of the form to be used in this view.
+        #             """
+        #     if form_class is None:
+        #         form_class = self.get_form_class()
+        #     return form_class(instance=self.get_form_instance(), **self.get_form_kwargs())
+        #
+        # def get_form_instance(self):
+        #     if self.http_method_names == "GET":
+        #         return self.form_class._meta.model.objects.get(customer=self.object)
+        #     return None
+
+
+class AuditCustomer(AjaxUpdateView):
+    model = AuditModel
     form_class = CustomerChangeForm
+    pk_url_kwarg = "audit_pk"
+
 
 # 待审核客户
 class CustomerAuditListView(SingleTableMixin, FilterView):

@@ -64,6 +64,9 @@ class CustomerChangeForm(forms.ModelForm):
         model = CustomerModel
         fields = ("audit_status", "is_black", "blcak_reason")
 
+    def save(self, commit=True):
+        pass
+
 
 # 审核 改变状态 指定放款人 加入黑名单
 AUDIT_CHOICES = (
@@ -77,12 +80,11 @@ AUDIT_CHOICES = (
 )
 
 
-class ChangeAuditForm(forms.ModelForm):
-    # audit_status = forms.ChoiceField(choices=AUDIT_CHOICES)
-
-    class Meta:
-        model = AuditModel
-        fields = ("customer","user","note",)
+class ChangeAuditForm(forms.Form):
+    audit_status = forms.ChoiceField(choices=AUDIT_CHOICES)
+    note = forms.CharField(widget=forms.Textarea)
+    customer_id = forms.IntegerField(widget=forms.HiddenInput)
+    user_id = forms.IntegerField(widget=forms.HiddenInput)
 
 
 

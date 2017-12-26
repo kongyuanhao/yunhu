@@ -69,7 +69,7 @@ class CustomerTable(tables.Table):
 
     def render_edit(self, record):
         view_html = '''
-        <a href="/yunhu/customer-update/%(customer_id)s/" class="fm-update btn btn-default" data-fm-head="客户审核" data-fm-callback="reload" data-fm-target="#customer-%(customer_id)s">审核</a>
+        <a href="/yunhu/customer-audit/%(customer_id)s/" class="fm-update btn btn-default" data-fm-head="客户审核" data-fm-callback="reload" data-fm-target="#customer-%(customer_id)s">审核</a>
         '''
 
         return format_html(view_html % {"customer_id": record.id})
