@@ -237,7 +237,7 @@ class LonasModel(models.Model):
 
     practical_blance = models.FloatField(verbose_name=u"实借金额", help_text=u"实借金额", default=0.00)
     lona_time = models.DateField(verbose_name=u"放款时间", auto_now=True)
-    refund_time = models.DateTimeField(verbose_name=u"还款时间", default=7, help_text=u"默认7天", blank=True)
+    refund_time = models.DateField(verbose_name=u"还款时间",help_text=u"默认7天", blank=True)
 
     def assign_urge_user(self, user_urge):
         UrgeModel.objects.get_or_create(

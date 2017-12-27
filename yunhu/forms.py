@@ -9,7 +9,7 @@ from django import forms
 
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 
-from yunhu.models import User, ChannelModel, CustomerModel, LonasModel, AuditModel
+from yunhu.models import User, ChannelModel, CustomerModel, LonasModel, AuditModel, UrgeModel
 
 
 class ChannelForm(forms.ModelForm):
@@ -83,21 +83,44 @@ AUDIT_CHOICES = (
 class ChangeAuditForm(forms.Form):
     # audit_status = forms.ChoiceField(choices=AUDIT_CHOICES)
     note = forms.CharField(widget=forms.Textarea)
-    customer_id = forms.IntegerField(widget=forms.HiddenInput)
-    user_id = forms.IntegerField(widget=forms.HiddenInput)
 
-    def __init__(self,*args, **kwargs):
+    def __init__(self, *args, **kwargs):
         user = kwargs.get("user")
-        super(ChangeAuditForm,self).__init__(*args, **kwargs)
-        self.fields["audit_status"] = forms.ChoiceField(choices=AUDIT_CHOICES[:4])
+        customer = kwargs.get("customer")
+        super(ChangeAuditForm, self).__init__(*args, **kwargs)
+        self.set_fields(user, customer)
 
-    def check_user(self,user):
+    def get_form_model(self, user, customer):
+        models = [AuditModel, LonasModel, UrgeModel]
+        model,_ = models[user.department - 1].objects.get_or_create(user=user,customer=customer)
+        return model
+
+    def set_fields(self, user, customer):
+        model = self.get_form_model(user,customer)
+        self.fields["note"] = forms.CharField(widget=forms.Textarea,initial=model.note)
+        self.fields["customer_id"] = forms.IntegerField(show_hidden_initial=user.id)
+        self.fields["user_id"] = forms.IntegerField(show_hidden_initial=customer.id)
+        if user.is_boss:
+            self.fields["audit_status"] = forms.ChoiceField(choices=AUDIT_CHOICES[:4])
+            self.fields["model"] = forms.CharField(show_hidden_initial="AuditModel")
+            self.fields["next_user"] = forms.ModelChoiceField(User.objects.filter(company=user.company, department=2))
+        # 审核部门
         if user.department == 1:
             self.fields["audit_status"] = forms.ChoiceField(choices=AUDIT_CHOICES[:4])
+            self.fields["model"] = forms.CharField(show_hidden_initial="AuditModel")
+            self.fields["next_user"] = forms.ModelChoiceField(User.objects.filter(company=user.company, department=2))
+        # 财务部门
+        if user.department == 2:
+            self.fields["audit_status"] = forms.ChoiceField(choices=AUDIT_CHOICES[5:])
             self.fields["model"] = forms.CharField(show_hidden_initial="LonasModel")
-            self.fields["next_user"] = forms.ModelChoiceField(User.objects.filter(company=user.company,department=2))
-
-
+            self.fields["next_user"] = forms.ModelChoiceField(
+                User.objects.filter(company=user.company, department=3))
+            self.fields["practical_blance"] = forms.FloatField()
+            self.fields["refund_time"] = forms.DateField(initial=model.refund_time)
+        # 追款部门
+        if user.department == 3:
+            self.fields["audit_status"] = forms.ChoiceField(choices=AUDIT_CHOICES[:4])
+            self.fields["model"] = forms.CharField(show_hidden_initial="UrgeModel")
 
 
 # 放款 改变状态 指定追款人 加入黑名单
