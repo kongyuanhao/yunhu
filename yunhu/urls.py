@@ -41,12 +41,8 @@ user_url = [
 ]
 customer_url = [
     url(r'^customer-list/', views.CustomerListView.as_view(), name="customer-list"),
-    url(r'^customer-audit/', views.CustomerAuditListView.as_view(), name="customer-audit"),
-    url(r'^customer-loan/', views.CustomerLoanListView.as_view(), name="customer-loan"),
-    url(r'^customer-urge/', views.CustomerUrgeListView.as_view(), name="customer-urge"),
     url(r'^customer-audit/(?P<customer_pk>\d+)/$', views.CustomerAuditView.as_view(), name="customer-audit"),
     url(r'^customerblack-list/', views.CustomerBlackListView.as_view(), name="customerblack-list"),
-    url(r'^auditcustomer/(?P<audit_pk>\d+)/$', views.AuditCustomer.as_view(), name="auditcustomer"),
 ]
 
 h5_url = [

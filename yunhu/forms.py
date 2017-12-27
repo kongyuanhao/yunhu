@@ -81,10 +81,22 @@ AUDIT_CHOICES = (
 
 
 class ChangeAuditForm(forms.Form):
-    audit_status = forms.ChoiceField(choices=AUDIT_CHOICES)
+    # audit_status = forms.ChoiceField(choices=AUDIT_CHOICES)
     note = forms.CharField(widget=forms.Textarea)
     customer_id = forms.IntegerField(widget=forms.HiddenInput)
     user_id = forms.IntegerField(widget=forms.HiddenInput)
+
+    def __init__(self,*args, **kwargs):
+        user = kwargs.get("user")
+        super(ChangeAuditForm,self).__init__(*args, **kwargs)
+        self.fields["audit_status"] = forms.ChoiceField(choices=AUDIT_CHOICES[:4])
+
+    def check_user(self,user):
+        if user.department == 1:
+            self.fields["audit_status"] = forms.ChoiceField(choices=AUDIT_CHOICES[:4])
+            self.fields["model"] = forms.CharField(show_hidden_initial="LonasModel")
+            self.fields["next_user"] = forms.ModelChoiceField(User.objects.filter(company=user.company,department=2))
+
 
 
 

@@ -144,98 +144,43 @@ class CustomerListView(SingleTableMixin, FilterView):
 
 
 class CustomerAuditView(AjaxFormView):
-    template_name = "yunhu/customer_audit.html"
+    template_name = "yunhu/customer_update.html"
 
     form_class = ChangeAuditForm
 
     def get_customer(self):
         pk = self.kwargs.get("customer_pk")
         return CustomerModel.objects.get(id=pk)
-
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+        return form_class(**self.get_form_kwargs())
     def get_initial(self):
         initial = self.initial.copy()
-        initial.update({"customer_id": self.object.id,"user_id": self.request.user.id})
+        initial.update({"customer_id": self.get_customer().id, "user_id": self.request.user.id})
         print initial
         return initial
-
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        print form
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
 
     def get_context_data(self, **kwargs):
         kwargs['customer'] = self.get_customer()
         return super(CustomerAuditView, self).get_context_data(**kwargs)
 
-    def post_save(self):
-        print self.object
-        # def get_form(self, form_class=None):
-        #     """
-        #             Returns an instance of the form to be used in this view.
-        #             """
-        #     if form_class is None:
-        #         form_class = self.get_form_class()
-        #     return form_class(instance=self.get_form_instance(), **self.get_form_kwargs())
-        #
-        # def get_form_instance(self):
-        #     if self.http_method_names == "GET":
-        #         return self.form_class._meta.model.objects.get(customer=self.object)
-        #     return None
+    def audit_save(self,form):
+        data = form.cleaned_data
+        customer = CustomerModel.objects.get(id=data.get("customer_id"))
+        user = self.request.user
+        customer.audit_status = data.get("audit_status")
+        audit,_ = AuditModel.objects.get_or_create(user=user,customer=customer)
+        audit.note = data.get("note")
+        audit.save()
 
 
-class AuditCustomer(AjaxUpdateView):
-    model = AuditModel
-    form_class = CustomerChangeForm
-    pk_url_kwarg = "audit_pk"
+    def form_valid(self, form):
+        if self.request.is_ajax():
+            self.audit_save(form)
+            return self.render_json_response(self.get_success_result())
+        return HttpResponseRedirect(self.get_success_url())
 
-
-# 待审核客户
-class CustomerAuditListView(SingleTableMixin, FilterView):
-    table_class = CustomerAuditTable
-    filterset_class = CustomerFilter
-
-    def get_queryset(self):
-        return CustomerModel.objects.filter(
-            audit_customer__user=self.request.user,
-        )
-
-
-#
-class CustomerAuditUpdateView(AjaxUpdateView):
-    form_class = CustomerChangeForm
-    model = CustomerModel
-    pk_url_kwarg = 'customer_pk'
-    template_name = "yunhu/customer_update.html"
-    context_object_name = 'customer'
-
-    def pre_save(self):
-        if self.object.audit_status == 4:
-            LonasModel.objects.create(customer=self.object).save()
-
-
-# 待放款客户
-class CustomerLoanListView(SingleTableMixin, FilterView):
-    table_class = CustomerLoanTable
-    filterset_class = CustomerFilter
-
-    def get_queryset(self):
-        return CustomerModel.objects.filter(
-            lona_customer__user=self.request.user,
-        )
-
-
-# 待催款客户
-class CustomerUrgeListView(SingleTableMixin, FilterView):
-    table_class = CustomerUrgeTable
-    filterset_class = CustomerFilter
-
-    def get_queryset(self):
-        return CustomerModel.objects.filter(
-            urge_customer__user=self.request.user,
-        )
 
 
 class ExpenseListView(SingleTableMixin, FilterView):
