@@ -5,6 +5,10 @@ Created on 2017/11/26 11:03
 By kongl
 base Info
 """
+import itertools
+
+from django.core.paginator import Paginator
+
 from models import *
 from django_tables2 import tables
 from django_tables2.tables import columns
@@ -12,14 +16,15 @@ from django.utils.html import format_html
 
 
 class ChannelTable(tables.Table):
+    row_number = columns.Column(empty_values=(), verbose_name="序号")
     edit = columns.Column(empty_values=(), verbose_name="操作")
 
-    class Meta:
-        model = ChannelModel
-        fields = ("name", "link_h5", "check_ways", "create_time",)
-        row_attrs = {
-            "id": lambda record: "-".join(["channel", str(record.pk)])
-        }
+    def __init__(self, *args, **kwargs):
+        super(ChannelTable, self).__init__(*args, **kwargs)
+        self.counter = itertools.count(start=1)
+
+    def render_row_number(self):
+        return '%d' % next(self.counter)
 
     def render_edit(self, record):
         update_html = '''
@@ -27,6 +32,16 @@ class ChannelTable(tables.Table):
         '''
 
         return format_html(update_html % {"channel_id": record.id})
+
+    def paginate(self, klass=Paginator, per_page=None, page=1, *args, **kwargs):
+        pass
+
+    class Meta:
+        model = ChannelModel
+        fields = ("row_number", "name", "link_h5", "check_ways", "create_time",)
+        row_attrs = {
+            "id": lambda record: "-".join(["channel", str(record.pk)])
+        }
 
 
 class UserTable(tables.Table):
@@ -91,6 +106,7 @@ class CustomerAuditTable(tables.Table):
 
         return format_html(view_html % {"customer_id": record.id})
 
+
 class CustomerLoanTable(tables.Table):
     edit = columns.Column(empty_values=(), verbose_name="操作")
 
@@ -106,6 +122,7 @@ class CustomerLoanTable(tables.Table):
         '''
 
         return format_html(view_html % {"customer_id": record.id})
+
 
 class CustomerUrgeTable(tables.Table):
     edit = columns.Column(empty_values=(), verbose_name="操作")

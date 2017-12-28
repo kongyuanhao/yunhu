@@ -14,6 +14,7 @@ from django.views import generic
 from django.views.generic import FormView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin, DetailView
 from django_filters.views import FilterView
+from django_tables2 import RequestConfig
 from django_tables2.views import SingleTableMixin
 from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView, AjaxFormView
 
@@ -58,6 +59,13 @@ class ChannelListView(SingleTableMixin, FilterView):
             queryset = queryset.order_by(*ordering)
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super(ChannelListView, self).get_context_data(**kwargs)
+        table = context["table"]
+        RequestConfig(self.request, paginate={'per_page': 2}).configure(table)
+        context["table"] = table
+        return context
+
 
 class ChannelCreateView(AjaxCreateView):
     '''
@@ -66,8 +74,8 @@ class ChannelCreateView(AjaxCreateView):
     form_class = ChannelForm
 
     def get_initial(self):
-        initial = self.initial.copy()
-        initial["company"] = self.request.user.company
+        initial = super(ChannelCreateView, self).get_initial()
+        initial.update({"user": self.request.user})
         return initial
 
 
@@ -76,8 +84,13 @@ class ChannelChangeView(AjaxUpdateView):
     渠道更新
     '''
     model = ChannelModel
-    form_class = ChannelChangeForm
+    form_class = ChannelForm
     pk_url_kwarg = 'channel_pk'
+
+    def get_initial(self):
+        initial = super(ChannelChangeView, self).get_initial()
+        initial.update({"user": self.request.user})
+        return initial
 
 
 class UserListView(SingleTableMixin, FilterView):
@@ -151,10 +164,12 @@ class CustomerAuditView(AjaxFormView):
     def get_customer(self):
         pk = self.kwargs.get("customer_pk")
         return CustomerModel.objects.get(id=pk)
+
     def get_form(self, form_class=None):
         if form_class is None:
             form_class = self.get_form_class()
         return form_class(**self.get_form_kwargs())
+
     def get_initial(self):
         initial = self.initial.copy()
         initial.update({"customer_id": self.get_customer().id, "user_id": self.request.user.id})
@@ -165,22 +180,20 @@ class CustomerAuditView(AjaxFormView):
         kwargs['customer'] = self.get_customer()
         return super(CustomerAuditView, self).get_context_data(**kwargs)
 
-    def audit_save(self,form):
+    def audit_save(self, form):
         data = form.cleaned_data
         customer = CustomerModel.objects.get(id=data.get("customer_id"))
         user = self.request.user
         customer.audit_status = data.get("audit_status")
-        audit,_ = AuditModel.objects.get_or_create(user=user,customer=customer)
+        audit, _ = AuditModel.objects.get_or_create(user=user, customer=customer)
         audit.note = data.get("note")
         audit.save()
-
 
     def form_valid(self, form):
         if self.request.is_ajax():
             self.audit_save(form)
             return self.render_json_response(self.get_success_result())
         return HttpResponseRedirect(self.get_success_url())
-
 
 
 class ExpenseListView(SingleTableMixin, FilterView):

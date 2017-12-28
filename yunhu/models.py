@@ -25,6 +25,18 @@ class CheckWayModel(models.Model):
         verbose_name_plural = u"审核途径"
         verbose_name = u"审核途径"
 
+'''
+# h5认证：学信，手机运营商，脉脉，人行征信
+    chsi = models.BooleanField(verbose_name=u"学信认证", default=False)
+    mno = models.BooleanField(verbose_name=u"运营商认证", default=False)
+    maimai = models.BooleanField(verbose_name=u"脉脉认证", default=False)
+    rhzx = models.BooleanField(verbose_name=u"人行征信认证", default=False)
+    # api 认证 ： 京东 淘宝 公积金
+    jd = models.BooleanField(verbose_name=u"京东认证", default=False)
+    tb = models.BooleanField(verbose_name=u"淘宝认证", default=False)
+    gjj = models.BooleanField(verbose_name=u"公积金认证", default=False)
+'''
+
 
 class CompanyModel(models.Model):
     '''
@@ -157,7 +169,7 @@ class CustomerModel(models.Model):
     zhima_score = models.CharField(verbose_name=u"芝麻信用分", max_length=50, blank=True)
     wechat = models.CharField(verbose_name=u"微信", max_length=50, help_text=u"", blank=True, null=True)
     zone = models.CharField(verbose_name=u"所在地区", max_length=50, help_text=u"", blank=True, null=True)
-    address = models.CharField(verbose_name=u"详细住址", max_length=50, help_text=u"", blank=True, null=True)
+    address = models.CharField(verbose_name=u"详细住址", max_length=255, help_text=u"", blank=True, null=True)
 
     # 图片类 身份证
     idcard_backpic = models.ImageField(verbose_name=u"身份证反面", help_text=u"身份证反面", upload_to="customer/idcard",

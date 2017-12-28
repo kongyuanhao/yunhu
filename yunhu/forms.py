@@ -9,31 +9,24 @@ from django import forms
 
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 
-from yunhu.models import User, ChannelModel, CustomerModel, LonasModel, AuditModel, UrgeModel
+from yunhu.models import User, ChannelModel, CustomerModel, LonasModel, AuditModel, UrgeModel, CompanyModel
 
 
 class ChannelForm(forms.ModelForm):
-    class Meta:
-        model = ChannelModel
-        fields = ("name", "company",)
 
-        widgets = {
-            'company': forms.HiddenInput(),
-        }
-
-
-class ChannelChangeForm(forms.ModelForm):
-    '''
-    渠道更新
-    '''
+    def __init__(self, *args, **kwargs):
+        user = kwargs.get("initial").pop("user")
+        super(ChannelForm, self).__init__(*args, **kwargs)
+        self.fields["check_ways"] = forms.ModelMultipleChoiceField(
+            queryset=user.company.check_ways.all(),
+            widget=forms.CheckboxSelectMultiple(),
+            label=u"认证方式"
+        )
+        self.fields["company"] = forms.ModelChoiceField(widget=forms.HiddenInput(),initial=user.company,queryset=CompanyModel.objects.all())
 
     class Meta:
         model = ChannelModel
-        fields = ("name", "check_ways")
-
-        widgets = {
-            'check_ways': forms.CheckboxSelectMultiple(),
-        }
+        fields = ("name", "company","check_ways")
 
 
 class UserCreateForm(UserCreationForm):
@@ -92,12 +85,12 @@ class ChangeAuditForm(forms.Form):
 
     def get_form_model(self, user, customer):
         models = [AuditModel, LonasModel, UrgeModel]
-        model,_ = models[user.department - 1].objects.get_or_create(user=user,customer=customer)
+        model, _ = models[user.department - 1].objects.get_or_create(user=user, customer=customer)
         return model
 
     def set_fields(self, user, customer):
-        model = self.get_form_model(user,customer)
-        self.fields["note"] = forms.CharField(widget=forms.Textarea,initial=model.note)
+        model = self.get_form_model(user, customer)
+        self.fields["note"] = forms.CharField(widget=forms.Textarea, initial=model.note)
         self.fields["customer_id"] = forms.IntegerField(show_hidden_initial=user.id)
         self.fields["user_id"] = forms.IntegerField(show_hidden_initial=customer.id)
         if user.is_boss:

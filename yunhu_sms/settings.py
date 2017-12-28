@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'fm',
     'corsheaders',
+    'django_seed',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 MIDDLEWARE = [
