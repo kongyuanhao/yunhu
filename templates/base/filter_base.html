@@ -14,11 +14,9 @@
                 {% bootstrap_form filter.form layout='inline' %}
                 {% bootstrap_button 'filter' icon='search' %}
             </form>
-            {% block operations %}{% endblock %}
         </div>
-        <div class="clearfix"></div>
-
     </div>
+    {% block operations %}{% endblock %}
     <div class="row">
         <div class="col-md-12">
             {% render_table table 'django_tables2/bootstrap.html' %}

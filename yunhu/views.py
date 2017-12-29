@@ -50,6 +50,7 @@ class ChannelListView(SingleTableMixin, FilterView):
     table_class = ChannelTable
     filterset_class = ChannelFilter
 
+
     def get_queryset(self):
         queryset = self.request.user.company.company_channels.all()
         ordering = self.get_ordering()
@@ -58,13 +59,6 @@ class ChannelListView(SingleTableMixin, FilterView):
                 ordering = (ordering,)
             queryset = queryset.order_by(*ordering)
         return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super(ChannelListView, self).get_context_data(**kwargs)
-        table = context["table"]
-        RequestConfig(self.request, paginate={'per_page': 2}).configure(table)
-        context["table"] = table
-        return context
 
 
 class ChannelCreateView(AjaxCreateView):

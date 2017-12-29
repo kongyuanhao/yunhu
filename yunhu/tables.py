@@ -10,42 +10,44 @@ import itertools
 from django.core.paginator import Paginator
 
 from models import *
-from django_tables2 import tables
+from django_tables2 import tables, A
 from django_tables2.tables import columns
 from django.utils.html import format_html
 
 
 class ChannelTable(tables.Table):
-    row_number = columns.Column(empty_values=(), verbose_name="序号")
-    edit = columns.Column(empty_values=(), verbose_name="操作")
-
-    def __init__(self, *args, **kwargs):
-        super(ChannelTable, self).__init__(*args, **kwargs)
-        self.counter = itertools.count(start=1)
-
-    def render_row_number(self):
-        return '%d' % next(self.counter)
-
-    def render_edit(self, record):
-        update_html = '''
-        <a href="/yunhu/channel-update/%(channel_id)s/" class="fm-update btn btn-default" data-fm-head="渠道修改" data-fm-callback="reload" data-fm-target="#channel-%(channel_id)s">修改</a>
-        '''
-
-        return format_html(update_html % {"channel_id": record.id})
-
-    def paginate(self, klass=Paginator, per_page=None, page=1, *args, **kwargs):
-        pass
+    edit = columns.LinkColumn('yunhu:channel-update', text=u'修改', args=[A('pk')], attrs={
+        'a': {
+            'class': 'fm-update btn btn-default',
+            'data-fm-head': '渠道修改',
+            'data-fm-callback': 'reload',
+            'data-fm-target': '#channel-%(channel_id)s',
+        }
+    })
 
     class Meta:
         model = ChannelModel
-        fields = ("row_number", "name", "link_h5", "check_ways", "create_time",)
+        fields = ("id", "name", "link_h5", "check_ways", "create_time",)
         row_attrs = {
             "id": lambda record: "-".join(["channel", str(record.pk)])
         }
+        attrs = {
+            'class': 'table table-striped table-bordered',
+
+        }
+        orderable = False
+        template = "django_tables2/bootstrap.html"
 
 
 class UserTable(tables.Table):
-    edit = columns.Column(empty_values=(), verbose_name="操作")
+    edit = columns.LinkColumn('yunhu:user-update', text=u'修改', args=[A('pk')], attrs={
+        'a': {
+            'class': 'fm-update btn btn-default',
+            'data-fm-head': '员工修改',
+            'data-fm-callback': 'reload',
+            'data-fm-target': '#user-%(user_id)s',
+        }
+    })
 
     class Meta:
         model = User
@@ -61,17 +63,17 @@ class UserTable(tables.Table):
         }
         template = "django_tables2/bootstrap.html"
 
-    def render_edit(self, record):
-        update_html = '''
-        <a href="/yunhu/user-update/%(user_id)s/" class="fm-update btn btn-default" data-fm-head="Updating User" data-fm-callback="reload" data-fm-target="#user-%(user_id)s">修改</a>
-        '''
-
-        return format_html(update_html % {"user_id": record.id})
-
 
 # 显示信息 来源 芝麻信用分 审核人 申请时间 状态 操作
 class CustomerTable(tables.Table):
-    edit = columns.Column(empty_values=(), verbose_name="操作")
+    edit = columns.LinkColumn('yunhu:customer-audit', text=u'审核', args=[A('pk')], attrs={
+        'a': {
+            'class': 'fm-update btn btn-default',
+            'data-fm-head': '客户审核',
+            'data-fm-callback': 'reload',
+            'data-fm-target': '#customer-%(customer_id)s',
+        }
+    })
 
     class Meta:
         model = CustomerModel
@@ -81,13 +83,6 @@ class CustomerTable(tables.Table):
                   "urge_customer.user",
                   "audit_status",
                   "create_time", ]
-
-    def render_edit(self, record):
-        view_html = '''
-        <a href="/yunhu/customer-audit/%(customer_id)s/" class="fm-update btn btn-default" data-fm-head="客户审核" data-fm-callback="reload" data-fm-target="#customer-%(customer_id)s">审核</a>
-        '''
-
-        return format_html(view_html % {"customer_id": record.id})
 
 
 class CustomerAuditTable(tables.Table):

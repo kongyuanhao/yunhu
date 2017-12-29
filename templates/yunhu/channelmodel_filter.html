@@ -3,8 +3,13 @@
     渠道管理
 {% endblock %}
 {% block operations %}
-    <a href="{% url 'yunhu:channel-create' %}" class="fm-create btn btn-default pull-right" data-fm-head="新增渠道"
-       data-fm-callback="reload">新增</a>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{% url 'yunhu:channel-create' %}" class="fm-create btn btn-default pull-right" data-fm-head="新增渠道"
+               data-fm-callback="reload">新增</a>
+        </div>
+    </div>
+
 {% endblock %}
 {% block bootstrap3_extra_script %}
     {{ block.super }}
@@ -14,20 +19,9 @@
     <script>
 
         $(".link_h5").click(function (event) {
-            {#        layer.alert($('#output').qrcode("http://jetienne.com"));#}
-            var qrcode = new QRCode('qrcode', {
-                text: '请输入二维码内容再生成图像',
-                width: 256,
-                height: 256,
-                colorDark: '#000000',
-                colorLight: '#ffffff',
-                correctLevel: QRCode.CorrectLevel.H
-            });
-            qrcode.clear();
 
             layer.tips(qrcode.makeCode($(event.target).text()), $(this));
-            console.log($(event.target).text());
-            console.log($().qrcode("http://jetienne.com"));
+
         })
     </script>
 {% endblock %}
