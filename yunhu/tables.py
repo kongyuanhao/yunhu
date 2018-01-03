@@ -8,6 +8,7 @@ base Info
 import itertools
 
 from django.core.paginator import Paginator
+from django_tables2.utils import Accessor
 
 from models import *
 from django_tables2 import tables, A
@@ -74,13 +75,43 @@ class CustomerTable(tables.Table):
             'data-fm-target': '#customer-%(customer_id)s',
         }
     })
+    audit_customer_user = columns.Column(verbose_name='审核人', orderable=False, empty_values=())
+    lona_customer_user = columns.Column(verbose_name='放款人', orderable=False, empty_values=())
+    urge_customer_user = columns.Column(verbose_name='追款人', orderable=False, empty_values=())
+
+    def render_audit_customer_user(self, record):
+        print record
+        _m = record.audit_customer.all()
+        print _m
+        if _m:
+            return _m[0].user.name
+        else:
+            return "-"
+
+    def render_lona_customer_user(self, record):
+        print record
+        _m = record.lona_customer.all()
+        print _m
+        if _m:
+            return _m[0].user.name
+        else:
+            return "-"
+
+    def render_urge_customer_user(self, record):
+        print record
+        _m = record.urge_customer.all()
+        print _m
+        if _m:
+            return _m[0].user.name
+        else:
+            return "-"
 
     class Meta:
         model = CustomerModel
         fields = ["channel", "name", "tel", "wechat", "identity", "zhima_score",
-                  "audit_customer.user",
-                  "lona_customer.user",
-                  "urge_customer.user",
+                  "audit_customer_user",
+                  "lona_customer_user",
+                  "urge_customer_user",
                   "audit_status",
                   "create_time", ]
 
@@ -162,4 +193,4 @@ class ExpenseTable(tables.Table):
 class CustomerBlackTable(tables.Table):
     class Meta:
         model = CustomerModel
-        fields = ["user", "name", "tel", "qq", "identity", ]
+        fields = ["name", "tel", "wechat", "identity", "blcak_reason"]

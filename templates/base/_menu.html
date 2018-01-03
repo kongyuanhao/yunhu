@@ -12,62 +12,46 @@
                     H+
                 </div>
             </li>
-            <li>
-                <a class="J_menuItem" href="{% url 'yunhu:channel-list' %}">
-                    <i class="fa fa-home"></i>
-                    <span class="nav-label">渠道管理</span>
-                    {#                    <span class="fa arrow"></span>#}
-                </a>
-            </li>
-            <li>
-                <a class="J_menuItem" href="{% url 'yunhu:user-list' %}">
-                    <i class="fa fa-home"></i>
-                    <span class="nav-label">员工管理</span>
-                    {#                    <span class="fa arrow"></span>#}
-                </a>
-            </li>
-            <li>
-                <a class="J_menuItem" href="{% url 'yunhu:customer-list' %}">
-                    <i class="fa fa-home"></i>
-                    <span class="nav-label">客户管理</span>
-                    {#                    <span class="fa arrow"></span>#}
-                </a>
-            </li>
-            <li>
-                <a class="J_menuItem" href="{% url 'yunhu:customer-list' %}">
-                    <i class="fa fa-home"></i>
-                    <span class="nav-label">审核管理</span>
-                    {#                    <span class="fa arrow"></span>#}
-                </a>
-            </li>
-            <li>
-                <a class="J_menuItem" href="{% url 'yunhu:customer-list' %}">
-                    <i class="fa fa-home"></i>
-                    <span class="nav-label">放款管理</span>
-                    {#                    <span class="fa arrow"></span>#}
-                </a>
-            </li>
-            <li>
-                <a class="J_menuItem" href="{% url 'yunhu:customer-list' %}">
-                    <i class="fa fa-home"></i>
-                    <span class="nav-label">催款管理</span>
-                    {#                    <span class="fa arrow"></span>#}
-                </a>
-            </li>
-            <li>
-                <a class="J_menuItem" href="#">
-                    <i class="fa fa-home"></i>
-                    <span class="nav-label">数据分析</span>
-                    {#                    <span class="fa arrow"></span>#}
-                </a>
-            </li>
-            <li>
-                <a class="J_menuItem" href="{% url 'yunhu:expense-list' %}">
-                    <i class="fa fa-home"></i>
-                    <span class="nav-label">消费详情</span>
-                    {#                    <span class="fa arrow"></span>#}
-                </a>
-            </li>
+
+            {% if user.is_boss %}
+                <li>
+                    <a class="J_menuItem" href="{% url 'yunhu:channel-list' %}">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-label">渠道管理</span>
+                        {#                    <span class="fa arrow"></span>#}
+                    </a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="{% url 'yunhu:user-list' %}">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-label">员工管理</span>
+                        {#                    <span class="fa arrow"></span>#}
+                    </a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="{% url 'yunhu:data-stats' %}">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-label">数据分析</span>
+                        {#                    <span class="fa arrow"></span>#}
+                    </a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="{% url 'yunhu:expense-list' %}">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-label">消费详情</span>
+                        {#                    <span class="fa arrow"></span>#}
+                    </a>
+                </li>
+            {% else %}
+                <li>
+                    <a class="J_menuItem" href="{% url 'yunhu:customer-list' %}">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-label">{{ customer_admin_name }}</span>
+                        {#                    <span class="fa arrow"></span>#}
+                    </a>
+                </li>
+            {% endif %}
+
             <li>
                 <a class="J_menuItem" href="{% url 'yunhu:customerblack-list' %}">
                     <i class="fa fa-home"></i>

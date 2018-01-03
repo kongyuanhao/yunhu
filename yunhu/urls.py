@@ -37,6 +37,7 @@ user_url = [
     url(r'^user-update/(?P<user_pk>\d+)/$', views.UserUpdateView.as_view(), name="user-update"),
     url(r'^user-delete/(?P<user_pk>\d+)/$', views.UserDeleteView.as_view(), name="user-delete"),
     url(r'^expense-list/', views.ExpenseListView.as_view(), name="expense-list"),
+    url(r'^data-stats/', views.DataStatsView.as_view(), name="data-stats"),
 
 ]
 customer_url = [

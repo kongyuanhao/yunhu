@@ -77,7 +77,7 @@ class ChannelModel(models.Model):
     def link_h5(self):
         checkways = "?checkway=" + ",".join([cw.namecode for cw in self.check_ways.all()])
         return "".join(
-            ["http://www.yunhu.com/#/login/", self.identification, checkways])
+            ["http://www.yunhu.com","/yunhu/h5_index/#/login/", self.identification, checkways])
 
         # link_h5. = 'H5链接'
 
@@ -110,6 +110,9 @@ class User(AbstractUser):
     wechat = models.CharField(verbose_name=u"微信", max_length=50, help_text=u"微信", blank=True, null=True)
     is_boss = models.BooleanField(verbose_name=u"管理员", default=False, help_text=u"管理员")
     channels = models.ManyToManyField(ChannelModel, verbose_name=u"负责渠道", related_name="channels_users")
+
+    def __unicode__(self):
+        return self.name
 
 
 # 待审核
@@ -243,13 +246,13 @@ class AuditModel(models.Model):
 # 客户放款：放款金额 放款笔记 放款时间 收款时间 指定催款人 修改标签 拉黑客户
 class LonasModel(models.Model):
     customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", related_name="lona_customer")
-    user = models.ForeignKey(User, verbose_name="放款人", help_text=u"放款客户", related_name="loan_user", blank=True,
+    user = models.ForeignKey(User, verbose_name=u"放款人", help_text=u"放款客户", related_name="loan_user", blank=True,
                              null=True)
     note = models.TextField(verbose_name=u"放款笔记", blank=True)
 
     practical_blance = models.FloatField(verbose_name=u"实借金额", help_text=u"实借金额", default=0.00)
     lona_time = models.DateField(verbose_name=u"放款时间", auto_now=True)
-    refund_time = models.DateField(verbose_name=u"还款时间",help_text=u"默认7天", blank=True)
+    refund_time = models.DateField(verbose_name=u"还款时间",help_text=u"默认7天", blank=True,auto_now=True)
 
     def assign_urge_user(self, user_urge):
         UrgeModel.objects.get_or_create(
@@ -259,7 +262,7 @@ class LonasModel(models.Model):
 # 客户催款 ：催款笔记 修改标签 拉黑客户
 class UrgeModel(models.Model):
     customer = models.ForeignKey(CustomerModel, verbose_name=u"客户", related_name="urge_customer")
-    user = models.ForeignKey(User, verbose_name="催款人", help_text=u"催款客户", related_name="urge_user", blank=True,
+    user = models.ForeignKey(User, verbose_name=u"催款人", help_text=u"催款客户", related_name="urge_user", blank=True,
                              null=True)
     note = models.TextField(verbose_name=u"催款笔记", blank=True)
 

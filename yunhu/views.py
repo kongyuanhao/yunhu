@@ -22,6 +22,7 @@ from filters import *
 from tables import *
 from uitls import send_message, BaiQiZiXinYun, BaiQiShiApi
 from yunhu.forms import *
+from django.apps import apps
 
 
 class MainView(LoginRequiredMixin, generic.TemplateView):
@@ -29,6 +30,13 @@ class MainView(LoginRequiredMixin, generic.TemplateView):
     登录主界面
     '''
     template_name = "base/main.html"
+
+    def get_context_data(self, **kwargs):
+        admin_names = [u"审核管理", u"放款管理", u"追款管理"]
+        context = super(MainView, self).get_context_data(**kwargs)
+        context["customer_admin_name"] = admin_names[
+            self.request.user.department - 1] if self.request.user.department else ""
+        return context
 
 
 class WelcomeView(generic.TemplateView):
@@ -49,7 +57,6 @@ class ChannelListView(SingleTableMixin, FilterView):
     '''
     table_class = ChannelTable
     filterset_class = ChannelFilter
-
 
     def get_queryset(self):
         queryset = self.request.user.company.company_channels.all()
@@ -144,8 +151,12 @@ class CustomerListView(SingleTableMixin, FilterView):
     filterset_class = CustomerFilter
 
     def get_queryset(self):
-        if self.request.user.is_boss:
-            return CustomerModel.objects.filter(channel__company=self.request.user.company, is_black=False)
+        if self.request.user.department == 1:
+            return CustomerModel.objects.filter(audit_customer__user=self.request.user)
+        elif self.request.user.department == 2:
+            return CustomerModel.objects.filter(lona_customer__user=self.request.user)
+        elif self.request.user.department == 3:
+            return CustomerModel.objects.filter(urge_customer__user=self.request.user)
         else:
             return CustomerModel.objects.none()
 
@@ -159,16 +170,15 @@ class CustomerAuditView(AjaxFormView):
         pk = self.kwargs.get("customer_pk")
         return CustomerModel.objects.get(id=pk)
 
-    def get_form(self, form_class=None):
-        if form_class is None:
-            form_class = self.get_form_class()
-        return form_class(**self.get_form_kwargs())
-
-    def get_initial(self):
-        initial = self.initial.copy()
-        initial.update({"customer_id": self.get_customer().id, "user_id": self.request.user.id})
-        print initial
-        return initial
+    def get_form_kwargs(self):
+        kwargs = super(CustomerAuditView, self).get_form_kwargs()
+        kwargs.update(
+            {
+                "user": self.request.user,
+                "customer": self.get_customer()
+            }
+        )
+        return kwargs
 
     def get_context_data(self, **kwargs):
         kwargs['customer'] = self.get_customer()
@@ -176,12 +186,21 @@ class CustomerAuditView(AjaxFormView):
 
     def audit_save(self, form):
         data = form.cleaned_data
-        customer = CustomerModel.objects.get(id=data.get("customer_id"))
+        customer_id = data.pop("customer_id")
+        customer = CustomerModel.objects.get(id=customer_id)
+        data.pop("user_id")
+        next_user = data.pop("next_user")
+        models = [AuditModel, LonasModel, UrgeModel]
+        models[next_user.department - 1].objects.get_or_create(user=next_user, customer=customer)
         user = self.request.user
-        customer.audit_status = data.get("audit_status")
-        audit, _ = AuditModel.objects.get_or_create(user=user, customer=customer)
-        audit.note = data.get("note")
-        audit.save()
+        customer.audit_status = data.pop("audit_status")
+        customer.save()
+        _model = apps.get_model("yunhu", data.pop("model"))
+        model, _ = _model.objects.get_or_create(user=user, customer=customer)
+        for k, v in data.items():
+            print k, v
+            setattr(model, k, v)
+        model.save()
 
     def form_valid(self, form):
         if self.request.is_ajax():
@@ -201,14 +220,15 @@ class ExpenseListView(SingleTableMixin, FilterView):
         else:
             return ExpenseModel.objects.filter(user=self.request.user)
 
+class DataStatsView(generic.TemplateView):
+    template_name = "yunhu/data_stats.html"
+
 
 class CustomerBlackListView(SingleTableMixin, generic.ListView):
     table_class = CustomerBlackTable
 
-    # filterset_class = CustomerFilter
-
     def get_queryset(self):
-        return CustomerModel.objects.filter(user__company=self.request.user.company, is_black=True)
+        return CustomerModel.objects.filter(channel__company=self.request.user.company, is_black=True)
 
 
 # 跳转到h5页面
@@ -226,8 +246,10 @@ def tel_check(request):
     tel_num = serializers_data.get("tel")
     if tel_num:
         tel, _ = TelCheckModel.objects.get_or_create(tel=tel_num)
-        code_num = str(random.randint(1000, 9999))
-        if send_message(tel_num, code_num):
+        # code_num = str(random.randint(1000, 9999))
+        code_num = "1111"
+        # if send_message(tel_num, code_num):
+        if True:
             tel.code = code_num
             tel.save()
             print "success"
