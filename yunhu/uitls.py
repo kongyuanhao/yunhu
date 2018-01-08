@@ -62,9 +62,10 @@ mobile  String  是  40  用户手机号
 # 白骑士认证
 # 人行征信  学信网
 class BaiQiZiXinYun(object):
-    url = "https://credit.baiqishi.com/clweb/api/"
+    url = "https://credit.baiqishi.com/clweb/api"
     report_url = "/".join([url, "common", "getreport"])
     token_url = "/".join([url, "common", "gettoken"])
+    report_page_url = "/".join([url,"common","getreportpage"])
     request_param = {
         "partnerId": "yousu",
         "verifyKey": "0f1e33c41d5642d98f0fa59c595bd60a",
@@ -109,18 +110,22 @@ class BaiQiZiXinYun(object):
         self.print_data(data)
 
     def get_token_data(self):
+        self.time_stamp = str(time.time())
+        print self.time_stamp
+        self.request_param["timeStamp"] = self.time_stamp
+        print self.request_param
         data = self.get_request_data(self.token_url)
         self.print_data(data)
+        return data
 
+    def get_report_page(self):
+        token = self.get_token_data().get("data")
+        self.request_param["token"] = token
+        print self.request_param
+        data = requests.get(self.report_page_url,params=self.request_param)
+        print data.url
+        print data.text
 
-class BaiQiShiApi(object):
-    def __init__(self, url, data):
-        self.url = url
-        self.data = data
-
-    def do_request(self):
-        rep_json = requests.post(self.url, json=self.data).json()
-        return rep_json
 
 
 '''
@@ -135,11 +140,6 @@ class BaiQiShiApi(object):
 '''
 if __name__ == '__main__':
     zxy = BaiQiZiXinYun()
-    zxy.set_check_way("jd")
     zxy.set_customer_info(u"李志修", "370285199308050418", "15563886389")
-    print "-" * 10, "original", "-" * 10
-    zxy.get_original_data()
     print "-" * 10, "report", "-" * 10
-    zxy.get_report_data()
-    print "-" * 10, "token", "-" * 10
-    zxy.get_token_data()
+    zxy.get_report_page()

@@ -116,71 +116,25 @@ class CustomerTable(tables.Table):
                   "create_time", ]
 
 
-class CustomerAuditTable(tables.Table):
-    edit = columns.Column(empty_values=(), verbose_name="操作")
-
-    class Meta:
-        model = CustomerModel
-        fields = ["channel", "name", "tel", "qq", "identity", "zhima_score",
-                  "audit_status",
-                  "create_time", ]
-
-    def render_edit(self, record):
-        view_html = '''
-        <a href="/yunhu/customer-update/%(customer_id)s/" class="fm-update btn btn-default" data-fm-head="客户审核" data-fm-callback="reload" data-fm-target="#customer-%(customer_id)s">审核</a>
-        '''
-
-        return format_html(view_html % {"customer_id": record.id})
-
-
-class CustomerLoanTable(tables.Table):
-    edit = columns.Column(empty_values=(), verbose_name="操作")
-
-    class Meta:
-        model = CustomerModel
-        fields = ["channel", "name", "tel", "qq", "identity", "zhima_score",
-                  "audit_status",
-                  "create_time", ]
-
-    def render_edit(self, record):
-        view_html = '''
-        <a href="/yunhu/customer-update/%(customer_id)s/" class="fm-update btn btn-default" data-fm-head="客户审核" data-fm-callback="reload" data-fm-target="#customer-%(customer_id)s">审核</a>
-        '''
-
-        return format_html(view_html % {"customer_id": record.id})
-
-
-class CustomerUrgeTable(tables.Table):
-    edit = columns.Column(empty_values=(), verbose_name="操作")
-
-    class Meta:
-        model = CustomerModel
-        fields = ["channel", "name", "tel", "qq", "identity", "zhima_score",
-                  "audit_status",
-                  "create_time", ]
-
-    def render_edit(self, record):
-        view_html = '''
-        <a href="/yunhu/customer-update/%(customer_id)s/" class="fm-update btn btn-default" data-fm-head="客户审核" data-fm-callback="reload" data-fm-target="#customer-%(customer_id)s">审核</a>
-        '''
-
-        return format_html(view_html % {"customer_id": record.id})
-
-
-# class LonasTable(tables.Table):
-#     edit = columns.Column(empty_values=(), verbose_name="操作")
-#
-#     class Meta:
-#         model = LonasModel
-#         fields = ["id", "customer.name", "practical_blance",
-#                   "create_time", "days", "is_blance", "is_repayment"]
-#
-#     def render_edit(self, record):
-#         view_html = '''
-#         <a href="/yunhu/lonas-update/%(lonas_id)s/" class="fm-update btn btn-default" data-fm-head="确认放款" data-fm-callback="reload" data-fm-target="#lonas-%(lonas_id)s">管理</a>
-#         '''
-#
-#         return format_html(view_html % {"lonas_id": record.id})
+class DataStatsTables(tables.Table):
+    '''
+    (1, u"待审核"),     to_audit
+    (2, u"拒绝受理"),   refuse_audit
+    (3, u"审核通过"),   pass_audit
+    (4, u"需要复审"),   re_audit
+    (5, u"已放款"),     loan
+    (6, u"续期"),       overdue
+    (7, u"结清"),       settle
+    总量                total
+    '''
+    username = columns.Column(verbose_name="员工名称")
+    to_audit = columns.Column(verbose_name="待审核占比")
+    refuse_audit = columns.Column(verbose_name="审核通过")
+    pass_audit = columns.Column(verbose_name="需要复审占比")
+    re_audit = columns.Column(verbose_name="已放款占比")
+    loan = columns.Column(verbose_name="续期占比")
+    overdue = columns.Column(verbose_name="结清占比")
+    settle = columns.Column(verbose_name="总量")
 
 
 class ExpenseTable(tables.Table):

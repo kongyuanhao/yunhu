@@ -20,7 +20,7 @@ from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView, AjaxFormVie
 
 from filters import *
 from tables import *
-from uitls import send_message, BaiQiZiXinYun, BaiQiShiApi
+from uitls import send_message, BaiQiZiXinYun
 from yunhu.forms import *
 from django.apps import apps
 
@@ -220,8 +220,50 @@ class ExpenseListView(SingleTableMixin, FilterView):
         else:
             return ExpenseModel.objects.filter(user=self.request.user)
 
+
 class DataStatsView(generic.TemplateView):
+    '''
+    (1, u"待审核"),     to_audit
+    (2, u"拒绝受理"),   refuse_audit
+    (3, u"审核通过"),   pass_audit
+    (4, u"需要复审"),   re_audit
+    (5, u"已放款"),     loan
+    (6, u"续期"),       overdue
+    (7, u"结清"),       settle
+    总量                total
+    '''
     template_name = "yunhu/data_stats.html"
+
+    def get_data_stats(self):
+        user = self.request.user
+        customer_filter = CustomerModel.objects.filter(channel__channels_users__company=user.company)
+        total = customer_filter.count()
+        to_audit = customer_filter.filter(audit_status=1).count()
+        refuse_audit = customer_filter.filter(audit_status=2).count()
+        pass_audit = customer_filter.filter(audit_status=3).count()
+        re_audit = customer_filter.filter(audit_status=4).count()
+        loan = customer_filter.filter(audit_status=5).count()
+        overdue = customer_filter.filter(audit_status=6).count()
+        settle = customer_filter.filter(audit_status=7).count()
+        return {
+            "total": total,
+            "to_audit": to_audit,
+            "refuse_audit": refuse_audit,
+            "pass_audit": pass_audit,
+            "re_audit": re_audit,
+            "loan": loan,
+            "overdue": overdue,
+            "settle": settle,
+        }
+
+    def get_tables(self):
+        boss = self.request.user
+        users = User.objects.filter(company=boss.company)
+
+    def get_context_data(self, **kwargs):
+        context = super(DataStatsView, self).get_context_data(**kwargs)
+        context.update(self.get_data_stats())
+        return context
 
 
 class CustomerBlackListView(SingleTableMixin, generic.ListView):
