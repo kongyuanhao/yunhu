@@ -84,8 +84,9 @@ class ChangeAuditForm(forms.Form):
         self.set_fields(user, customer)
 
     def get_form_model(self, user, customer):
+
         models = [AuditModel, LonasModel, UrgeModel]
-        model, _ = models[0].objects.get_or_create(user=user, customer=customer)
+        model, _ = models[user.department - 1].objects.get_or_create(user=user, customer=customer)
         return model
 
     def set_fields(self, user, customer):

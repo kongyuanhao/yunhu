@@ -181,7 +181,12 @@ class CustomerAuditView(AjaxFormView):
         return kwargs
 
     def get_context_data(self, **kwargs):
-        kwargs['customer'] = self.get_customer()
+        customer = self.get_customer()
+        kwargs['customer'] = customer
+        zxy = BaiQiZiXinYun()
+        zxy.set_customer_info(customer.name,customer.identity,customer.tel)
+
+        kwargs["customer_report_page_url"] = zxy.get_report_page_url()
         return super(CustomerAuditView, self).get_context_data(**kwargs)
 
     def audit_save(self, form):
@@ -557,6 +562,12 @@ def check_approve_info(request):
 
 
 # 白骑士api转发
+class BaiQiShiApi(object):
+    def __init__(self,url,data):
+        pass
+    def do_request(self):
+        pass
+
 def bqs_api(request):
     serializers_data = json.loads(request.body)
     url = serializers_data.get("url")

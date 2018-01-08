@@ -1,14 +1,42 @@
 {% extends "base/base.html" %}
 {% block content %}
     <div class="row">
-        <div class="col-md-12">
-            <span>待审核占比</span>
-            <span>审核中占比</span>
-            <span>拒绝受理占比</span>
-            <span>已放款占比</span>
-            <span>已结清占比</span>
-            <span>预期占比</span>
-            <span>总数量</span>
+        <div class="col-md-1">
+            待审核占比 | {{ to_audit }}
+
         </div>
+        <div class="col-md-1">
+            审核中占比
+
+        </div>
+        <div class="col-md-1">
+            拒绝受理占比
+
+        </div>
+        <div class="col-md-1">
+            已放款占比
+
+        </div>
+        <div class="col-md-1">
+            已放款占比
+
+        </div>
+        <div class="col-md-1">
+            已结清占比
+
+        </div>
+        <div class="col-md-1">
+            预期占比
+
+        </div>
+        <div class="col-md-1">
+            预期占比
+
+        </div>
+        <div class="col-md-1">
+            总数量
+
+        </div>
+
     </div>
 {% endblock %}

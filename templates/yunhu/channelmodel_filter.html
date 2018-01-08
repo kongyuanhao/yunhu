@@ -19,8 +19,18 @@
     <script>
 
         $(".link_h5").click(function (event) {
-
-            layer.tips(qrcode.makeCode($(event.target).text()), $(this));
+            console.log("ok");
+            {#layer.tips(qrcode.makeCode($(event.target).text()), $(this));#}
+            var random_id = Math.random().toString(36).substr(2);
+            layer.tips('<div id="'+random_id+'"></div>', event.target, {
+                tips: [2, '#ffcccc'],
+                time: 5000
+            });
+            $("#"+random_id+"").qrcode({
+                "width":150,
+                "height":150,
+                "text":$(event.target).text()
+            })
 
         })
     </script>

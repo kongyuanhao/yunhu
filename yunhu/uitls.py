@@ -8,7 +8,10 @@ base Info
 
 # ali pay
 import time
+from urllib import urlencode
+
 from alipay import AliPay
+import urlparse
 
 
 def zhifu():
@@ -118,13 +121,12 @@ class BaiQiZiXinYun(object):
         self.print_data(data)
         return data
 
-    def get_report_page(self):
+    def get_report_page_url(self):
+        from furl import furl
         token = self.get_token_data().get("data")
         self.request_param["token"] = token
-        print self.request_param
-        data = requests.get(self.report_page_url,params=self.request_param)
-        print data.url
-        print data.text
+        return furl(self.report_page_url).add(self.request_param)
+
 
 
 
@@ -142,4 +144,4 @@ if __name__ == '__main__':
     zxy = BaiQiZiXinYun()
     zxy.set_customer_info(u"李志修", "370285199308050418", "15563886389")
     print "-" * 10, "report", "-" * 10
-    zxy.get_report_page()
+    zxy.get_report_page_url()

@@ -77,7 +77,7 @@ class ChannelModel(models.Model):
     def link_h5(self):
         checkways = "?checkway=" + ",".join([cw.namecode for cw in self.check_ways.all()])
         return "".join(
-            ["http://www.yunhu.com","/yunhu/h5_index/#/login/", self.identification, checkways])
+            ["http://47.94.133.188:8080","/yunhu/h5_index/#/login/", self.identification, checkways])
 
         # link_h5. = 'H5链接'
 
