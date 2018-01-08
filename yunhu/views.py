@@ -20,7 +20,7 @@ from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView, AjaxFormVie
 
 from filters import *
 from tables import *
-from uitls import send_message, BaiQiZiXinYun
+from uitls import send_message, BaiQiZiXinYun, BaiQiShiApi
 from yunhu.forms import *
 from django.apps import apps
 
@@ -561,12 +561,6 @@ def check_approve_info(request):
         })
 
 
-# 白骑士api转发
-class BaiQiShiApi(object):
-    def __init__(self,url,data):
-        pass
-    def do_request(self):
-        pass
 
 def bqs_api(request):
     serializers_data = json.loads(request.body)

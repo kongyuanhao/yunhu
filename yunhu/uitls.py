@@ -129,6 +129,14 @@ class BaiQiZiXinYun(object):
 
 
 
+class BaiQiShiApi(object):
+    def __init__(self, url, data):
+        self.url = url
+        self.data = data
+
+    def do_request(self):
+        rep_json = requests.post(self.url, json=self.data).json()
+        return rep_json
 
 '''
 :

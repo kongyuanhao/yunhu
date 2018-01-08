@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64d17b7e-d39d-4f8f-92c0-f1b271dce4e2" name="Default" comment="周一 尚客">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/yunhu_sms.iml" afterPath="$PROJECT_DIR$/.idea/yunhu_sms.iml" />
-      <change beforePath="$PROJECT_DIR$/templates/yunhu/channelmodel_filter.html" afterPath="$PROJECT_DIR$/templates/yunhu/channelmodel_filter.html" />
-      <change beforePath="$PROJECT_DIR$/templates/yunhu/customer_info.html" afterPath="$PROJECT_DIR$/templates/yunhu/customer_info.html" />
-      <change beforePath="$PROJECT_DIR$/templates/yunhu/data_stats.html" afterPath="$PROJECT_DIR$/templates/yunhu/data_stats.html" />
-      <change beforePath="$PROJECT_DIR$/yunhu/forms.py" afterPath="$PROJECT_DIR$/yunhu/forms.py" />
-      <change beforePath="$PROJECT_DIR$/yunhu/models.py" afterPath="$PROJECT_DIR$/yunhu/models.py" />
       <change beforePath="$PROJECT_DIR$/yunhu/uitls.py" afterPath="$PROJECT_DIR$/yunhu/uitls.py" />
       <change beforePath="$PROJECT_DIR$/yunhu/views.py" afterPath="$PROJECT_DIR$/yunhu/views.py" />
     </list>
@@ -71,11 +64,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/yunhu/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="565" column="30" lean-forward="false" selection-start-line="565" selection-start-column="30" selection-end-line="565" selection-end-column="30" />
+            <state relative-caret-position="427">
+              <caret line="568" column="24" lean-forward="false" selection-start-line="568" selection-start-column="24" selection-end-line="568" selection-end-column="24" />
               <folding>
                 <element signature="e#24#63#0" expanded="true" />
               </folding>
@@ -86,7 +79,7 @@
       <file leaf-file-name="filters.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/yunhu/filters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-187">
+            <state relative-caret-position="170">
               <caret line="12" column="6" lean-forward="false" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
               <folding />
             </state>
@@ -96,7 +89,7 @@
       <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/yunhu/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
+            <state relative-caret-position="170">
               <caret line="14" column="94" lean-forward="false" selection-start-line="14" selection-start-column="94" selection-end-line="14" selection-end-column="94" />
               <folding />
             </state>
@@ -106,7 +99,7 @@
       <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/yunhu/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1428">
+            <state relative-caret-position="1496">
               <caret line="88" column="45" lean-forward="false" selection-start-line="88" selection-start-column="45" selection-end-line="88" selection-end-column="45" />
               <folding>
                 <element signature="e#85#109#0" expanded="true" />
@@ -118,7 +111,7 @@
       <file leaf-file-name="channelmodel_filter.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/yunhu/channelmodel_filter.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
+            <state relative-caret-position="510">
               <caret line="30" column="28" lean-forward="false" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
               <folding />
             </state>
@@ -128,7 +121,7 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/yunhu/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-285">
+            <state relative-caret-position="1887">
               <caret line="116" column="0" lean-forward="false" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
               <folding />
             </state>
@@ -138,7 +131,7 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/yunhu_sms/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1343">
+            <state relative-caret-position="1547">
               <caret line="91" column="4" lean-forward="false" selection-start-line="88" selection-start-column="4" selection-end-line="97" selection-end-column="9" />
               <folding />
             </state>
@@ -155,11 +148,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="uitls.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="uitls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/yunhu/uitls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="71" column="21" lean-forward="true" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
+            <state relative-caret-position="256">
+              <caret line="139" column="0" lean-forward="false" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
               <folding>
                 <element signature="e#95#106#0" expanded="true" />
               </folding>
@@ -290,8 +283,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -467,17 +460,17 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938644" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37277147" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.44390243" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36747968" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44390243" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32831" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36747968" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20813008" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17549168" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17776097" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -714,7 +707,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="4" lean-forward="false" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -730,7 +722,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="18" lean-forward="false" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -752,7 +743,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/yunhu/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1428">
+        <state relative-caret-position="1496">
           <caret line="88" column="45" lean-forward="false" selection-start-line="88" selection-start-column="45" selection-end-line="88" selection-end-column="45" />
           <folding>
             <element signature="e#85#109#0" expanded="true" />
@@ -762,7 +753,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/yunhu_sms/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1343">
+        <state relative-caret-position="1547">
           <caret line="91" column="4" lean-forward="false" selection-start-line="88" selection-start-column="4" selection-end-line="97" selection-end-column="9" />
           <folding />
         </state>
@@ -770,7 +761,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/yunhu/filters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-187">
+        <state relative-caret-position="170">
           <caret line="12" column="6" lean-forward="false" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
           <folding />
         </state>
@@ -778,7 +769,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/yunhu/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
+        <state relative-caret-position="170">
           <caret line="14" column="94" lean-forward="false" selection-start-line="14" selection-start-column="94" selection-end-line="14" selection-end-column="94" />
           <folding />
         </state>
@@ -786,7 +777,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/yunhu/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-285">
+        <state relative-caret-position="1887">
           <caret line="116" column="0" lean-forward="false" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
           <folding />
         </state>
@@ -794,28 +785,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/yunhu/channelmodel_filter.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
+        <state relative-caret-position="510">
           <caret line="30" column="28" lean-forward="false" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/yunhu/views.py">
+    <entry file="file://$PROJECT_DIR$/yunhu/uitls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="565" column="30" lean-forward="false" selection-start-line="565" selection-start-column="30" selection-end-line="565" selection-end-column="30" />
+        <state relative-caret-position="256">
+          <caret line="139" column="0" lean-forward="false" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
           <folding>
-            <element signature="e#24#63#0" expanded="true" />
+            <element signature="e#95#106#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/yunhu/uitls.py">
+    <entry file="file://$PROJECT_DIR$/yunhu/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="71" column="21" lean-forward="true" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
+        <state relative-caret-position="427">
+          <caret line="568" column="24" lean-forward="false" selection-start-line="568" selection-start-column="24" selection-end-line="568" selection-end-column="24" />
           <folding>
-            <element signature="e#95#106#0" expanded="true" />
+            <element signature="e#24#63#0" expanded="true" />
           </folding>
         </state>
       </provider>
