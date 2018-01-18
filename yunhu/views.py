@@ -20,7 +20,7 @@ from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView, AjaxFormVie
 
 from filters import *
 from tables import *
-from uitls import send_message, BaiQiZiXinYun, BaiQiShiApi
+from uitls import BaiQiZiXinYun, BaiQiShiApi, SendMsm
 from yunhu.forms import *
 from django.apps import apps
 
@@ -293,10 +293,11 @@ def tel_check(request):
     tel_num = serializers_data.get("tel")
     if tel_num:
         tel, _ = TelCheckModel.objects.get_or_create(tel=tel_num)
-        # code_num = str(random.randint(1000, 9999))
-        code_num = "1111"
-        # if send_message(tel_num, code_num):
-        if True:
+        code_num = str(random.randint(1000, 9999))
+        # code_num = "1111"
+        sms = SendMsm()
+
+        if sms.send_sms(tel_num, code_num):
             tel.code = code_num
             tel.save()
             print "success"
