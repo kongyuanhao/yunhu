@@ -68,8 +68,8 @@ class SendMsm(object):
     send_sem_url = "http://61.129.57.234:7891/mt"
     send_sms_url = "http://61.129.57.37:7891/mt"
 
-    sem_template = u"【优速金融】尊敬的用户，您的借款申请已经通过，请添加微信客服：17094837410.进行操作下款"
-    sms_template = u"【优速金融】尊敬的用户，您的验证码是%(code)s"
+    sem_template = u"《优速金融》尊敬的用户，您的借款申请已经通过，请添加微信客服：17094837410.进行操作下款"
+    sms_template = u"《优速金融》尊敬的用户，您的验证码是%(code)s"
 
     params = {
         "un": "500063",
@@ -124,13 +124,15 @@ class BaiQiZiXinYun(object):
         return requests.post(url, json=self.request_param).json()
 
     def print_data(self, data):
-        pass
+        for k, v in data.items():
+            print k, ":", v
 
     # 客户认证信息更新
     def update_approve_info(self, customer):
         self.set_customer_info(customer.name, customer.identity, customer.tel)
         check_ways = ["chsi", "mno", "maimai", "rhzx", "jd", "tb", "gjj"]
         for check_way in check_ways:
+            print check_way,getattr(customer, check_way)
             if not getattr(customer, check_way):
                 self.set_check_way(check_way)
                 data = self.get_original_data()
@@ -150,7 +152,9 @@ class BaiQiZiXinYun(object):
 
     def get_token_data(self):
         self.time_stamp = str(time.time())
+        print self.time_stamp
         self.request_param["timeStamp"] = self.time_stamp
+        print self.request_param
         data = self.get_request_data(self.token_url)
         self.print_data(data)
         return data
@@ -243,17 +247,10 @@ class BaiQiShiFanQiZha(object):
             "certNo":"370285199308050418",
         })
     def do_request(self):
-        decisions = {
-            "binding":"binding",
-            "loan":"login",
-            "login":"login",
-            "modify":"modify",
-            "register":"register",
-            "withdraw":"withdraw",
-        }
+        # self.set_info()
         print "-" * 10, "report", "-" * 10
 
-        response_date = requests.post(self.url,json=self.params)
+        response_date = requests.post(self.url,json=self.params).json()
 
     def bingding(self):
         pass

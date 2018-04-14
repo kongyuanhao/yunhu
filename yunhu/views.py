@@ -203,6 +203,7 @@ class CustomerAuditView(AjaxFormView):
         _model = apps.get_model("yunhu", data.pop("model"))
         model, _ = _model.objects.get_or_create(user=user, customer=customer)
         for k, v in data.items():
+            print k, v
             setattr(model, k, v)
         model.save()
 
@@ -269,25 +270,6 @@ class DataStatsView(generic.TemplateView):
         context.update(self.get_data_stats())
         return context
 
-# 加入黑名单
-def add_blacklist(request):
-    try:
-        customer_id = request.POST.get("customer_id")
-        reason = request.POST.get("reason")
-        customer = CustomerModel.objects.get(id=customer_id)
-        customer.is_black = True
-        customer.blcak_reason = reason
-        customer.save()
-        return JsonResponse({
-            "msg":"成功加入黑名单",
-        })
-    except Exception,e:
-        return JsonResponse({
-            "msg":e.message,
-        })
-    pass
-# 移出黑名单
-
 
 class CustomerBlackListView(SingleTableMixin, generic.ListView):
     table_class = CustomerBlackTable
@@ -298,23 +280,16 @@ class CustomerBlackListView(SingleTableMixin, generic.ListView):
 
 # 跳转到h5页面
 def h5_index(request):
-    identification = request.GET.get("identification")
-    company = ChannelModel.objects.get(identification=identification).company
-
-    return render_to_response("yunhu/h5/index.html",
-                              {"title":company.name,
-                               "img1":company.h5_first_background or "img/h5/background1.png",
-                               "img2":company.h5_second_background or "img/h5/background2.png"
-                               })
-
-
+    return render_to_response("yunhu/h5/index.html")
 
 
 # 检查手机号
 def tel_check(request):
+    print request.body
     serializers_data = json.loads(request.body)
     # for ss in serializers_data:
     #     print ss
+    print serializers_data
     tel_num = serializers_data.get("tel")
     if tel_num:
         tel, _ = TelCheckModel.objects.get_or_create(tel=tel_num)
@@ -325,6 +300,7 @@ def tel_check(request):
         if sms.send_sms(tel_num, code_num):
             tel.code = code_num
             tel.save()
+            print "success"
             return JsonResponse({
                 "code": "SUCCESS",
                 "msg": "成功获取验证码",
@@ -350,20 +326,11 @@ def check_identification(request):
     identification = serializers_data.get("identification")
     if identification:
         try:
-            channel = ChannelModel.objects.get(identification=identification)
-            company = channel.company
-            company_name = company.name or u"云狐风控"
-            company_img1 = company.h5_first_background.url if company.h5_first_background else ""
-            company_img2 = company.h5_second_background.url if company.h5_second_background else ""
-
+            ChannelModel.objects.get(identification=identification)
             return JsonResponse({
                 "code": "SUCCESS",
                 "msg": u"渠道存在",
-                "body": {
-                    "company_name":company_name,
-                    "company_img1":company_img1,
-                    "company_img2":company_img2,
-                },
+                "body": None,
             })
         except Exception, e:
             print e
@@ -442,6 +409,7 @@ def check_base_info(request):
                 },
             })
         except Exception, e:
+            print e
             return JsonResponse({
                 "code": "FAIL",
                 "msg": u"客户信息不存在，请先注册",
@@ -460,9 +428,12 @@ def update_base_info(request):
     serializers_data = json.loads(request.body)
     customer_id = serializers_data.get("customer_id")
     base_info = serializers_data.get("base_info")
+    print customer_id
+    print base_info
     try:
         custom = CustomerModel.objects.get(id=customer_id)
         for k, v in base_info.items():
+            print k, v
             if isinstance(CustomerModel._meta.get_field(k), models.ImageField):
                 if v.startswith("data:"):
                     setattr(custom, k, str_img(v))
@@ -533,6 +504,7 @@ def update_supplement_info(request):
     try:
         custom = CustomerModel.objects.get(id=customer_id)
         for k, v in supplement_info.items():
+            print k, v
             if isinstance(CustomerModel._meta.get_field(k), models.ImageField):
                 if v.startswith("data:"):
                     setattr(custom, k, str_img(v))
@@ -597,5 +569,3 @@ def bqs_api(request):
     data = serializers_data.get("data")
     response_data = BaiQiShiApi(url, data).do_request()
     return JsonResponse(response_data)
-
-

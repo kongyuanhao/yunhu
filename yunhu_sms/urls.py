@@ -22,12 +22,9 @@ admin.site.site_header = u"云狐风控系统"
 # admin.site.site_title = 'HTML title from adminsitration'
 from django.conf.urls.static import static
 from django.conf import settings
-from rest_framework.authtoken import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^yunhu/', include("yunhu.urls",namespace="yunhu")),
-    url(r'^login/', views.obtain_auth_token),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

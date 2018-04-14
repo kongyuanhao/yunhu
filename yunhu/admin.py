@@ -37,8 +37,8 @@ class CompanyAdmin(admin.ModelAdmin):
 
 @admin.register(models.CheckWayModel)
 class CheckWayAdmin(admin.ModelAdmin):
-    fields = ("name","namecode")
-    list_display = ("name","namecode")
+    fields = ("name",)
+    list_display = ("name",)
 
 
 
