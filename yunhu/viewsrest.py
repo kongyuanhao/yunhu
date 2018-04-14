@@ -21,7 +21,7 @@ class ChannelModelViewSet(viewsets.ModelViewSet):
     serializer_class = ChannelModelSerializer
 
     def get_queryset(self):
-        return self.request.user.company.comany_users.all()
+        return self.request.user.company.company_channels.all()
 
     def create(self, request, *args, **kwargs):
         data = request.data
@@ -40,7 +40,7 @@ class UserModelViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        return self.request.user.company.company_channels.all()
+        return self.request.user.company.comany_users.all()
 
     def create(self, request, *args, **kwargs):
         data = request.data
@@ -51,7 +51,7 @@ class UserModelViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-router.register(r'channelmodel', ChannelModelViewSet,base_name='channelmodel')
+router.register(r'usermodel', ChannelModelViewSet,base_name='usermodel')
 
 
 # 客户管理
