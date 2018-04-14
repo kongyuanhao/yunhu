@@ -32,10 +32,10 @@ class ChannelTable(tables.Table):
         row_attrs = {
             "id": lambda record: "-".join(["channel", str(record.pk)])
         }
-        attrs = {
-            'class': 'table table-striped table-bordered',
-
-        }
+        # attrs = {
+        #     'class': 'table table-striped table-bordered',
+        #
+        # }
         orderable = False
         template = "django_tables2/bootstrap.html"
 
@@ -80,27 +80,21 @@ class CustomerTable(tables.Table):
     urge_customer_user = columns.Column(verbose_name='追款人', orderable=False, empty_values=())
 
     def render_audit_customer_user(self, record):
-        print record
         _m = record.audit_customer.all()
-        print _m
         if _m:
             return _m[0].user.name
         else:
             return "-"
 
     def render_lona_customer_user(self, record):
-        print record
         _m = record.lona_customer.all()
-        print _m
         if _m:
             return _m[0].user.name
         else:
             return "-"
 
     def render_urge_customer_user(self, record):
-        print record
         _m = record.urge_customer.all()
-        print _m
         if _m:
             return _m[0].user.name
         else:

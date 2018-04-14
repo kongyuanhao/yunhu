@@ -77,7 +77,7 @@ class ChannelModel(models.Model):
     def link_h5(self):
         checkways = "?checkway=" + ",".join([cw.namecode for cw in self.check_ways.all()])
         return "".join(
-            ["http://47.94.133.188:8080","/yunhu/h5_index/#/login/", self.identification, checkways])
+            ["http://www.yunhushuju.com","/yunhu/h5_index/?identification=",self.identification,"#/login/", self.identification, checkways])
 
         # link_h5. = 'H5链接'
 
@@ -176,11 +176,11 @@ class CustomerModel(models.Model):
 
     # 图片类 身份证
     idcard_backpic = models.ImageField(verbose_name=u"身份证反面", help_text=u"身份证反面", upload_to="customer/idcard",
-                                       blank=True, null=True)
-    idcard_pic = models.ImageField(verbose_name=u"身份证正面", help_text=u"身份证正面", upload_to="customer/idcard", blank=True,
-                                   null=True)
+                                       default="customer/nopic.gif")
+    idcard_pic = models.ImageField(verbose_name=u"身份证正面", help_text=u"身份证正面", upload_to="customer/idcard",
+                                   default="customer/nopic.gif")
     idcard_people_pic = models.ImageField(verbose_name=u"手持身份证", help_text=u"手持身份证", upload_to="customer/idcard",
-                                          blank=True, null=True)
+                                          default="customer/nopic.gif")
     # 补充信息
     # 联系人信息
     father_name = models.CharField(verbose_name=u"父亲姓名", max_length=50, blank=True)
@@ -199,8 +199,8 @@ class CustomerModel(models.Model):
     company_salary = models.CharField(verbose_name=u"薪水", max_length=50, blank=True)
 
     # 图片类
-    zfb_score_pic = models.ImageField(verbose_name=u"支付宝芝麻信用分数页", upload_to="customer/zfb", blank=True)
-    zfb_manage_pic = models.ImageField(verbose_name=u"支付宝管理页", upload_to="customer/zfb", blank=True)
+    zfb_score_pic = models.ImageField(verbose_name=u"支付宝芝麻信用分数页", upload_to="customer/zfb", default="customer/nopic.gif")
+    zfb_manage_pic = models.ImageField(verbose_name=u"支付宝管理页", upload_to="customer/zfb", default="customer/nopic.gif")
 
     # h5认证：学信，手机运营商，脉脉，人行征信
     chsi = models.BooleanField(verbose_name=u"学信认证", default=False)
