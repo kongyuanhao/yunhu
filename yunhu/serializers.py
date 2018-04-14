@@ -20,4 +20,14 @@ class UserSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def create(self, validated_data):
-        pass
+        instance = super(UserSerializer,self).create(validated_data)
+        if validated_data["password"]:
+            instance.set_password(validated_data["password"])
+            instance.save()
+        return instance
+    def update(self, instance, validated_data):
+        instance = super(UserSerializer, self).create(instance,validated_data)
+        if validated_data["password"]:
+            instance.set_password(validated_data["password"])
+            instance.save()
+        return instance

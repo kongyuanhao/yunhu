@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'fm',
     'corsheaders',
     'django_seed',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_filters'
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 MIDDLEWARE = [
