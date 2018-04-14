@@ -11,7 +11,7 @@ from models import *
 # 登录用户配置数据
 
 
-from yunhu.serializers import ChannelModelSerializer
+from yunhu.serializers import ChannelModelSerializer, UserSerializer
 from rest_framework import status
 router = routers.SimpleRouter()
 
@@ -19,6 +19,25 @@ router = routers.SimpleRouter()
 # 渠道管理
 class ChannelModelViewSet(viewsets.ModelViewSet):
     serializer_class = ChannelModelSerializer
+
+    def get_queryset(self):
+        return self.request.user.company.comany_users.all()
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        data["company"] = request.user.company.id
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+router.register(r'channelmodel', ChannelModelViewSet,base_name='channelmodel')
+
+
+# 员工管理
+class UserModelViewSet(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
 
     def get_queryset(self):
         return self.request.user.company.company_channels.all()
@@ -32,10 +51,8 @@ class ChannelModelViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-router.register(r'channelmodel', ChannelModelViewSet,base_name='configInfo')
+router.register(r'channelmodel', ChannelModelViewSet,base_name='channelmodel')
 
-
-# 员工管理
 
 # 客户管理
 
