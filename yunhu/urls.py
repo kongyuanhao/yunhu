@@ -9,6 +9,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
 import views
+import viewsrest
 
 urlpatterns = [
     url(r'^login/', login,
@@ -63,3 +64,4 @@ urlpatterns += channel_url
 urlpatterns += user_url
 urlpatterns += customer_url
 urlpatterns += h5_url
+urlpatterns += viewsrest.router.urls
