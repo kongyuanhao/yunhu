@@ -7,13 +7,20 @@
 from rest_framework import serializers
 from models import *
 
+# 认证方式 序列化
+class CheckWayModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CheckWayModel
+        fields = "__all__"
+
 # 渠道 序列化
 class ChannelModelSerializer(serializers.ModelSerializer):
+    check_ways_get = CheckWayModelSerializer(source="check_ways",many=True,read_only=True)
     class Meta:
         model = ChannelModel
         fields = "__all__"
 
-# 员工管理序列化
+# 员工管理 序列化
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
