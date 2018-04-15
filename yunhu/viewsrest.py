@@ -11,11 +11,21 @@ from models import *
 # 登录用户配置数据
 
 
-from yunhu.serializers import ChannelModelSerializer, UserSerializer
+from yunhu.serializers import ChannelModelSerializer, UserSerializer, CheckWayModelSerializer
 from rest_framework import status
+
 router = routers.SimpleRouter()
 
 
+# 认证方式获取
+class CheckWayModelViewSet(viewsets.ModelViewSet):
+    serializer_class = CheckWayModelSerializer
+    http_method_names = ["get"]
+
+    def get_queryset(self):
+        return self.request.user.company.check_ways.all()
+
+router.register(r'checkwaymodel', CheckWayModelViewSet, base_name='checkwaymodel')
 # 渠道管理
 class ChannelModelViewSet(viewsets.ModelViewSet):
     serializer_class = ChannelModelSerializer
@@ -32,7 +42,9 @@ class ChannelModelViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-router.register(r'channelmodel', ChannelModelViewSet,base_name='channelmodel')
+
+
+router.register(r'channelmodel', ChannelModelViewSet, base_name='channelmodel')
 
 
 # 员工管理
@@ -51,8 +63,9 @@ class UserModelViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-router.register(r'usermodel', ChannelModelViewSet,base_name='usermodel')
 
+
+router.register(r'usermodel', ChannelModelViewSet, base_name='usermodel')
 
 # 客户管理
 
