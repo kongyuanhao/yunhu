@@ -1,4 +1,27 @@
 接口文档
 url = ""
 登录
-/
+
+渠道管理
+/yunhu/channelmodel/
+"id": 1,
+"check_ways_get": [
+    {
+        "id": 4,
+        "name": "人行征信",
+        "namecode": "rhzx"
+    },
+    {
+        "id": 6,
+        "name": "淘宝",
+        "namecode": "tb"
+    }
+],
+"name": "百度推广",
+"identification": "efdc9b40-eb9b-11e7-ad5a-6045cb9cc2ed",
+"create_time": "2017-12-29T15:15:58",
+"company": 2,
+"check_ways": [
+    4,
+    6
+]
