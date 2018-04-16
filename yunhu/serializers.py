@@ -21,7 +21,7 @@ class ChannelModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ChannelModel
-        fields = ["name","link_h5","check_ways_get","create_time","check_ways"]
+        fields = ["id","name","link_h5","check_ways_get","create_time","check_ways"]
 
 # 员工管理 序列化
 class UserSerializer(serializers.ModelSerializer):
