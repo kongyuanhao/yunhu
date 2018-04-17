@@ -11,7 +11,7 @@ from models import *
 # 登录用户配置数据
 
 
-from yunhu.serializers import ChannelModelSerializer, UserSerializer, CheckWayModelSerializer
+from yunhu.serializers import ChannelModelSerializer, UserSerializer, CheckWayModelSerializer, CustomerModelSerializer
 from rest_framework import status
 
 router = routers.SimpleRouter()
@@ -68,6 +68,9 @@ class UserModelViewSet(viewsets.ModelViewSet):
 router.register(r'usermodel', ChannelModelViewSet, base_name='usermodel')
 
 # 客户管理
+class CustomerModelViewSet(viewsets.ModelViewSet):
+    serializer_class = CustomerModelSerializer
+
 
 # 审核管理
 

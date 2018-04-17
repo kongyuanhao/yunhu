@@ -41,3 +41,8 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(validated_data["password"])
             instance.save()
         return instance
+
+# 客户管理
+class CustomerModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomerModel
