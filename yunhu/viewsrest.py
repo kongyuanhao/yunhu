@@ -11,7 +11,8 @@ from models import *
 # 登录用户配置数据
 
 
-from yunhu.serializers import ChannelModelSerializer, UserSerializer, CheckWayModelSerializer, CustomerModelSerializer
+from yunhu.serializers import ChannelModelSerializer, UserSerializer, CheckWayModelSerializer, CustomerModelSerializer, \
+    CustomerModelListSerializer
 from rest_framework import status
 
 router = routers.SimpleRouter()
@@ -25,7 +26,10 @@ class CheckWayModelViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return self.request.user.company.check_ways.all()
 
+
 router.register(r'checkwaymodel', CheckWayModelViewSet, base_name='checkwaymodel')
+
+
 # 渠道管理
 class ChannelModelViewSet(viewsets.ModelViewSet):
     serializer_class = ChannelModelSerializer
@@ -35,8 +39,8 @@ class ChannelModelViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         data = request.data
-        data["company"] = request.user.company.id
-        serializer = self.get_serializer(data=request.data)
+        data[u"company"] = request.user.company.id
+        serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
@@ -67,10 +71,21 @@ class UserModelViewSet(viewsets.ModelViewSet):
 
 router.register(r'usermodel', ChannelModelViewSet, base_name='usermodel')
 
+
 # 客户管理
 class CustomerModelViewSet(viewsets.ModelViewSet):
     serializer_class = CustomerModelSerializer
 
+    def get_serializer_class(self, *args, **kwargs):
+        if self.action == "list":
+            return CustomerModelListSerializer
+        else:
+            return self.serializer_class
+    def get_queryset(self):
+        return CustomerModel.objects.filter(channel__in=self.request.user.company.company_channels.all())
+
+
+router.register(r'customermodel', CustomerModelViewSet, base_name='customermodel')
 
 # 审核管理
 

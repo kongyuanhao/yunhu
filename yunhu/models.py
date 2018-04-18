@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import uuid
-
+import shortuuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -24,6 +23,7 @@ class CheckWayModel(models.Model):
     class Meta:
         verbose_name_plural = u"审核途径"
         verbose_name = u"审核途径"
+
 
 '''
 # h5认证：学信，手机运营商，脉脉，人行征信
@@ -67,8 +67,7 @@ class ChannelModel(models.Model):
     渠道管理
     '''
     name = models.CharField(verbose_name=u"渠道名称", max_length=50, help_text=u"渠道名称")
-    identification = models.CharField(verbose_name=u"标识码", max_length=255, help_text=u"标识码", default=uuid.uuid1,
-                                      unique=True)
+    identification = models.CharField(verbose_name=u"标识码", max_length=255, help_text=u"标识码",blank=True,null=True)
     company = models.ForeignKey(CompanyModel, verbose_name=u"所属公司", related_name="company_channels")
     create_time = models.DateTimeField(auto_now=True)
     check_ways = models.ManyToManyField(CheckWayModel, verbose_name=u"认证方式", related_name="check_way_channels")
@@ -77,12 +76,20 @@ class ChannelModel(models.Model):
     def link_h5(self):
         checkways = "?checkway=" + ",".join([cw.namecode for cw in self.check_ways.all()])
         return "".join(
-            ["http://47.94.133.188:8080","/yunhu/h5_index/#/login/", self.identification, checkways])
+            ["http://47.94.133.188:8080", "/yunhu/h5_index/#/login/", self.identification, checkways])
 
         # link_h5. = 'H5链接'
 
     def __unicode__(self):
         return self.name
+
+    def save(self,force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        # Generate ID once, then check the db. If exists, keep trying.
+        self.identification = shortuuid.uuid()
+        while ChannelModel.objects.filter(identification=self.identification).exists():
+            self.identification = shortuuid.uuid()
+        super(ChannelModel, self).save()
 
     class Meta:
         verbose_name_plural = u"渠道管理"
@@ -100,7 +107,8 @@ class User(AbstractUser):
     '''
     公司用户管理
     '''
-    company = models.ForeignKey(CompanyModel, verbose_name=u"所属公司", help_text=u"所属公司", related_name="comany_users", null=True)
+    company = models.ForeignKey(CompanyModel, verbose_name=u"所属公司", help_text=u"所属公司", related_name="comany_users",
+                                null=True)
     department = models.IntegerField(verbose_name=u"部门名称", help_text=u"部门名称", choices=DEPARTMENT_CHOICES, blank=True,
                                      null=True)
     name = models.CharField(verbose_name=u"姓名", max_length=50, help_text=u"姓名")
@@ -218,7 +226,6 @@ class CustomerModel(models.Model):
     is_black = models.BooleanField(verbose_name=u"拉黑", help_text=u"用户进入黑名单", default=False)
     blcak_reason = models.TextField(verbose_name=u"拉黑原因", blank=True, null=True)
 
-
     def assign_audit_user(self, user_audit):
         AuditModel.objects.get_or_create(customer=self, user=user_audit)
 
@@ -235,8 +242,7 @@ class AuditModel(models.Model):
     user = models.ForeignKey(User, verbose_name="审核人", help_text=u"审核客户", related_name="audit_user", blank=True,
                              null=True)
     note = models.TextField(verbose_name=u"审核笔记", blank=True)
-    time = models.DateTimeField(verbose_name=u"审核时间",auto_now=True)
-
+    time = models.DateTimeField(verbose_name=u"审核时间", auto_now=True)
 
     def assign_lona_user(self, user_loan):
         LonasModel.objects.get_or_create(
@@ -252,7 +258,7 @@ class LonasModel(models.Model):
 
     practical_blance = models.FloatField(verbose_name=u"实借金额", help_text=u"实借金额", default=0.00)
     lona_time = models.DateField(verbose_name=u"放款时间", auto_now=True)
-    refund_time = models.DateField(verbose_name=u"还款时间",help_text=u"默认7天", blank=True,auto_now=True)
+    refund_time = models.DateField(verbose_name=u"还款时间", help_text=u"默认7天", blank=True, auto_now=True)
 
     def assign_urge_user(self, user_urge):
         UrgeModel.objects.get_or_create(

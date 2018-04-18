@@ -16,12 +16,12 @@ class CheckWayModelSerializer(serializers.ModelSerializer):
 # 渠道 序列化
 class ChannelModelSerializer(serializers.ModelSerializer):
     check_ways_get = CheckWayModelSerializer(source="check_ways",many=True,read_only=True)
-    check_ways = serializers.Field(write_only=True)
     link_h5 = serializers.ReadOnlyField()
 
     class Meta:
         model = ChannelModel
-        fields = ["id","name","link_h5","check_ways_get","create_time","check_ways"]
+        fields = ["id","name","link_h5","check_ways_get","create_time",'company',"check_ways"]
+        write_only_fields = ('company',"check_ways")
 
 # 员工管理 序列化
 class UserSerializer(serializers.ModelSerializer):
@@ -43,6 +43,11 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 # 客户管理
+class CustomerModelListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomerModel
+        fields = ["name","tel","identity","zhima_score","wechat","zone","address"]
 class CustomerModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerModel
+        fields = "__all__"
