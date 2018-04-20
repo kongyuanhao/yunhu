@@ -4,7 +4,8 @@
 # @Site    : 
 # @File    : viewsrest.py
 # @Software: PyCharm
-from rest_framework import views, viewsets, permissions, routers
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import views, viewsets, permissions, routers, filters
 from rest_framework.response import Response
 
 from models import *
@@ -33,6 +34,8 @@ router.register(r'checkwaymodel', CheckWayModelViewSet, base_name='checkwaymodel
 # 渠道管理
 class ChannelModelViewSet(viewsets.ModelViewSet):
     serializer_class = ChannelModelSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name', 'check_ways__name')
 
     def get_queryset(self):
         return self.request.user.company.company_channels.all()
@@ -88,6 +91,11 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
 router.register(r'customermodel', CustomerModelViewSet, base_name='customermodel')
 
 # 审核管理
+# class AuditModelViewSet(views):
+#
+#     def get(self):
+#         pass
+
 
 # 放贷管理
 
