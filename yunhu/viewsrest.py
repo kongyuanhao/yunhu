@@ -84,6 +84,7 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
             return CustomerModelListSerializer
         else:
             return self.serializer_class
+
     def get_queryset(self):
         return CustomerModel.objects.filter(channel__in=self.request.user.company.company_channels.all())
 

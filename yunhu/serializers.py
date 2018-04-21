@@ -46,7 +46,7 @@ class UserSerializer(serializers.ModelSerializer):
 class CustomerModelListSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerModel
-        fields = ["name","tel","identity","zhima_score","wechat","zone","address"]
+        fields = ["id","name","tel","identity","zhima_score","wechat","zone","address"]
 class CustomerModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerModel
