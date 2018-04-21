@@ -72,7 +72,7 @@ class UserModelViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-router.register(r'usermodel', ChannelModelViewSet, base_name='usermodel')
+router.register(r'usermodel', UserModelViewSet, base_name='usermodel')
 
 
 # 客户管理

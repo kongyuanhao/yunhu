@@ -17,6 +17,9 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework.documentation import include_docs_urls
+
+
 admin.site.site_header = u"云狐风控系统"
 # admin.site.index_title = ''
 # admin.site.site_title = 'HTML title from adminsitration'
@@ -26,6 +29,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^yunhu/', include("yunhu.urls",namespace="yunhu")),
     url(r'^login/', obtain_auth_token),
+    url(r'^docs/', include_docs_urls(title='云狐API'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
