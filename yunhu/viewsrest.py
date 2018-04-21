@@ -57,6 +57,8 @@ router.register(r'channelmodel', ChannelModelViewSet, base_name='channelmodel')
 # 员工管理
 class UserModelViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
 
     def get_queryset(self):
         return self.request.user.company.comany_users.all()
@@ -91,12 +93,12 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
 
 router.register(r'customermodel', CustomerModelViewSet, base_name='customermodel')
 
-# 审核管理
-# class AuditModelViewSet(views):
-#
-#     def get(self):
-#         pass
 
+# 审核管理
+class AuditViewSet(viewsets.GenericViewSet):
+
+    def retrieve(self, request, pk=None):
+        pass
 
 # 放贷管理
 
