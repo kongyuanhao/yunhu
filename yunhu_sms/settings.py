@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django_seed',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_filters'
+    'rest_framework_filters',
+    'rest_framework_swagger',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 MIDDLEWARE = [
