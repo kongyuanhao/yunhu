@@ -13,7 +13,7 @@ from models import *
 
 
 from yunhu.serializers import ChannelModelSerializer, UserSerializer, CheckWayModelSerializer, CustomerModelSerializer, \
-    CustomerModelListSerializer
+    CustomerModelListSerializer, AuditModelSerializer
 from rest_framework import status
 
 router = routers.SimpleRouter()
@@ -95,10 +95,11 @@ router.register(r'customermodel', CustomerModelViewSet, base_name='customermodel
 
 
 # 审核管理
-class AuditViewSet(viewsets.GenericViewSet):
+class AuditModelViewSet(viewsets.ModelViewSet):
+    serializer_class = AuditModelSerializer
 
-    def retrieve(self, request, pk=None):
-        pass
+
+router.register(r'customeraudit', AuditModelViewSet, base_name='customeraudit')
 
 # 放贷管理
 

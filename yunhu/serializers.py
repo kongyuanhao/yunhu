@@ -53,31 +53,38 @@ class CustomerModelListSerializer(serializers.ModelSerializer):
     loan_user = serializers.SerializerMethodField()
     urge_user = serializers.SerializerMethodField()
     channel__name = serializers.CharField(source='channel.name')
+
     class Meta:
         model = CustomerModel
         fields = ["id", "channel__name", "name", "tel", "identity", "zhima_score", "wechat", "zone", "address",
                   "audit_user", "loan_user", "urge_user"]
 
     def get_audit_user(self, obj):
-        user  = obj.audit_customer.all()
+        user = obj.audit_customer.all()
         if user:
-            return user[0].user.name
-        return ""
+            return {"uername": user[0].user.name, "id": user[0].id}
+        return {}
 
     def get_loan_user(self, obj):
         user = obj.lona_customer.all()
         if user:
-            return user[0].user.name
-        return ""
+            return {"uername": user[0].user.name, "id": user[0].id}
+        return {}
 
     def get_urge_user(self, obj):
         user = obj.urge_customer.all()
         if user:
-            return user[0].user.name
-        return ""
+            return {"uername": user[0].user.name, "id": user[0].id}
+        return {}
 
 
 class CustomerModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerModel
+        fields = "__all__"
+
+
+class AuditModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AuditModel
         fields = "__all__"
