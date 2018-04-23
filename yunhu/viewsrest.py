@@ -119,6 +119,9 @@ router.register(r'customermodel', CustomerModelViewSet, base_name='customermodel
 class AuditModelViewSet(viewsets.ModelViewSet):
     serializer_class = AuditModelSerializer
 
+    def get_queryset(self):
+        return CustomerModel.objects.filter(channel__in=self.request.user.company.company_channels.all(),audit_status=3)
+
 
 router.register(r'customeraudit', AuditModelViewSet, base_name='customeraudit')
 

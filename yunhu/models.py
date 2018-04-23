@@ -302,3 +302,13 @@ class TelCheckModel(models.Model):
             return True
         else:
             return False
+
+'''
+审核人：
+打发第三方第三方大师傅都是
+放款人：
+打发第三方第三方大师傅都是
+追款人：
+打发第三方第三方大师
+'''
+
