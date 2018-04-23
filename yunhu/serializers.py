@@ -85,6 +85,13 @@ class CustomerModelSerializer(serializers.ModelSerializer):
 
 
 class AuditModelSerializer(serializers.ModelSerializer):
+    audit_status = serializers.IntegerField(source='customer.audit_status')   
+    next_user = serializers.IntegerField()
+
     class Meta:
         model = AuditModel
-        fields = "__all__"
+        fields = ["note", "time", "audit_status"]
+
+    def update(self, instance, validated_data):
+        # next_user =
+        pass

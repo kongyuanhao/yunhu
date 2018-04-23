@@ -5,8 +5,11 @@
 # @File    : viewsrest.py
 # @Software: PyCharm
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import views, viewsets, permissions, routers, filters
+from rest_framework import views, viewsets, permissions, routers, filters, parsers, renderers
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from models import *
 # 登录用户配置数据
@@ -18,6 +21,24 @@ from rest_framework import status
 
 router = routers.SimpleRouter()
 
+class ObtainAuthToken(APIView):
+    throttle_classes = ()
+    permission_classes = ()
+    parser_classes = (parsers.FormParser, parsers.MultiPartParser, parsers.JSONParser,)
+    renderer_classes = (renderers.JSONRenderer,)
+    serializer_class = AuthTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        user_data = UserSerializer(instance=user).data
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({'token': token.key,"user":user_data})
+
+
+obtain_auth_token = ObtainAuthToken.as_view()
 
 # 认证方式获取
 class CheckWayModelViewSet(viewsets.ModelViewSet):
