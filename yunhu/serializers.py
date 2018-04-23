@@ -62,19 +62,19 @@ class CustomerModelListSerializer(serializers.ModelSerializer):
     def get_audit_user(self, obj):
         user = obj.audit_customer.all()
         if user:
-            return {"uername": user[0].user.name, "id": user[0].id}
+            return {"username": user[0].user.name, "id": user[0].id}
         return {}
 
     def get_loan_user(self, obj):
         user = obj.lona_customer.all()
         if user:
-            return {"uername": user[0].user.name, "id": user[0].id}
+            return {"username": user[0].user.name, "id": user[0].id}
         return {}
 
     def get_urge_user(self, obj):
         user = obj.urge_customer.all()
         if user:
-            return {"uername": user[0].user.name, "id": user[0].id}
+            return {"username": user[0].user.name, "id": user[0].id}
         return {}
 
 
