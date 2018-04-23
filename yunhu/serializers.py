@@ -86,11 +86,11 @@ class CustomerModelSerializer(serializers.ModelSerializer):
 
 class AuditModelSerializer(serializers.ModelSerializer):
     audit_status = serializers.IntegerField(source='customer.audit_status')   
-    next_user = serializers.IntegerField()
+    next_user = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = AuditModel
-        fields = ["note", "time", "audit_status"]
+        fields = ["note","next_user", "time", "audit_status"]
 
     def update(self, instance, validated_data):
         # next_user =
