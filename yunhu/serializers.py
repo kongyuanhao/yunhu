@@ -84,7 +84,20 @@ class CustomerModelSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+# 贷款审核
 class AuditModelSerializer(serializers.ModelSerializer):
+    next_user = serializers.IntegerField(write_only=True)
+    note_history = serializers.ModelField(read_only=True)
+
     class Meta:
         model = AuditModel
-        fields = "__all__"
+        fields = ["next_user", "note_history", "note", "time"]
+
+    def update(self, instance, validated_data):
+        next_user = validated_data.pop("next_user")
+        instance = super(AuditModelSerializer, self).update(instance, validated_data)
+        instance.assign_lona_user(User.objects.get(id=next_user))
+        return instance
+
+    def get_note_history(self, obj):
+        return "-----"

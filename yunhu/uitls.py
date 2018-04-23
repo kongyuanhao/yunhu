@@ -267,8 +267,8 @@ class BaiQiShiFanQiZha(object):
 15215427752
 '''
 if __name__ == '__main__':
-    # zxy = BaiQiZiXinYun()
-    # zxy.set_customer_info(u"李志修", "370285199308050418", "15563886389")
-    # zxy.get_report_page_url()
-    fqz = BaiQiShiFanQiZha()
-    fqz.do_request()
+    zxy = BaiQiZiXinYun()
+    zxy.set_customer_info(u"李志修", "370285199308050418", "15563886389")
+    print zxy.get_report_page_url()
+    # fqz = BaiQiShiFanQiZha()
+    # fqz.do_request()
