@@ -24,6 +24,12 @@ router = routers.SimpleRouter()
 
 
 class ObtainAuthToken(APIView):
+    '''
+        list:
+            list
+        create:
+        create
+    '''
     throttle_classes = ()
     permission_classes = ()
     parser_classes = (parsers.FormParser, parsers.MultiPartParser, parsers.JSONParser,)
@@ -57,6 +63,12 @@ router.register(r'checkwaymodel', CheckWayModelViewSet, base_name='checkwaymodel
 
 # 渠道管理
 class ChannelModelViewSet(viewsets.ModelViewSet):
+    '''
+    list:
+        list
+    create:
+    create
+    '''
     serializer_class = ChannelModelSerializer
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'check_ways__name')
