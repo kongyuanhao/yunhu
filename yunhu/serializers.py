@@ -91,13 +91,28 @@ class AuditModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AuditModel
-        fields = ["note", "next_user", "time", "audit_status"]
+        fields = ["note", "next_user", "audit_status"]
 
     def update(self, instance, validated_data):
-
-        next_user = validated_data.pop("next_user",None)
+        next_user = validated_data.pop("next_user", None)
         instance = super(AuditModelSerializer, self).update(instance, validated_data)
         if next_user:
             instance.assign_audit_user(User.objects.get(id=next_user))
         return instance
 
+
+# 放款管理
+class LonasModelSerializer(serializers.ModelSerializer):
+    audit_status = serializers.IntegerField(source='customer.audit_status')
+    next_user = serializers.IntegerField(write_only=True)
+
+    class Meta:
+        model = LonasModel
+        fields = ["note", "next_user", "audit_status", "practical_blance", "lona_time", "refund_time"]
+
+    def update(self, instance, validated_data):
+        next_user = validated_data.pop("next_user", None)
+        instance = super(LonasModelSerializer, self).update(instance, validated_data)
+        if next_user:
+            instance.assign_urge_user(User.objects.get(id=next_user))
+        return instance

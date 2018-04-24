@@ -5,21 +5,23 @@
 # @File    : viewsrest.py
 # @Software: PyCharm
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import views, viewsets, permissions, routers, filters, parsers, renderers
+from rest_framework import views, viewsets, permissions, routers, filters, parsers, renderers, mixins
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import GenericViewSet
 
 from models import *
 # 登录用户配置数据
 
 
 from yunhu.serializers import ChannelModelSerializer, UserSerializer, CheckWayModelSerializer, CustomerModelSerializer, \
-    CustomerModelListSerializer, AuditModelSerializer
+    CustomerModelListSerializer, AuditModelSerializer, LonasModelSerializer
 from rest_framework import status
 
 router = routers.SimpleRouter()
+
 
 class ObtainAuthToken(APIView):
     throttle_classes = ()
@@ -35,10 +37,11 @@ class ObtainAuthToken(APIView):
         user = serializer.validated_data['user']
         user_data = UserSerializer(instance=user).data
         token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key,"user":user_data})
+        return Response({'token': token.key, "user": user_data})
 
 
 obtain_auth_token = ObtainAuthToken.as_view()
+
 
 # 认证方式获取
 class CheckWayModelViewSet(viewsets.ModelViewSet):
@@ -109,23 +112,34 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
             return self.serializer_class
 
     def get_queryset(self):
-        return CustomerModel.objects.filter(channel__in=self.request.user.company.company_channels.all())
+        if self.request.user.department == 3:
+            return CustomerModel.objects.filter(channel__in=self.request.user.company.company_channels.all(),
+                                                audit_status__in=[9, 10])
+        else:
+            return CustomerModel.objects.filter(channel__in=self.request.user.company.company_channels.all())
 
 
 router.register(r'customermodel', CustomerModelViewSet, base_name='customermodel')
 
 
 # 审核管理
-class AuditModelViewSet(viewsets.ModelViewSet):
+class AuditModelViewSet(mixins.RetrieveModelMixin,
+                        mixins.UpdateModelMixin,
+                        GenericViewSet):
     serializer_class = AuditModelSerializer
-
-    def get_queryset(self):
-        return CustomerModel.objects.filter(channel__in=self.request.user.company.company_channels.all(),audit_status=3)
+    queryset = AuditModel.objects.all()
 
 
 router.register(r'customeraudit', AuditModelViewSet, base_name='customeraudit')
 
 # 放贷管理
+class LonasModelViewSet(mixins.RetrieveModelMixin,
+                        mixins.UpdateModelMixin,
+                        GenericViewSet):
+    serializer_class = LonasModelSerializer
+    queryset = LonasModel.objects.all()
+
+router.register(r'customerlonas', LonasModelViewSet, base_name='customerlonas')
 
 # 追款管理
 
