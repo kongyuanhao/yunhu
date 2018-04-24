@@ -4,6 +4,7 @@
 # @Site    : 
 # @File    : viewsrest.py
 # @Software: PyCharm
+import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import views, viewsets, permissions, routers, filters, parsers, renderers, mixins
 from rest_framework.authtoken.models import Token
@@ -93,7 +94,8 @@ router.register(r'channelmodel', ChannelModelViewSet, base_name='channelmodel')
 # 员工管理
 class UserModelViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter,DjangoFilterBackend)
+    filter_fields = ('department',)
     search_fields = ('name',)
 
     def get_queryset(self):
