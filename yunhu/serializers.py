@@ -40,7 +40,7 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
     def update(self, instance, validated_data):
-        instance = super(UserSerializer, self).create(instance, validated_data)
+        instance = super(UserSerializer, self).create(validated_data)
         if validated_data["password"]:
             instance.set_password(validated_data["password"])
             instance.save()
@@ -62,19 +62,19 @@ class CustomerModelListSerializer(serializers.ModelSerializer):
     def get_audit_user(self, obj):
         user = obj.audit_customer.all()
         if user:
-            return {"uername": user[0].user.name, "id": user[0].id}
+            return {"username": user[0].user.name, "id": user[0].id, "note": user[0].note}
         return {}
 
     def get_loan_user(self, obj):
         user = obj.lona_customer.all()
         if user:
-            return {"uername": user[0].user.name, "id": user[0].id}
+            return {"username": user[0].user.name, "id": user[0].id, "note": user[0].note}
         return {}
 
     def get_urge_user(self, obj):
         user = obj.urge_customer.all()
         if user:
-            return {"uername": user[0].user.name, "id": user[0].id}
+            return {"username": user[0].user.name, "id": user[0].id, "note": user[0].note}
         return {}
 
 
@@ -87,17 +87,51 @@ class CustomerModelSerializer(serializers.ModelSerializer):
 # 贷款审核
 class AuditModelSerializer(serializers.ModelSerializer):
     next_user = serializers.IntegerField(write_only=True)
-    note_history = serializers.ModelField(read_only=True)
+    audit_status = serializers.IntegerField(source="customer.audit_status")
 
     class Meta:
         model = AuditModel
-        fields = ["next_user", "note_history", "note", "time"]
+        fields = ["next_user", "note", "audit_status"]
 
     def update(self, instance, validated_data):
-        next_user = validated_data.pop("next_user")
+        next_user = validated_data.pop("next_user", None)
         instance = super(AuditModelSerializer, self).update(instance, validated_data)
-        instance.assign_lona_user(User.objects.get(id=next_user))
+        if next_user:
+            instance.assign_lona_user(User.objects.get(id=next_user))
+            instance.save()
         return instance
 
-    def get_note_history(self, obj):
-        return "-----"
+
+# 放款
+class LonasModelSerializer(serializers.ModelSerializer):
+    next_user = serializers.IntegerField(write_only=True)
+    audit_status = serializers.IntegerField(source="customer.audit_status")
+
+    class Meta:
+        model = LonasModel
+        fields = ["next_user", "note", "practical_blance", "lona_time", "refund_time", "audit_status"]
+
+    def update(self, instance, validated_data):
+        next_user = validated_data.pop("next_user", None)
+        instance = super(LonasModelSerializer, self).update(instance, validated_data)
+        if next_user:
+            instance.assign_urge_user(User.objects.get(id=next_user))
+            instance.save()
+        return instance
+
+
+# 催收
+class UrgeModelSerializer(serializers.ModelSerializer):
+    audit_status = serializers.IntegerField(source="customer.audit_status")
+
+    class Meta:
+        model = UrgeModel
+        fields = ["note", "audit_status"]
+
+    def update(self, instance, validated_data):
+        next_user = validated_data.pop("next_user", None)
+        instance = super(UrgeModelSerializer, self).update(instance, validated_data)
+        if next_user:
+            instance.assign_lona_user(User.objects.get(id=next_user))
+            instance.save()
+        return instance

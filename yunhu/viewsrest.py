@@ -17,7 +17,7 @@ from models import *
 
 
 from yunhu.serializers import ChannelModelSerializer, UserSerializer, CheckWayModelSerializer, CustomerModelSerializer, \
-    CustomerModelListSerializer, AuditModelSerializer, LonasModelSerializer
+    CustomerModelListSerializer, AuditModelSerializer, LonasModelSerializer, UrgeModelSerializer
 from rest_framework import status
 
 router = routers.SimpleRouter()
@@ -112,11 +112,19 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
             return self.serializer_class
 
     def get_queryset(self):
+        customers = CustomerModel.objects.filter(channel__in=self.request.user.company.company_channels.all())
+        if self.request.user.department == 1:
+            # 审核部门
+            return customers.filter(audit_customer__user=self.request.user)
+        if self.request.user.department == 2:
+            # 放款部门
+            return customers.filter(lona_customer__user=self.request.user)
+            pass
         if self.request.user.department == 3:
-            return CustomerModel.objects.filter(channel__in=self.request.user.company.company_channels.all(),
-                                                audit_status__in=[9, 10])
+            # 催收部门
+            return customers.filter(urge_customer__user=self.request.user, audit_status__in=[9, 10])
         else:
-            return CustomerModel.objects.filter(channel__in=self.request.user.company.company_channels.all())
+            return customers
 
 
 router.register(r'customermodel', CustomerModelViewSet, base_name='customermodel')
@@ -132,6 +140,7 @@ class AuditModelViewSet(mixins.RetrieveModelMixin,
 
 router.register(r'customeraudit', AuditModelViewSet, base_name='customeraudit')
 
+
 # 放贷管理
 class LonasModelViewSet(mixins.RetrieveModelMixin,
                         mixins.UpdateModelMixin,
@@ -139,10 +148,22 @@ class LonasModelViewSet(mixins.RetrieveModelMixin,
     serializer_class = LonasModelSerializer
     queryset = LonasModel.objects.all()
 
+
 router.register(r'customerlonas', LonasModelViewSet, base_name='customerlonas')
 
-# 追款管理
 
+# 追款管理
+class UrgeModelViewSet(mixins.RetrieveModelMixin,
+                       mixins.UpdateModelMixin,
+                       GenericViewSet):
+    '''
+    sssssssssss
+    '''
+    serializer_class = UrgeModelSerializer
+    queryset = UrgeModel.objects.all()
+
+
+router.register(r'customerurge', UrgeModelViewSet, base_name='customerurge')
 # 数据分析
 
 # 消费情况
