@@ -121,6 +121,7 @@ class AuditModelSerializer(serializers.ModelSerializer):
         audit_status = validated_data.pop("audit_status", None)
         note = validated_data.pop("note")
         instance.customer.audit_status = audit_status
+        instance.customer.save()
         instance.note = note
         if next_user:
             instance.assign_lona_user(User.objects.get(id=next_user))
@@ -139,10 +140,13 @@ class LonasModelSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         next_user = validated_data.pop("next_user", None)
-        instance = super(LonasModelSerializer, self).update(instance, validated_data)
+        audit_status = validated_data.pop("audit_status", None)
+        instance.customer.audit_status = audit_status
+        instance.customer.save()
+        instance.update(**validated_data)
         if next_user:
             instance.assign_urge_user(User.objects.get(id=next_user))
-            instance.save()
+        instance.save()
         return instance
 
 
@@ -155,9 +159,9 @@ class UrgeModelSerializer(serializers.ModelSerializer):
         fields = ["note", "audit_status"]
 
     def update(self, instance, validated_data):
-        next_user = validated_data.pop("next_user", None)
-        instance = super(UrgeModelSerializer, self).update(instance, validated_data)
-        if next_user:
-            instance.assign_lona_user(User.objects.get(id=next_user))
-            instance.save()
+        audit_status = validated_data.pop("audit_status", None)
+        instance.customer.audit_status = audit_status
+        instance.customer.save()
+        instance.update(**validated_data)
+        instance.save()
         return instance
