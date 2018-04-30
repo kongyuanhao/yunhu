@@ -118,10 +118,13 @@ class AuditModelSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         next_user = validated_data.pop("next_user", None)
-        instance = super(AuditModelSerializer, self).update(instance, validated_data)
+        audit_status = validated_data.pop("audit_status", None)
+        note = validated_data.pop("note")
+        instance.customer.audit_status = audit_status
+        instance.note = note
         if next_user:
             instance.assign_lona_user(User.objects.get(id=next_user))
-            instance.save()
+        instance.save()
         return instance
 
 

@@ -44,7 +44,7 @@ class ObtainAuthToken(APIView):
         user = serializer.validated_data['user']
         user_data = UserSerializer(instance=user).data
         token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key, "user": user_data})
+        return Response({'token': token.key, "user": user_data, "access": user.department if user.department else 0})
 
 
 obtain_auth_token = ObtainAuthToken.as_view()
@@ -94,7 +94,7 @@ router.register(r'channelmodel', ChannelModelViewSet, base_name='channelmodel')
 # 员工管理
 class UserModelViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
-    filter_backends = (filters.SearchFilter,DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter, DjangoFilterBackend)
     filter_fields = ('department',)
     search_fields = ('name',)
 
