@@ -9,6 +9,9 @@ from models import *
 
 
 # 认证方式 序列化
+from yunhu.uitls import BaiQiZiXinYun
+
+
 class CheckWayModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CheckWayModel
@@ -82,6 +85,7 @@ class CustomerModelSerializer(serializers.ModelSerializer):
     audit_user = serializers.SerializerMethodField()
     loan_user = serializers.SerializerMethodField()
     urge_user = serializers.SerializerMethodField()
+    zxy_url = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomerModel
@@ -106,8 +110,14 @@ class CustomerModelSerializer(serializers.ModelSerializer):
             return {"username": user[0].user.name, "id": user[0].id, "note": user[0].note}
         return {}
 
+    def get_zxy_url(self, obj):
+        zxy = BaiQiZiXinYun()
+        zxy.set_customer_info(obj.name, obj.identity, obj.tel)
+        return zxy.get_report_page_url()
 
-# 贷款审核
+    # 贷款审核
+
+
 class AuditModelSerializer(serializers.ModelSerializer):
     next_user = serializers.IntegerField(write_only=True)
     audit_status = serializers.IntegerField(source="customer.audit_status")

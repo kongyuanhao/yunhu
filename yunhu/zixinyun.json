@@ -1,0 +1,566 @@
+{
+  u
+  'ebMonthCostInfos': [
+    {
+      u
+      'costMoney': u
+      '137.90',
+      u
+      'costCount': u
+      '2',
+      u
+      'month': u
+      '201705'
+    },
+    {
+      u
+      'costMoney': u
+      '548.78',
+      u
+      'costCount': u
+      '11',
+      u
+      'month': u
+      '201706'
+    },
+    {
+      u
+      'costMoney': u
+      '328.90',
+      u
+      'costCount': u
+      '7',
+      u
+      'month': u
+      '201707'
+    },
+    {
+      u
+      'costMoney': u
+      '600.58',
+      u
+      'costCount': u
+      '15',
+      u
+      'month': u
+      '201708'
+    },
+    {
+      u
+      'costMoney': u
+      '246.02',
+      u
+      'costCount': u
+      '11',
+      u
+      'month': u
+      '201709'
+    },
+    {
+      u
+      'costMoney': u
+      '653.03',
+      u
+      'costCount': u
+      '16',
+      u
+      'month': u
+      '201710'
+    },
+    {
+      u
+      'costMoney': u
+      '619.31',
+      u
+      'costCount': u
+      '29',
+      u
+      'month': u
+      '201711'
+    },
+    {
+      u
+      'costMoney': u
+      '119.14',
+      u
+      'costCount': u
+      '7',
+      u
+      'month': u
+      '201712'
+    }
+  ],
+  u
+  'reportTime': u
+  '2018-05-02 18:58:56',
+  u
+  'crossValidation': {
+    u
+    'oneselfAdderChangeFrequency': {
+      u
+      'evidence': u
+      '\u4e00\u5e74\u5185\u5730\u5740\u53d8\u53164\u6b21',
+      u
+      'inspectionItems': u
+      '\u672c\u4eba\u5730\u5740\u53d8\u5316\u60c5\u51b5',
+      u
+      'result': u
+      '\u5076\u5c14'
+    },
+    u
+    'ebUseFrequency': {
+      u
+      'evidence': u
+      '\u4e00\u5e74\u5185\u5b58\u572898\u6761\u8d2d\u4e70\u8bb0\u5f55',
+      u
+      'inspectionItems': u
+      '\u7535\u5546\u4f7f\u7528\u9891\u7387',
+      u
+      'result': u
+      '\u9891\u7e41'
+    },
+    u
+    'oneselfEbUseFrequency': {
+      u
+      'evidence': u
+      '\u4e00\u5e74\u5185\u5b58\u572833\u6761\u672c\u4eba\u8d2d\u4e70\u8bb0\u5f55',
+      u
+      'inspectionItems': u
+      '\u672c\u4eba\u7535\u5546\u4f7f\u7528\u9891\u7387',
+      u
+      'result': u
+      '\u9891\u7e41'
+    }
+  },
+  u
+  'tbMonthCostInfos': [
+    {
+      u
+      'costMoney': u
+      '137.90',
+      u
+      'costCount': u
+      '2',
+      u
+      'month': u
+      '201705'
+    },
+    {
+      u
+      'costMoney': u
+      '548.78',
+      u
+      'costCount': u
+      '11',
+      u
+      'month': u
+      '201706'
+    },
+    {
+      u
+      'costMoney': u
+      '328.90',
+      u
+      'costCount': u
+      '7',
+      u
+      'month': u
+      '201707'
+    },
+    {
+      u
+      'costMoney': u
+      '600.58',
+      u
+      'costCount': u
+      '15',
+      u
+      'month': u
+      '201708'
+    },
+    {
+      u
+      'costMoney': u
+      '246.02',
+      u
+      'costCount': u
+      '11',
+      u
+      'month': u
+      '201709'
+    },
+    {
+      u
+      'costMoney': u
+      '653.03',
+      u
+      'costCount': u
+      '16',
+      u
+      'month': u
+      '201710'
+    },
+    {
+      u
+      'costMoney': u
+      '619.31',
+      u
+      'costCount': u
+      '29',
+      u
+      'month': u
+      '201711'
+    },
+    {
+      u
+      'costMoney': u
+      '119.14',
+      u
+      'costCount': u
+      '7',
+      u
+      'month': u
+      '201712'
+    }
+  ],
+  u
+  'petitioner': {
+    u
+    'birthAddress': u
+    '\u5c71\u4e1c\u7701\u9752\u5c9b\u5e02\u83b1\u897f\u5e02',
+    u
+    'name': u
+    '\u674e\u5fd7\u4fee',
+    u
+    'mobile': u
+    '15563886389',
+    u
+    'gender': u
+    '\u7537',
+    u
+    'age': u
+    '25',
+    u
+    'certNo': u
+    '370285199308050418',
+    u
+    'mobileBelongTo': u
+    '\u5c71\u4e1c\u7701\u70df\u53f0\u5e02',
+    u
+    'mobileMnoType': u
+    '\u4e2d\u56fd\u8054\u901a',
+    u
+    'constellation': u
+    '\u72ee\u5b50'
+  },
+  u
+  'reportSn': u
+  '201805021858568185092',
+  u
+  'webDataSources': [
+    {
+      u
+      'sourceType': u
+      '\u7535\u5546',
+      u
+      'sourceTime': u
+      '\u8fd1\u4e00\u5e74',
+      u
+      'storeTime': u
+      '2017-12-24 13:22:10',
+      u
+      'source': u
+      '\u6dd8\u5b9d\u5546\u57ce',
+      u
+      'passRealName': True,
+      u
+      'equalToPetitioner': True,
+      u
+      'realNameInfo': u
+      '3****************8,\u674e**'
+    }
+  ],
+  u
+  'financeDatas': [
+    {
+      u
+      'dataType': u
+      '\u8682\u8681\u82b1\u5457',
+      u
+      'totalLimit': u
+      '2500.0',
+      u
+      'huabeiAvailableAmount': u
+      '1734.47',
+      u
+      'yuebaoBalance': u
+      '0.99',
+      u
+      'accountBalance': u
+      '742.41'
+    }
+  ],
+  u
+  'commonlyUsedAddresses': [
+    {
+      u
+      'lastUserTime': u
+      '2017-08-04 10:48:53',
+      u
+      'costCount': u
+      '14',
+      u
+      'mobile': u
+      '15563886389',
+      u
+      'firstUseTime': u
+      '2017-05-26 21:10:35',
+      u
+      'address': u
+      '\u5c71\u4e1c\u7701\u9752\u5c9b\u5e02\u5e02\u5317\u533a\u91cd\u5e86\u5357\u8def27\u53f71\u53f7\u697c3\u5355\u5143803',
+      u
+      'costMoney': u
+      '688.06',
+      u
+      'name': u
+      '\u674e\u5fd7\u4fee'
+    },
+    {
+      u
+      'lastUserTime': u
+      '2017-09-13 12:32:21',
+      u
+      'costCount': u
+      '11',
+      u
+      'mobile': u
+      '15563886389',
+      u
+      'firstUseTime': u
+      '2017-08-15 20:10:14',
+      u
+      'address': u
+      '\u5c71\u4e1c\u7701\u9752\u5c9b\u5e02\u5e02\u5317\u533a\u5c71\u4e1c\u8def182\u53f713\u53f7\u697c1\u5355\u5143504',
+      u
+      'costMoney': u
+      '453.80',
+      u
+      'name': u
+      '\u674e\u5fd7\u4fee'
+    },
+    {
+      u
+      'lastUserTime': u
+      '2017-11-06 18:34:16',
+      u
+      'costCount': u
+      '7',
+      u
+      'mobile': u
+      '15563886389',
+      u
+      'firstUseTime': u
+      '2017-09-13 19:36:39',
+      u
+      'address': u
+      '\u5c71\u4e1c\u7701\u9752\u5c9b\u5e02\u5e02\u5317\u533a\u961c\u65b0\u8def\u8857\u9053\u5c71\u4e1c\u8def182\u53f713\u53f7\u697c1\u5355\u5143504',
+      u
+      'costMoney': u
+      '100.90',
+      u
+      'isDefault': u
+      '\u6dd8\u5b9d\u5546\u57ce',
+      u
+      'name': u
+      '\u674e\u5fd7\u4fee'
+    },
+    {
+      u
+      'lastUserTime': u
+      '2017-07-09 13:24:18',
+      u
+      'costCount': u
+      '1',
+      u
+      'mobile': u
+      '15563886389',
+      u
+      'firstUseTime': u
+      '2017-07-09 13:24:18',
+      u
+      'address': u
+      '\u5c71\u4e1c\u7701\u9752\u5c9b\u5e02\u83b1\u897f\u5e02\u540e\u891a\u6cb3\u5934\u6751\uff08\u9ebb\u70e6\u9001\u5230\u6751\u91cc\uff0c\u8c22\u8c22\uff0c\u6751\u5b50\u5730\u5740\u53ef\u4ee5\u767e\u5ea6\u5730\u56fe\u6216\u8005\u6253\u7535\u8bdd\u8be2\u95ee\u3002\uff09',
+      u
+      'costMoney': u
+      '86.00',
+      u
+      'name': u
+      '\u674e\u5fd7\u4fee'
+    },
+    {
+      u
+      'mobile': u
+      '15*******89',
+      u
+      'costMoney': u
+      '0.00',
+      u
+      'costCount': u
+      '0',
+      u
+      'name': u
+      '\u674e\u5fd7\u4fee',
+      u
+      'address': u
+      '\u5c71\u4e1c\u7701\u9752\u5c9b\u5e02\u5e02\u5317\u533a\u56db\u65b9\u8857\u9053\u91cd\u5e86\u5357\u8def27\u53f71\u53f7\u697c3\u5355\u5143803'
+    },
+    {
+      u
+      'mobile': u
+      '15*******89',
+      u
+      'costMoney': u
+      '0.00',
+      u
+      'costCount': u
+      '0',
+      u
+      'name': u
+      '\u674e\u5fd7\u4fee',
+      u
+      'address': u
+      '\u5c71\u4e1c\u7701\u9752\u5c9b\u5e02\u83b1\u897f\u5e02\u671b\u57ce\u8857\u9053\u540e\u891a\u6cb3\u5934\u6751\uff08\u9ebb\u70e6\u9001\u5230\u6751\u91cc\uff0c\u8c22\u8c22\uff0c\u6751\u5b50\u5730\u5740\u53ef\u4ee5\u767e\u5ea6\u5730\u56fe\u6216\u8005\u6253\u7535\u8bdd\u8be2\u95ee\u3002\uff09'
+    },
+    {
+      u
+      'mobile': u
+      '15*******48',
+      u
+      'costMoney': u
+      '0.00',
+      u
+      'costCount': u
+      '0',
+      u
+      'name': u
+      '\u4e8e\u745e\u8273',
+      u
+      'address': u
+      '\u5c71\u4e1c\u7701\u9752\u5c9b\u5e02\u83b1\u897f\u5e02\u6cbd\u6cb3\u8857\u9053\u725b\u6eaa\u57e0\u6751574\u53f7'
+    },
+    {
+      u
+      'mobile': u
+      '86-1708*****91',
+      u
+      'costMoney': u
+      '0.00',
+      u
+      'costCount': u
+      '0',
+      u
+      'name': u
+      '\u674e',
+      u
+      'address': u
+      '\u5c71\u4e1c\u7701\u9752\u5c9b\u5e02\u5e02\u5317\u533a\u961c\u65b0\u8def\u8857\u9053\u5c71\u4e1c\u8def182\u53f712\u53f7\u697c\u91cc'
+    },
+    {
+      u
+      'mobile': u
+      '15*******89',
+      u
+      'costMoney': u
+      '0.00',
+      u
+      'costCount': u
+      '0',
+      u
+      'name': u
+      '\u674e\u5fd7\u4fee',
+      u
+      'address': u
+      '\u5c71\u4e1c\u7701\u9752\u5c9b\u5e02\u5e02\u5357\u533a\u4e2d\u5c71\u8def\u8857\u9053\u4e2d\u5c71\u8def70\u53f7\u5317\u95e8410'
+    },
+    {
+      u
+      'mobile': u
+      '1719*****38',
+      u
+      'costMoney': u
+      '0.00',
+      u
+      'costCount': u
+      '0',
+      u
+      'name': u
+      '\u674e\u5fd7',
+      u
+      'address': u
+      '\u5c71\u4e1c\u7701\u9752\u5c9b\u5e02\u5e02\u5317\u533a\u961c\u65b0\u8def\u8857\u9053\u91cd\u5e86\u5357\u8def27\u53f7'
+    },
+    {
+      u
+      'mobile': u
+      '86-18*******59',
+      u
+      'costMoney': u
+      '0.00',
+      u
+      'costCount': u
+      '0',
+      u
+      'name': u
+      '\u5f20\u6d2a\u7167',
+      u
+      'address': u
+      '\u5c71\u4e1c\u7701\u6d4e\u5b81\u5e02\u5609\u7965\u53bf\u5b5f\u59d1\u96c6\u9547\u5b5f\u59d1\u96c6\u4e61\u653f\u5e9c'
+    },
+    {
+      u
+      'mobile': u
+      '13*******55',
+      u
+      'costMoney': u
+      '0.00',
+      u
+      'costCount': u
+      '0',
+      u
+      'name': u
+      '\u674e\u65b0\u5168',
+      u
+      'address': u
+      '\u5c71\u4e1c\u7701\u9752\u5c9b\u5e02\u83b1\u897f\u5e02\u6c34\u96c6\u8857\u9053\u5c71\u4e1c\u9752\u5c9b\u83b1\u897f\u5e02\u534e\u5fb7\u5c0f\u533a4#\u697c\u4e8c\u5355\u5143'
+    }
+  ],
+  u
+  'ebBaseInfos': [
+    {
+      u
+      'boundCertNo': u
+      '3****************8',
+      u
+      'boundName': u
+      '\u674e**',
+      u
+      'ebType': u
+      '\u6dd8\u5b9d\u5546\u57ce',
+      u
+      'boundMobile': u
+      '183****7597',
+      u
+      'loginName': u
+      '\u957f\u5b89\u516d\u6708\u96ea1'
+    }
+  ],
+  u
+  'bqsAntiFraudCloud': {
+    u
+    'phoneCount': u
+    '1',
+    u
+    'idcCount': u
+    '1'
+  }
+}
