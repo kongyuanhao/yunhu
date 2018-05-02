@@ -229,7 +229,7 @@ class CustomerModel(models.Model):
     tb = models.BooleanField(verbose_name=u"淘宝认证", help_text=u"淘宝认证", default=False)
     gjj = models.BooleanField(verbose_name=u"公积金认证", help_text=u"公积金认证", default=False)
 
-    create_time = models.DateTimeField(verbose_name=u"申请时间", help_text=u"申请时间", auto_now=True)
+    create_time = models.DateTimeField(verbose_name=u"申请时间", help_text=u"申请时间", auto_now_add=True)
     audit_status = models.IntegerField(verbose_name=u"审核状态", help_text=u"审核状态", choices=AUDIT_STATUS_CHOICES, default=1)
 
     is_black = models.BooleanField(verbose_name=u"拉黑", help_text=u"用户进入黑名单", default=False)
