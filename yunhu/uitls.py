@@ -124,8 +124,9 @@ class BaiQiZiXinYun(object):
         return requests.post(url, json=self.request_param).json()
 
     def print_data(self, data):
-        for k, v in data.items():
-            print k, ":", v
+        pass
+        # for k, v in data.items():
+        #     print k, ":", v
 
     # 客户认证信息更新
     def update_approve_info(self, customer):
