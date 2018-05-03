@@ -186,6 +186,11 @@ router.register(r'customerurge', UrgeModelViewSet, base_name='customerurge')
 @api_view(["GET", ])
 @permission_classes([permissions.IsAuthenticated, ])
 def data_statistics(request):
+    '''
+
+    :param request:
+    :return:
+    '''
     check_ways = request.user.company.check_ways.all()
     customers = CustomerModel.objects.filter(channel__company=request.user.company)
 

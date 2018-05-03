@@ -7,7 +7,6 @@
 from rest_framework import serializers
 from models import *
 
-
 # 认证方式 序列化
 from yunhu.uitls import BaiQiZiXinYun
 
@@ -112,8 +111,9 @@ class CustomerModelSerializer(serializers.ModelSerializer):
 
     def get_zxy_url(self, obj):
         zxy = BaiQiZiXinYun()
+        print obj.name, obj.identity, obj.tel
         zxy.set_customer_info(obj.name, obj.identity, obj.tel)
-        return zxy.get_report_page_url()
+        return zxy.get_report_page_url().url
 
     # 贷款审核
 
