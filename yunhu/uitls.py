@@ -153,9 +153,7 @@ class BaiQiZiXinYun(object):
 
     def get_token_data(self):
         self.time_stamp = str(time.time())
-        print self.time_stamp
         self.request_param["timeStamp"] = self.time_stamp
-        print self.request_param
         data = self.get_request_data(self.token_url)
         self.print_data(data)
         return data
