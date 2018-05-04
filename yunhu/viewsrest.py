@@ -91,6 +91,11 @@ class ChannelModelViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
+    @action(detail=False)
+    def customer_count(self, request):
+        customers = CustomerModel.objects.filter(channel__company=request.user.company)
+        return Response(customers.values("channel").annotate(customer_count=Sum("id")))
+
 
 router.register(r'channelmodel', ChannelModelViewSet, base_name='channelmodel')
 
@@ -161,7 +166,8 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
     @action(detail=False)
     def status_analysis(self, request):
         customers = CustomerModel.objects.filter(channel__company=request.user.company)
-        return Response(customers.values("audit_status").annotate(Sum("id")))
+        return Response(customers.values("audit_status").annotate(customer_count=Sum("id")))
+
 
 router.register(r'customermodel', CustomerModelViewSet, base_name='customermodel')
 
