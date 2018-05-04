@@ -208,40 +208,6 @@ class UrgeModelViewSet(mixins.RetrieveModelMixin,
 router.register(r'customerurge', UrgeModelViewSet, base_name='customerurge')
 
 
-# 数据分析
-@api_view(["GET", ])
-@permission_classes([permissions.IsAuthenticated, ])
-def data_statistics(request):
-    '''
-
-    :param request:
-    :return:
-    '''
-    check_ways = request.user.company.check_ways.all()
-    customers = CustomerModel.objects.filter(channel__company=request.user.company)
-
-    datas = {
-        "today_customers": {
-            "register": customers.filter(create_time__date=datetime.date.today()).count(),
-            "authentication": customers.filter(create_time__date=datetime.date.today(), mno=True).count(),
-            "loan": LonasModel.objects.filter(customer__in=customers, lona_time=datetime.date.today()).count(),
-            "overdue": LonasModel.objects.filter(customer__in=customers, refund_time=datetime.date.today(),
-                                                 customer__audit_status=5),
-        },
-        "last_week_consumption": {
-
-        },
-        "last_week_loan": {},
-        "channel": {},
-        "customer_status": {},
-        "customer_total": {
-            "register": 10,
-            "loans": 10,
-            "overdue": 10,
-            "urgent": 10,
-        }
-    }
-
 # 消费情况
 
 # 黑名单
