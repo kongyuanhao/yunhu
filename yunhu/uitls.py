@@ -267,7 +267,7 @@ class BaiQiShiFanQiZha(object):
 '''
 if __name__ == '__main__':
     zxy = BaiQiZiXinYun()
-    zxy.set_customer_info(u"李志修", "370285199308050418", "15563886389")
-    print type(zxy.get_report_page_url().url)
+    zxy.set_customer_info(u"韩婷婷", "370285199209213525", "15215427752")
+    print zxy.get_report_page_url()
     # fqz = BaiQiShiFanQiZha()
     # fqz.do_request()
