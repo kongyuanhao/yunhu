@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-control" content="no-cache"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>资信云报告</title>
+    <link rel="stylesheet" href="https://credit.baiqishi.com/clweb/resources/lib/iconfont/iconfont.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://credit.baiqishi.com/clweb/resources/css/reportNew.css?v=201708101"/>
+    <script src="https://credit.baiqishi.com/clweb/resources/lib/jquery-2.1.1/jquery.min.js"></script>
+    <script src="https://credit.baiqishi.com/clweb/resources/lib/echarts/echarts.common.min.js"></script>
+    <script src="https://credit.baiqishi.com/clweb/resources/js/reportNew.js"></script>
+</head>
+<body>
+
+{% autoescape off %}{{ report }}{% endautoescape %}
+
+
+<button><a href="http://127.0.0.1:8050/yunhu/customermodel/{{ pk }}/zxy_report/?scrapy=1">重新采集</a></button>
+
+</body>
+</html>

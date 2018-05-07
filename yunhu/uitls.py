@@ -28,6 +28,10 @@ import codecs
 
 
 # baiqishi
+
+from lxml import etree
+
+
 def baiqishi():
     pass
 
@@ -123,7 +127,7 @@ class BaiQiZiXinYun(object):
         self.request_param["mobile"] = mobile
 
     def get_request_data(self, url):
-        return requests.post(url, json=self.request_param)
+        return requests.post(url, json=self.request_param).json()
 
     def print_data(self, data):
         pass
@@ -166,6 +170,17 @@ class BaiQiZiXinYun(object):
         token = self.get_token_data().get("data")
         self.request_param["token"] = token
         return furl(self.report_page_url).add(self.request_param)
+
+    def get_report_page_html(self):
+        url = self.get_report_page_url().url
+        print url
+        root = etree.HTML(requests.get(url).content)
+        header = etree.tostring(root.xpath('//body/header')[0], encoding='utf-8')
+        div_main = ''
+        if root.xpath('//body/div[@id="main"]'):
+            div_main = etree.tostring(root.xpath('//body/div[@id="main"]')[0], encoding='utf-8')
+        return '\n'.join([header,div_main])
+
 
 
 
@@ -270,7 +285,7 @@ class BaiQiShiFanQiZha(object):
 '''
 if __name__ == '__main__':
     zxy = BaiQiZiXinYun()
-    zxy.set_customer_info(u"李志修", "370285199308050418", "15563886389")
-    codecs.open('abc.json','w','utf-8').write(zxy.get_report_data())
+    zxy.set_customer_info(u"韩婷婷", "370285199209213525", "15215427752")
+    print zxy.get_report_page_url()
     # fqz = BaiQiShiFanQiZha()
     # fqz.do_request()

@@ -8,14 +8,17 @@ import datetime
 
 import django_filters
 from django.db.models import Sum
+from django.shortcuts import render_to_response
+from django.views.decorators.clickjacking import xframe_options_sameorigin, xframe_options_exempt
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import views, viewsets, permissions, routers, filters, parsers, renderers, mixins
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.decorators import api_view, permission_classes, action
+from rest_framework.decorators import api_view, permission_classes, action, renderer_classes
 
 from models import *
 # 登录用户配置数据
@@ -153,7 +156,7 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
             return customers
 
     @action(detail=False)
-        def status_analysis_today(self, request):
+    def status_analysis_today(self, request):
         customers = CustomerModel.objects.filter(channel__company=request.user.company)
         return Response({
             "register": customers.filter(create_time__date=datetime.date.today()).count(),
@@ -172,36 +175,41 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
         return Response(customers.values("audit_status").annotate(customer_count=Sum("id")))
 
     @action(detail=True)
+    @renderer_classes((TemplateHTMLRenderer,))
+    @xframe_options_exempt
     def zxy_report(self, request, pk):
         customer = CustomerModel.objects.get(id=pk)
-        scrapy = self.request.data.get("scrapy")
+        scrapy = request.GET.get("scrapy")
+
         try:
             report = ZxyReportModel.objects.get(customer=customer)
         except:
             report = None
         if scrapy:
             fee = self.request.user.company.fee
-            if fee < self.request.user.company.balance:
-                return Response({'detail':u"账户余额不足！"})
+            if fee > self.request.user.company.balance:
+                return Response({'detail': u"账户余额不足！"})
 
             ExpenseModel.objects.create(**{
-                "user":self.request.user,
-                "detail":u"采集资信云报告",
-                "amount":fee,
+                "user": self.request.user,
+                "detail": u"采集资信云报告",
+                "amount": fee,
             })
             zxy = BaiQiZiXinYun()
             zxy.set_customer_info(customer.name, customer.identity, customer.tel)
-            zxy_report = zxy.get_report_data()
+            zxy_report = zxy.get_report_page_html()
+            print zxy_report
             if report:
                 report.report = zxy_report
                 report.save()
             else:
-                ZxyReportModel.objects.create(**{
-                    "customer":customer,
-                    "report":zxy_report
+                report, _ = ZxyReportModel.objects.create(**{
+                    "customer": customer,
+                    "report": zxy_report
                 })
-        else:
-            return Response({"report":report.report if report else None})
+
+        return render_to_response(template_name="yunhu_rest/report.html",
+                                  context={"pk": pk, 'report': report.report if report else u"<p>当前客户没有采集</p>"})
 
 
 router.register(r'customermodel', CustomerModelViewSet, base_name='customermodel')
