@@ -22,8 +22,11 @@ from models import *
 
 
 from yunhu.serializers import ChannelModelSerializer, UserSerializer, CheckWayModelSerializer, CustomerModelSerializer, \
-    CustomerModelListSerializer, AuditModelSerializer, LonasModelSerializer, UrgeModelSerializer
+    CustomerModelListSerializer, AuditModelSerializer, LonasModelSerializer, UrgeModelSerializer, \
+    ExpenseModelSerializer, ZxyReportModelSerializer
 from rest_framework import status
+
+from yunhu.uitls import BaiQiZiXinYun
 
 router = routers.SimpleRouter()
 
@@ -150,7 +153,7 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
             return customers
 
     @action(detail=False)
-    def status_analysis_today(self, request):
+        def status_analysis_today(self, request):
         customers = CustomerModel.objects.filter(channel__company=request.user.company)
         return Response({
             "register": customers.filter(create_time__date=datetime.date.today()).count(),
@@ -167,6 +170,38 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
     def status_analysis(self, request):
         customers = CustomerModel.objects.filter(channel__company=request.user.company)
         return Response(customers.values("audit_status").annotate(customer_count=Sum("id")))
+
+    @action(detail=True)
+    def zxy_report(self, request, pk):
+        customer = CustomerModel.objects.get(id=pk)
+        scrapy = self.request.data.get("scrapy")
+        try:
+            report = ZxyReportModel.objects.get(customer=customer)
+        except:
+            report = None
+        if scrapy:
+            fee = self.request.user.company.fee
+            if fee < self.request.user.company.balance:
+                return Response({'detail':u"账户余额不足！"})
+
+            ExpenseModel.objects.create(**{
+                "user":self.request.user,
+                "detail":u"采集资信云报告",
+                "amount":fee,
+            })
+            zxy = BaiQiZiXinYun()
+            zxy.set_customer_info(customer.name, customer.identity, customer.tel)
+            zxy_report = zxy.get_report_data()
+            if report:
+                report.report = zxy_report
+                report.save()
+            else:
+                ZxyReportModel.objects.create(**{
+                    "customer":customer,
+                    "report":zxy_report
+                })
+        else:
+            return Response({"report":report.report if report else None})
 
 
 router.register(r'customermodel', CustomerModelViewSet, base_name='customermodel')
@@ -209,5 +244,12 @@ router.register(r'customerurge', UrgeModelViewSet, base_name='customerurge')
 
 
 # 消费情况
+class ExpenseModelViewSet(viewsets.ModelViewSet):
+    serializer_class = ExpenseModelSerializer
 
+    def get_queryset(self):
+        return ExpenseModel.objects.filter(user__company=self.request.user.company)
+
+
+router.register(r'expensemodel', ExpenseModelViewSet, base_name='expensemodel')
 # 黑名单

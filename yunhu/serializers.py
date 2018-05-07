@@ -174,3 +174,17 @@ class UrgeModelSerializer(serializers.ModelSerializer):
         instance.update(**validated_data)
         instance.save()
         return instance
+
+
+# 消费笔记
+class ExpenseModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExpenseModel
+        fields = '__all__'
+
+
+# 资信云
+class ZxyReportModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ZxyReportModel
+        fields = '__all__'

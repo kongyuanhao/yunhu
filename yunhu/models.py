@@ -45,6 +45,7 @@ class CompanyModel(models.Model):
     name = models.CharField(verbose_name=u"公司名称", max_length=50, help_text=u"公司名称", unique=True)
     contact = models.CharField(verbose_name=u"联系方式", max_length=50, help_text=u"联系方式")
     balance = models.FloatField(verbose_name=u"账户余额", help_text=u"账户余额", default=0.00)
+    fee = models.FloatField(verbose_name=u"扣费标准", help_text=u"扣费标准", default=0.00)
     check_ways = models.ManyToManyField(CheckWayModel, verbose_name=u"审查方式", help_text=u"审查方式", related_name="companys")
     possessor = models.CharField(verbose_name=u"所有人", help_text=u"所有人", max_length=50)
     identity = models.CharField(verbose_name="身份证号", help_text=u"身份证号", max_length=30)
@@ -297,6 +298,12 @@ class ExpenseModel(models.Model):
     create_time = models.DateTimeField(verbose_name=u"消费时间", help_text=u"消费时间", auto_now=True)
     amount = models.FloatField(verbose_name=u"消费金额", help_text=u"消费金额")
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.user.company.balance = self.user.company.balance - self.amount
+        self.user.company.save()
+        super(ExpenseModel, self).save()
+
 
 class CustomerLoginInfoModel(models.Model):
     '''
@@ -322,11 +329,8 @@ class TelCheckModel(models.Model):
             return False
 
 
-'''
-审核人：
-打发第三方第三方大师傅都是
-放款人：
-打发第三方第三方大师傅都是
-追款人：
-打发第三方第三方大师
-'''
+# customer 资信云报告
+class ZxyReportModel(models.Model):
+    customer = models.ForeignKey(CustomerModel, related_name="zxy_report")
+    report = models.TextField(verbose_name=u"资信云报告", help_text=u"资信云报告")
+    create_time = models.DateTimeField(help_text=u"获取时间", auto_now=True)

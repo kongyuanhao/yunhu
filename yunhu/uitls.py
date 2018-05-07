@@ -7,8 +7,10 @@ base Info
 """
 
 # ali pay
+import json
 import time
 from urllib import urlencode
+import codecs
 
 # from alipay import AliPay
 # import urlparse
@@ -121,7 +123,7 @@ class BaiQiZiXinYun(object):
         self.request_param["mobile"] = mobile
 
     def get_request_data(self, url):
-        return requests.post(url, json=self.request_param).json()
+        return requests.post(url, json=self.request_param)
 
     def print_data(self, data):
         pass
@@ -149,7 +151,8 @@ class BaiQiZiXinYun(object):
 
     def get_report_data(self):
         data = self.get_request_data(self.report_url)
-        self.print_data(data)
+        return data.text
+        # self.print_data(data)
 
     def get_token_data(self):
         self.time_stamp = str(time.time())
@@ -267,7 +270,7 @@ class BaiQiShiFanQiZha(object):
 '''
 if __name__ == '__main__':
     zxy = BaiQiZiXinYun()
-    zxy.set_customer_info(u"韩婷婷", "370285199209213525", "15215427752")
-    print zxy.get_report_page_url()
+    zxy.set_customer_info(u"李志修", "370285199308050418", "15563886389")
+    codecs.open('abc.json','w','utf-8').write(zxy.get_report_data())
     # fqz = BaiQiShiFanQiZha()
     # fqz.do_request()
