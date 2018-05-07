@@ -7,6 +7,7 @@
 import datetime
 
 import django_filters
+from django.db.models import Sum
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import views, viewsets, permissions, routers, filters, parsers, renderers, mixins
 from rest_framework.authtoken.models import Token
@@ -14,7 +15,8 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, action
+
 from models import *
 # 登录用户配置数据
 
@@ -89,6 +91,11 @@ class ChannelModelViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
+    @action(detail=False)
+    def customer_count(self, request):
+        customers = CustomerModel.objects.filter(channel__company=request.user.company)
+        return Response(customers.values("channel").annotate(customer_count=Sum("id")))
+
 
 router.register(r'channelmodel', ChannelModelViewSet, base_name='channelmodel')
 
@@ -142,6 +149,25 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
         else:
             return customers
 
+    @action(detail=False)
+    def status_analysis_today(self, request):
+        customers = CustomerModel.objects.filter(channel__company=request.user.company)
+        return Response({
+            "register": customers.filter(create_time__date=datetime.date.today()).count(),
+            "authentication": customers.filter(create_time__date=datetime.date.today(),
+                                               mno=True).count(),
+            "loan": LonasModel.objects.filter(customer__in=customers,
+                                              lona_time=datetime.date.today()).count(),
+            "overdue": LonasModel.objects.filter(customer__in=customers,
+                                                 refund_time=datetime.date.today(),
+                                                 customer__audit_status=5).count(),
+        })
+
+    @action(detail=False)
+    def status_analysis(self, request):
+        customers = CustomerModel.objects.filter(channel__company=request.user.company)
+        return Response(customers.values("audit_status").annotate(customer_count=Sum("id")))
+
 
 router.register(r'customermodel', CustomerModelViewSet, base_name='customermodel')
 
@@ -181,40 +207,6 @@ class UrgeModelViewSet(mixins.RetrieveModelMixin,
 
 router.register(r'customerurge', UrgeModelViewSet, base_name='customerurge')
 
-
-# 数据分析
-@api_view(["GET", ])
-@permission_classes([permissions.IsAuthenticated, ])
-def data_statistics(request):
-    '''
-
-    :param request:
-    :return:
-    '''
-    check_ways = request.user.company.check_ways.all()
-    customers = CustomerModel.objects.filter(channel__company=request.user.company)
-
-    datas = {
-        "today_customers": {
-            "register": customers.filter(create_time__date=datetime.date.today()).count(),
-            "authentication": customers.filter(create_time__date=datetime.date.today(), mno=True).count(),
-            "loan": LonasModel.objects.filter(customer__in=customers, lona_time=datetime.date.today()).count(),
-            "overdue": LonasModel.objects.filter(customer__in=customers, refund_time=datetime.date.today(),
-                                                 customer__audit_status=5),
-        },
-        "last_week_consumption": {
-
-        },
-        "last_week_loan": {},
-        "channel": {},
-        "customer_status": {},
-        "customer_total": {
-            "register": 10,
-            "loans": 10,
-            "overdue": 10,
-            "urgent": 10,
-        }
-    }
 
 # 消费情况
 
