@@ -7,7 +7,8 @@
 import datetime
 
 import django_filters
-from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
+from django.db.models import Sum, Count
 from django.shortcuts import render_to_response
 from django.views.decorators.clickjacking import xframe_options_sameorigin, xframe_options_exempt
 from django_filters.rest_framework import DjangoFilterBackend
@@ -157,6 +158,7 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
 
     @action(detail=False)
     def status_analysis_today(self, request):
+        # 当天统计
         customers = CustomerModel.objects.filter(channel__company=request.user.company)
         return Response({
             "register": customers.filter(create_time__date=datetime.date.today()).count(),
@@ -171,19 +173,24 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
 
     @action(detail=False)
     def status_analysis(self, request):
+        # 状态统计
         customers = CustomerModel.objects.filter(channel__company=request.user.company)
-        return Response(customers.values("audit_status").annotate(customer_count=Sum("id")))
+        return Response(customers.values("audit_status").annotate(customer_count=Count("id")))
+
+    @action(detail=False)
+    def channel_analysis(self, request):
+        # 渠道统计
+        customers = CustomerModel.objects.filter(channel__company=request.user.company)
+        return Response(customers.values("channel").annotate(customer_count=Count("id")))
 
     @action(detail=True)
     @renderer_classes((TemplateHTMLRenderer,))
-    @xframe_options_exempt
     def zxy_report(self, request, pk):
         customer = CustomerModel.objects.get(id=pk)
         scrapy = request.GET.get("scrapy")
-
         try:
             report = ZxyReportModel.objects.get(customer=customer)
-        except:
+        except Exception, e:
             report = None
         if scrapy:
             fee = self.request.user.company.fee
@@ -203,7 +210,7 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
                 report.report = zxy_report
                 report.save()
             else:
-                report, _ = ZxyReportModel.objects.create(**{
+                report = ZxyReportModel.objects.create(**{
                     "customer": customer,
                     "report": zxy_report
                 })
@@ -257,6 +264,12 @@ class ExpenseModelViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return ExpenseModel.objects.filter(user__company=self.request.user.company)
+
+    @action(detail=False)
+    def user_analysis(self, request):
+        # 员工消费统计
+        queryset = ExpenseModel.objects.filter(user__company=self.request.user.company)
+        return Response(queryset.values("user").annotate(customer_count=Sum("id")))
 
 
 router.register(r'expensemodel', ExpenseModelViewSet, base_name='expensemodel')

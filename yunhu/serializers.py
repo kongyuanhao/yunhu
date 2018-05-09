@@ -5,6 +5,8 @@
 # @File    : serializers.py
 # @Software: PyCharm
 from rest_framework import serializers
+from rest_framework.utils import model_meta
+
 from models import *
 
 # 认证方式 序列化
@@ -59,7 +61,7 @@ class CustomerModelListSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerModel
         fields = ["id", "channel__name", "name", "tel", "identity", "zhima_score", "wechat", "zone", "address",
-                  "audit_user", "loan_user", "urge_user"]
+                  "audit_status", "audit_user", "loan_user", "urge_user"]
 
     def get_audit_user(self, obj):
         user = obj.audit_customer.all()
@@ -84,7 +86,6 @@ class CustomerModelSerializer(serializers.ModelSerializer):
     audit_user = serializers.SerializerMethodField()
     loan_user = serializers.SerializerMethodField()
     urge_user = serializers.SerializerMethodField()
-    zxy_url = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomerModel
@@ -109,14 +110,8 @@ class CustomerModelSerializer(serializers.ModelSerializer):
             return {"username": user[0].user.name, "id": user[0].id, "note": user[0].note}
         return {}
 
-    def get_zxy_url(self, obj):
-        zxy = BaiQiZiXinYun()
-        zxy.set_customer_info(obj.name, obj.identity, obj.tel)
-        return zxy.get_report_page_url().url
 
-    # 贷款审核
-
-
+# 贷款审核
 class AuditModelSerializer(serializers.ModelSerializer):
     next_user = serializers.IntegerField(write_only=True)
     audit_status = serializers.IntegerField(source="customer.audit_status")
@@ -126,16 +121,37 @@ class AuditModelSerializer(serializers.ModelSerializer):
         fields = ["next_user", "note", "audit_status"]
 
     def update(self, instance, validated_data):
+        # raise_errors_on_nested_writes('update', self, validated_data)
+        info = model_meta.get_field_info(instance)
+
+        # Simply set each attribute on the instance, and then save it.
+        # Note that unlike `.create()` we don't need to treat many-to-many
+        # relationships as being a special case. During updates we already
+        # have an instance pk for the relationships to be associated with.
         next_user = validated_data.pop("next_user", None)
-        audit_status = validated_data.pop("audit_status", None)
-        note = validated_data.pop("note")
-        instance.customer.audit_status = audit_status
-        instance.customer.save()
-        instance.note = note
+        print validated_data
+        print info.relations
         if next_user:
             instance.assign_lona_user(User.objects.get(id=next_user))
+        for attr, value in validated_data.items():
+            if attr in info.relations:
+                field = getattr(instance, attr)
+                for k, v in value.items():
+                    setattr(field, k, v)
+            else:
+                setattr(instance, attr, value)
         instance.save()
+
         return instance
+        # print validated_data
+        #         # audit_status = validated_data.pop("audit_status", None)
+        #         # note = validated_data.pop("note")
+        #         # print audit_status
+        #         # instance.customer.audit_status = audit_status
+        #         # instance.customer.save()
+        #         # instance.note = note
+
+        # return super(AuditModelSerializer, self).update(instance, validated_data)
 
 
 # 放款
