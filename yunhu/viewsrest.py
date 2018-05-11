@@ -5,6 +5,7 @@
 # @File    : viewsrest.py
 # @Software: PyCharm
 import datetime
+import random
 
 import django_filters
 from django.contrib.auth.decorators import login_required
@@ -29,10 +30,14 @@ from yunhu.serializers import ChannelModelSerializer, UserSerializer, CheckWayMo
     CustomerModelListSerializer, AuditModelSerializer, LonasModelSerializer, UrgeModelSerializer, \
     ExpenseModelSerializer, ZxyReportModelSerializer
 from rest_framework import status
-
+from models import AUDIT_STATUS_CHOICES
 from yunhu.uitls import BaiQiZiXinYun
 
 router = routers.SimpleRouter()
+COLOR_SEQ = ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd',
+             '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d',
+             '#17becf', '#9edae5']
+AUDIT_STATUS = dict(AUDIT_STATUS_CHOICES)
 
 
 class ObtainAuthToken(APIView):
@@ -174,14 +179,24 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
     @action(detail=False)
     def status_analysis(self, request):
         # 状态统计
-        customers = CustomerModel.objects.filter(channel__company=request.user.company)
-        return Response(customers.values("audit_status").annotate(customer_count=Count("id")))
+        results = CustomerModel.objects.filter(channel__company=request.user.company).values("audit_status").annotate(
+            customer_count=Count("id"))
+        datas = [{'value': result.get("customer_count"),
+                  'name': AUDIT_STATUS.get(result.get("audit_status")),
+                  'itemStyle': {'normal': {'color': random.choice(COLOR_SEQ)}}}
+                 for result in results]
+        return Response(datas)
 
     @action(detail=False)
     def channel_analysis(self, request):
         # 渠道统计
-        customers = CustomerModel.objects.filter(channel__company=request.user.company)
-        return Response(customers.values("channel").annotate(customer_count=Count("id")))
+        results = CustomerModel.objects.filter(channel__company=request.user.company).values("channel").annotate(
+            customer_count=Count("id"))
+        datas = [{'value': result.get("customer_count"),
+                  'name': ChannelModel.objects.get(id=result.get("channel")).name,
+                  'itemStyle': {'normal': {'color': random.choice(COLOR_SEQ)}}}
+                 for result in results]
+        return Response(datas)
 
     @action(detail=True)
     @renderer_classes((TemplateHTMLRenderer,))
@@ -267,9 +282,21 @@ class ExpenseModelViewSet(viewsets.ModelViewSet):
 
     @action(detail=False)
     def user_analysis(self, request):
-        # 员工消费统计
-        queryset = ExpenseModel.objects.filter(user__company=self.request.user.company)
-        return Response(queryset.values("user").annotate(customer_count=Sum("id")))
+        # 员工消费统计 柱状图
+        results = ExpenseModel.objects.filter(user__company=self.request.user.company).values("user").annotate(
+            customer_amount=Sum("amount"))
+        data = []
+        series = []
+
+        for result in results:
+            name = User.objects.get(id=result["user"]).name
+            series.append({
+                'value': result["customer_amount"],
+                'name': name,
+                'itemStyle': {'normal': {'color:' '#2d8cf0'}}})
+            data.append(name)
+
+        return Response({"data": data, "series": series})
 
 
 router.register(r'expensemodel', ExpenseModelViewSet, base_name='expensemodel')

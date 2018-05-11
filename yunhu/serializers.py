@@ -194,6 +194,7 @@ class UrgeModelSerializer(serializers.ModelSerializer):
 
 # 消费笔记
 class ExpenseModelSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source="user.name")
     class Meta:
         model = ExpenseModel
         fields = '__all__'
