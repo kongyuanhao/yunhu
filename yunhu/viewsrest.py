@@ -140,7 +140,8 @@ router.register(r'usermodel', UserModelViewSet, base_name='usermodel')
 class CustomerModelViewSet(viewsets.ModelViewSet):
     serializer_class = CustomerModelSerializer
     filter_backends = (filters.SearchFilter, DjangoFilterBackend)
-    filter_fields = ('is_black',)
+    filter_fields = ('is_black', 'create_time')
+
     def get_serializer_class(self, *args, **kwargs):
         if self.action == "list":
             return CustomerModelListSerializer
@@ -149,7 +150,7 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         customers = CustomerModel.objects.filter(channel__in=self.request.user.company.company_channels.all())
-        if self.request.query_params.get("is_black"):
+        if self.request.query_params.get("is_black") == 'true':
             return customers.filter(is_black=True)
         if self.request.user.department == 1:
             # 审核部门
@@ -157,7 +158,6 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
         if self.request.user.department == 2:
             # 放款部门
             return customers.filter(lona_customer__user=self.request.user)
-            pass
         if self.request.user.department == 3:
             # 催收部门
             return customers.filter(urge_customer__user=self.request.user, audit_status__in=[9, 10])
@@ -235,6 +235,41 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
 
         return render_to_response(template_name="yunhu_rest/report.html",
                                   context={"pk": pk, 'report': report.report if report else u"<p>当前客户没有采集</p>"})
+
+    @action(detail=True, methods=["post"])
+    def audit(self, request, pk):
+        user = request.user
+        datas = request.data
+        customer = CustomerModel.objects.get(id=pk)
+        # "next_user", "note", "audit_status"
+        customer.audit_status = datas.get("audit_status")
+        customer.save()
+        if datas.get("next_user"):
+            next_user = User.objects.get(id=datas.get("next_user"))
+        if user.department == 1:
+            audit = AuditModel.objects.get(user=user, customer=customer)
+            audit.note = datas.get("note")
+            audit.save()
+            if datas.get("next_user"):
+                next_user = User.objects.get(id=datas.get("next_user"))
+                audit.assign_lona_user(next_user)
+
+        if user.department == 2:
+            audit = LonasModel.objects.get(user=user, customer=customer)
+            audit.note = datas.get("note")
+            audit.lona_time = datas.get("lona_time")
+            audit.refund_time = datas.get("refund_time")
+            audit.practical_blance = datas.get("practical_blance")
+            audit.save()
+            if datas.get("next_user"):
+                next_user = User.objects.get(id=datas.get("next_user"))
+                audit.assign_urge_user(next_user)
+        if user.department == 3:
+            audit = AuditModel.objects.get(user=user, customer=customer)
+            audit.note = datas.get("note")
+            audit.save()
+
+        return Response(True)
 
 
 router.register(r'customermodel', CustomerModelViewSet, base_name='customermodel')

@@ -281,7 +281,7 @@ class LonasModel(models.Model):
             urge[0].user = user_urge
             urge[0].save()
         else:
-            UrgeModel.objects.create(customer=self.customer, user_urge=user_urge)
+            UrgeModel.objects.create(customer=self.customer, user=user_urge)
 
 
 # 客户催款 ：催款笔记 修改标签 拉黑客户
