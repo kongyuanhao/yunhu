@@ -61,7 +61,7 @@ class CustomerModelListSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerModel
         fields = ["id", "channel__name", "name", "tel", "identity", "zhima_score", "wechat", "zone", "address",
-                  "audit_status", "audit_user", "loan_user", "urge_user"]
+                  "audit_status", "audit_user", "loan_user", "urge_user",'blcak_reason']
 
     def get_audit_user(self, obj):
         user = obj.audit_customer.all()
