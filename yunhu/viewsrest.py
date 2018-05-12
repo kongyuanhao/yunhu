@@ -139,7 +139,8 @@ router.register(r'usermodel', UserModelViewSet, base_name='usermodel')
 # 客户管理
 class CustomerModelViewSet(viewsets.ModelViewSet):
     serializer_class = CustomerModelSerializer
-
+    filter_backends = (filters.SearchFilter, DjangoFilterBackend)
+    filter_fields = ('is_black',)
     def get_serializer_class(self, *args, **kwargs):
         if self.action == "list":
             return CustomerModelListSerializer
@@ -148,6 +149,8 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         customers = CustomerModel.objects.filter(channel__in=self.request.user.company.company_channels.all())
+        if self.request.query_params.get("is_black"):
+            return customers.filter(is_black=True)
         if self.request.user.department == 1:
             # 审核部门
             return customers.filter(audit_customer__user=self.request.user)
