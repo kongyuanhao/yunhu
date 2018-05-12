@@ -61,7 +61,7 @@ class CustomerModelListSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerModel
         fields = ["id", "channel__name", "name", "tel", "identity", "zhima_score", "wechat", "zone", "address",
-                  "audit_status", "audit_user", "loan_user", "urge_user",'blcak_reason']
+                  "audit_status", "audit_user", "loan_user", "urge_user", 'blcak_reason', "create_time"]
 
     def get_audit_user(self, obj):
         user = obj.audit_customer.all()
@@ -195,6 +195,7 @@ class UrgeModelSerializer(serializers.ModelSerializer):
 # 消费笔记
 class ExpenseModelSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source="user.name")
+
     class Meta:
         model = ExpenseModel
         fields = '__all__'
