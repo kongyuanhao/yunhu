@@ -224,6 +224,7 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
             })
             zxy = BaiQiZiXinYun()
             zxy.set_customer_info(customer.name, customer.identity, customer.tel)
+            zxy.post_report_text(customer)
             zxy_report = zxy.get_report_page_html()
             print zxy_report
             if report:

@@ -38,6 +38,7 @@ def baiqishi():
 
 # send message
 import requests
+
 '''
 接口参数
 IP：61.129.57.234
@@ -80,23 +81,27 @@ class SendMsm(object):
     params = {
         "un": "500063",
         "pw": "500063",
-        "sa":"563",
+        "sa": "563",
         "dc": 15,
         "tf": 3,
         "da": None,
         "sm": None,
         "rd": 1,
     }
-    def send_sms(self,tel,code):
-        self.params["sm"] = self.sms_template % {"code":code}
+
+    def send_sms(self, tel, code):
+        self.params["sm"] = self.sms_template % {"code": code}
         self.params["da"] = tel
         data = requests.get(self.send_sms_url, params=self.params)
         return True
-    def send_sem(self,tel):
+
+    def send_sem(self, tel):
         self.params["sm"] = self.sem_template
         self.params["da"] = tel
         data = requests.get(self.send_sms_url, params=self.params)
         return True
+
+
 '''
 partnerId  String  是  20  第三方用户唯一凭证【白骑士分配】
 verifyKey  String  是  40  校验 key【白骑士分配】
@@ -112,7 +117,8 @@ class BaiQiZiXinYun(object):
     url = "https://credit.baiqishi.com/clweb/api"
     report_url = "/".join([url, "common", "getreport"])
     token_url = "/".join([url, "common", "gettoken"])
-    report_page_url = "/".join([url,"common","getreportpage"])
+    report_page_url = "/".join([url, "common", "getreportpage"])
+    report_text_url = "/".join([url, "common", "reportext"])
     request_param = {
         "partnerId": "yousu",
         "verifyKey": "0f1e33c41d5642d98f0fa59c595bd60a",
@@ -139,7 +145,7 @@ class BaiQiZiXinYun(object):
         self.set_customer_info(customer.name, customer.identity, customer.tel)
         check_ways = ["chsi", "mno", "maimai", "rhzx", "jd", "tb", "gjj"]
         for check_way in check_ways:
-            print check_way,getattr(customer, check_way)
+            print check_way, getattr(customer, check_way)
             if not getattr(customer, check_way):
                 self.set_check_way(check_way)
                 data = self.get_original_data()
@@ -152,6 +158,32 @@ class BaiQiZiXinYun(object):
         data = self.get_request_data(self.original_url)
         self.print_data(data)
         return data
+
+    def post_report_text(self, customer):
+        self.request_param["contacts"] = [
+            {
+                "name": customer.father_name,
+                "mobile": customer.father_tel,
+                "relation": '1',
+            },
+            {
+                "name": customer.mother_name,
+                "mobile": customer.mother_tel,
+                "relation": '1',
+            },
+            {
+                "name": customer.friend_name,
+                "mobile": customer.friend_tel,
+                "relation": '7',
+            },
+            {
+                "name": customer.colleague_name,
+                "mobile": customer.colleague_tel,
+                "relation": '4',
+            }
+        ]
+        res = requests.post(self.report_text_url, data=self.request_param)
+        print res.content
 
     def get_report_data(self):
         data = self.get_request_data(self.report_url)
@@ -179,9 +211,7 @@ class BaiQiZiXinYun(object):
         div_main = ''
         if root.xpath('//body/div[@id="main"]'):
             div_main = etree.tostring(root.xpath('//body/div[@id="main"]')[0], encoding='utf-8')
-        return '\n'.join([header,div_main])
-
-
+        return '\n'.join([header, div_main])
 
 
 class BaiQiShiApi(object):
@@ -192,6 +222,7 @@ class BaiQiShiApi(object):
     def do_request(self):
         rep_json = requests.post(self.url, json=self.data).json()
         return rep_json
+
 
 class BaiQiShiFanQiZha(object):
     '''
@@ -251,23 +282,25 @@ class BaiQiShiFanQiZha(object):
     params = {
         "partnerId": "yousu",
         "verifyKey": "0f1e33c41d5642d98f0fa59c595bd60a",
-        "appId":"test",
-        "eventType":"binding",
+        "appId": "test",
+        "eventType": "binding",
         "name": "万年利",
         "mobile": "15595402226",
         "certNo": "642221199112190211",
     }
+
     def set_info(self):
         self.params.update({
-            "name":"李志修",
-            "mobile":"15563886389",
-            "certNo":"370285199308050418",
+            "name": "李志修",
+            "mobile": "15563886389",
+            "certNo": "370285199308050418",
         })
+
     def do_request(self):
         # self.set_info()
         print "-" * 10, "report", "-" * 10
 
-        response_date = requests.post(self.url,json=self.params).json()
+        response_date = requests.post(self.url, json=self.params).json()
 
     def bingding(self):
         pass
