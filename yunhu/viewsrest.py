@@ -184,9 +184,11 @@ class CustomerModelViewSet(viewsets.ModelViewSet):
         # 状态统计
         results = CustomerModel.objects.filter(channel__company=request.user.company).values("audit_status").annotate(
             customer_count=Count("id"))
+        i = 1
         datas = [{'value': result.get("customer_count"),
                   'name': AUDIT_STATUS.get(result.get("audit_status")),
-                  'itemStyle': {'normal': {'color': random.choice(COLOR_SEQ)}}}
+                  'itemStyle': {'normal': {'color': COLOR_SEQ[i]}}
+                  }
                  for result in results]
         return Response(datas)
 
