@@ -32,7 +32,7 @@ class UserAdmin(UserAdmin):
 # 公司管理
 @admin.register(models.CompanyModel)
 class CompanyAdmin(admin.ModelAdmin):
-    fields = ("name", "contact","balance","check_ways","possessor","identity","status","remark","h5_first_background","h5_second_background")
+    fields = ("name", "contact","balance","check_ways","possessor","identity","status","fee","remark","h5_first_background","h5_second_background")
     list_display = ("name", "contact","balance","possessor","identity","status","remark",)
 
 @admin.register(models.CheckWayModel)
